@@ -1,0 +1,29 @@
+{
+  "places": [
+    {
+      "visited": true,
+      "id": 1,
+      "Name": "Zadar",
+      "Description": "Beautiful city",
+      "latitude": 44.1350575,
+      "longitude": 15.1788635
+    },
+    {
+      "visited": true,
+
+      "id": 2,
+      "Name": "Split",
+      "Description": "Beautiful city",
+      "latitude": 43.5160411,
+      "longitude": 16.4140639
+    },
+    {
+      "visited": false,
+      "id": 3,
+      "Name": "Šibenik",
+      "Description": "Beautiful city",
+      "latitude": 43.7416835,
+      "longitude": 15.8174061
+    }
+  ]
+}
