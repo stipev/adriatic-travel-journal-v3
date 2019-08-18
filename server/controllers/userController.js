@@ -15,11 +15,14 @@ const { signUp } = require("./signup");
 
 // SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
 
-signToken = (username, id) => {
+signToken = (id, username, email, firstName, lastName) => {
   return jwt.sign(
     {
+      id,
       username,
-      id
+      email,
+      firstName,
+      lastName
     },
     SECRET
   );
@@ -43,7 +46,7 @@ router.post("/signup", (req, res) => {
 */
 
 router.get("/signin", (req, res) => {
-  //console.log("req.flash()", req.flash("error"));
+  //  console.log("req.message", req.message);
   res.json({ message: "Incorrect user data!" });
 });
 
@@ -55,10 +58,12 @@ router.post(
     session: false
   }),
   (req, res) => {
-    console.log("req.body", req.body);
-    const { username, id, password } = req.body;
-    const token = signToken(username, id);
-    //console.log("signed token: ", token);
+    //console.log("req.body", req.body);
+    const { id, username, email, firstName, lastName } = req.body;
+    //console.log(" DA VIDIM ID", id);
+    //console.log("DATA: ", id, username, email, firstName, lastName);
+    const token = signToken(id, username, email, firstName, lastName);
+    //console.log("decoded token", decode(token));
     res.json({ token });
   }
 );

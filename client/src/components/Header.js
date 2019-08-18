@@ -1,8 +1,11 @@
 import React from "react";
+import NavBar from "./NavBar";
 import { NavLink, withRouter } from "react-router-dom";
+import { logOut, isLoggedIn } from "../components/AuthService";
 
 class Header extends React.Component {
   render() {
+    console.log("HEADER");
     return (
       <div>
         <nav className="navbar has-background-info is-fixed-top">
@@ -18,78 +21,27 @@ class Header extends React.Component {
               </h3>
             </div>
           </div>
-          <div className="navbar-end" style={{ marginRight: "3rem" }}>
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
+          <div
+            className="navbar-end"
+            style={{
+              marginRight: "3rem"
+            }}
+          >
+            <NavBar />
+            <button
+              onClick={() => {
+                logOut(this.props.history);
               }}
-              to="/home"
-            >
-              HOME
-            </NavLink>
-
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
+              className="title is-6 navbar-item has-background-info"
+              style={{
+                border: "3px solid black",
+                color: "white",
+                cursor: "pointer",
+                border: "none"
               }}
-              to="/profile"
-            >
-              PROFILE
-            </NavLink>
-
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
-              }}
-              to="/reviews"
-            >
-              REVIEWS
-            </NavLink>
-
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
-              }}
-              to="/prizes"
-            >
-              PRIZES
-            </NavLink>
-
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
-              }}
-              to="/about"
-            >
-              ABOUT
-            </NavLink>
-
-            <NavLink
-              className="navbar-item has-background-info"
-              style={{ color: "white" }}
-              activeStyle={{
-                color: "yellow",
-                borderBottom: "2px solid yellow"
-              }}
-              to="/signup"
             >
               SIGN OUT
-            </NavLink>
+            </button>
           </div>
         </nav>
       </div>

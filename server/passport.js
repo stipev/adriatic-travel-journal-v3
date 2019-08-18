@@ -11,13 +11,8 @@ const Op = Sequelize.Op;
 
 passport.use(
   new LocalStrategy(
-    //  { passReqToCallback: true },
-    (
-      //req,
-      username,
-      password,
-      done
-    ) => {
+    { passReqToCallback: true },
+    (req, username, password, done) => {
       console.log("LOCAL STRATEGY");
       User.findOne({
         where: {
@@ -30,13 +25,21 @@ passport.use(
           console.log("ah taj user koji uvik postoji: ", user);
           if (!user) {
             console.log("NEMA USERA");
+            req.message = "123NEMAAAAA GAAAA";
+
             return done(
               null,
               false
               //req.flash("error", "NEMA GAAA")
             );
           } else if (user) {
-            console.log("IMA USERA");
+            console.log("IMA USERA ID MU JE: ", user.dataValues.id);
+            req.body.id = user.dataValues.id;
+            req.body.email = user.dataValues.email;
+            req.body.username = user.dataValues.username;
+            req.body.firstName = user.dataValues.firstName;
+            req.body.lastName = user.dataValues.lastName;
+
             done(null, user);
           }
         })

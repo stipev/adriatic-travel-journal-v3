@@ -8,6 +8,7 @@ import About from "./pages/About";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { PrivateRoute, PublicRoute } from "../src/components/Routes";
 
 function App() {
   return (
@@ -24,13 +25,23 @@ function App() {
           }}
         >
           <Switch>
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/reviews" component={Reviews} />
-            <Route exact path="/prizes" component={Prizes} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/signin" component={SignIn} />
+            <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/reviews" component={Reviews} />
+            <PrivateRoute exact path="/prizes" component={Prizes} />
+            <PrivateRoute exact path="/about" component={About} />
+            <PublicRoute
+              restricted={true}
+              exact
+              path="/signup"
+              component={SignUp}
+            />
+            <PublicRoute
+              restricted={true}
+              exact
+              path="/signin"
+              component={SignIn}
+            />
           </Switch>
         </div>
       </Router>

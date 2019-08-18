@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { setTokenToLocalStorage } from "../components/AuthService";
 const URL = "http://localhost:8000/signin";
 
 class SignIn extends React.Component {
@@ -26,7 +27,10 @@ class SignIn extends React.Component {
     })
       .then(res => {
         this.setState({ message: res.data.message });
-
+        if (res.data.token) {
+          console.log("TOKEN");
+          setTokenToLocalStorage(res.data.token);
+        }
         //console.log("res: ", res);
         //console.log("res:", res.data);
       })
