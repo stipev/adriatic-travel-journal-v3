@@ -2,33 +2,24 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
-  "bin": {
-    "server": "server.js"
-  },
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./app",
-    "dev": "nodemon ./app"
+    "start": "nodemon index"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  },
   "dependencies": {
-    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
-    "connect": "^3.7.0",
-    "connect-flash": "^0.1.1",
-    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-session": "^1.16.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "mysql2": "^1.6.5",
+    "nodemon": "^1.19.1",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^5.15.0"
+    "sequelize": "^5.13.1",
+    "sha256": "^0.2.0"
   }
 }

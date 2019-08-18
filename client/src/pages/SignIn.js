@@ -26,7 +26,7 @@ class SignIn extends React.Component {
     })
       .then(res => {
         this.setState({ message: "bolje nediraj nista" });
-        //console.log("res: ", res);
+        console.log("res: ", res);
         console.log("res:", res.data);
       })
       .catch();
