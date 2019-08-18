@@ -25,9 +25,10 @@ class SignIn extends React.Component {
       credentials: "same-origin"
     })
       .then(res => {
-        this.setState({ message: "bolje nediraj nista" });
-        console.log("res: ", res);
-        console.log("res:", res.data);
+        this.setState({ message: res.data.message });
+
+        //console.log("res: ", res);
+        //console.log("res:", res.data);
       })
       .catch();
   };

@@ -5,28 +5,44 @@ const LocalStrategy = require("passport-local").Strategy;
 const JWT_SECRET = "secret";
 const User = require("./Models/User");
 const sha256 = require("sha256");
+const Sequelize = require("sequelize");
+
+const Op = Sequelize.Op;
 
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    console.log("LOCAL STRATEGY");
-    User.findOne({
-      where: {
-        username
-        //  password: sha256(password)
-      }
-    })
-      .then(user => {
-        console.log("ah taj user koji uvik postoji: ", user);
-        if (!user) {
-          console.log("NEMA USERA");
-          return done(null, false);
-        } else if (user) {
-          console.log("IMA USERA");
-          done(null, user);
+  new LocalStrategy(
+    //  { passReqToCallback: true },
+    (
+      //req,
+      username,
+      password,
+      done
+    ) => {
+      console.log("LOCAL STRATEGY");
+      User.findOne({
+        where: {
+          [Op.or]: [{ username }, { email: username }],
+          password
+          //  password: sha256(password)
         }
       })
-      .catch(error => done(error, null));
-  })
+        .then(user => {
+          console.log("ah taj user koji uvik postoji: ", user);
+          if (!user) {
+            console.log("NEMA USERA");
+            return done(
+              null,
+              false
+              //req.flash("error", "NEMA GAAA")
+            );
+          } else if (user) {
+            console.log("IMA USERA");
+            done(null, user);
+          }
+        })
+        .catch(error => done(error, null));
+    }
+  )
 );
 
 // JSON WEB TOKENS STRATEGY

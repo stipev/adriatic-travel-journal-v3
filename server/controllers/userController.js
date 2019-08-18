@@ -43,14 +43,15 @@ router.post("/signup", (req, res) => {
 */
 
 router.get("/signin", (req, res) => {
-  res.json({ message: "failure" });
+  //console.log("req.flash()", req.flash("error"));
+  res.json({ message: "Incorrect user data!" });
 });
 
 router.post(
   "/signin",
   passport.authenticate("local", {
+    //failureFlash: true,
     failureRedirect: "/signin",
-
     session: false
   }),
   (req, res) => {
