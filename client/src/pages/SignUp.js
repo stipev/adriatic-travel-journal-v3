@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-const URL = "http://localhost:8000/signup";
+import { signUp } from "../components/AuthService";
+//import axios from "axios";
 
 class SignUp extends React.Component {
   state = {
@@ -14,26 +14,17 @@ class SignUp extends React.Component {
     message: " Fill input fields with your data:"
   };
 
-  signUpNewUser = () => {
-    axios({
-      method: "post",
-      url: URL,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password
-      }
-    })
-      .then(res => {
-        this.setState({ message: res.data });
-        console.log("res:", res.data);
-      })
-      .catch();
+  signUp = () => {
+    signUp(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.username,
+      this.state.email,
+      this.state.password,
+      this.props.history
+    )
+      .then(res => this.setState({ message: res }))
+      .catch(err => console.log("error: ", err));
   };
 
   updateFirstName = event => {
@@ -146,7 +137,7 @@ class SignUp extends React.Component {
               justifyContent: "center"
             }}
           >
-            <button onClick={this.signUpNewUser} className="button is-info">
+            <button onClick={this.signUp} className="button is-info">
               SIGN UP
             </button>
           </div>

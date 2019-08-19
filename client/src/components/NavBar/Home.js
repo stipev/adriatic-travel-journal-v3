@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { getUsername, isLoggedIn } from "../AuthService";
+import { getUsername, isSignedIn } from "../AuthService";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
           color: "yellow",
           borderBottom: "2px solid yellow"
         }}
-        to={isLoggedIn() ? `/home/${getUsername()}` : "/home"}
+        to={isSignedIn() ? `/home/${getUsername()}` : "/home"}
       >
         HOME
       </NavLink>

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { logOut } from "../AuthService";
+import { signOut } from "../AuthService";
 
 function PrivateNavComponents(props) {
   return (
@@ -55,7 +55,7 @@ function PrivateNavComponents(props) {
 
       <button
         onClick={() => {
-          logOut(props.history);
+          signOut(props.history);
         }}
         className="title is-6 navbar-item has-background-info"
         style={{

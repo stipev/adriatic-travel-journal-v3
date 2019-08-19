@@ -8,6 +8,7 @@ const Sequelize = require("sequelize");
 
 const signUp = (firstName, lastName, username, email, password) => {
   let message = "";
+  let success;
   return new Promise((resolve, reject) => {
     emailExist(email)
       .then(res => {
@@ -26,19 +27,22 @@ const signUp = (firstName, lastName, username, email, password) => {
                 createUser(firstName, lastName, username, email, password).then(
                   () => {
                     message = "User created successfully!";
-                    resolve(message);
+                    success = true;
+                    resolve({ message, success });
                   }
                 );
                 //});
               } else {
                 message = "Username already exist!";
-                resolve(message);
+                success = false;
+                resolve({ message, success });
               }
             })
             .catch();
         } else {
           message = "Email already exist!";
-          resolve(message);
+          success = false;
+          resolve({ message, success });
         }
       })
       .catch(error => {

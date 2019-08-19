@@ -1,13 +1,13 @@
 import React from "react";
 import NavBar from "./NavBar/NavBar";
 import { withRouter } from "react-router-dom";
-import { isLoggedIn, getUsername } from "./AuthService";
+import { isSignedIn, getUsername } from "./AuthService";
 
 class Header extends React.Component {
   componentDidMount() {
-    if (this.props.history.location.pathname === "/" && isLoggedIn()) {
+    if (this.props.history.location.pathname === "/" && isSignedIn()) {
       this.props.history.push(`/home/${getUsername()}`);
-    } else if (this.props.history.location.pathname === "/" && !isLoggedIn()) {
+    } else if (this.props.history.location.pathname === "/" && !isSignedIn()) {
       this.props.history.push("/home");
     }
   }

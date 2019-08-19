@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isLoggedIn, getUsername } from "../components/AuthService";
+import { isSignedIn, getUsername } from "../components/AuthService";
 
 export const PublicRoute = ({ component: Component, restricted, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props =>
-        isLoggedIn() && restricted ? (
+        isSignedIn() && restricted ? (
           <Redirect to={`/home/${getUsername()}`} />
         ) : (
           <Component {...props} />
@@ -22,7 +22,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isLoggedIn() ? <Component {...props} /> : <Redirect to="/home" />
+        isSignedIn() ? <Component {...props} /> : <Redirect to="/home" />
       }
     />
   );
