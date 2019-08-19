@@ -91,6 +91,21 @@ export const getUsername = () => {
   username = localStorage.getItem("username", username);
   return username;
 };
+export const getFirstName = () => {
+  let firstName;
+  firstName = localStorage.getItem("firstName", firstName);
+  return firstName;
+};
+export const getLastName = () => {
+  let lastName;
+  lastName = localStorage.getItem("lastName", lastName);
+  return lastName;
+};
+export const getEmail = () => {
+  let email;
+  email = localStorage.getItem("email", email);
+  return email;
+};
 
 export const isSignedIn = () => {
   if (localStorage.getItem("token")) {

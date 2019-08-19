@@ -20,10 +20,11 @@ function App() {
         <div
           style={{
             margin: "3rem",
+            marginTop: "15rem",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "center"
-            //       border: "3px solid red"
+            // border: "3px solid green"
           }}
         >
           <Switch>

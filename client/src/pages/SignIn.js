@@ -28,8 +28,9 @@ class SignIn extends React.Component {
     return (
       <div
         style={{
-          marginTop: "100px"
-
+          marginTop: "100px",
+          display: "flex",
+          flexDirection: "column"
           //border: "3px solid black"
         }}
       >
