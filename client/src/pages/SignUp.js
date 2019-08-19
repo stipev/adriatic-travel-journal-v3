@@ -15,12 +15,13 @@ class SignUp extends React.Component {
   };
 
   signUp = () => {
+    const password = this.state.password.trim();
     signUp(
       this.state.firstName,
       this.state.lastName,
       this.state.username,
       this.state.email,
-      this.state.password,
+      password,
       this.props.history
     )
       .then(res => this.setState({ message: res }))

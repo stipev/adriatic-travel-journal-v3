@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const Sequelize = require("sequelize");
-//const bcrypt = require("bcrypt");
-//const BCRYPT_SALT_ROUNDS = 12;
+const bcrypt = require("bcrypt");
+const BCRYPT_SALT_ROUNDS = 12;
 //const Op = Sequelize.Op;
 
 //bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
@@ -16,22 +16,21 @@ const signUp = (firstName, lastName, username, email, password) => {
           usernameExist(username)
             .then(res => {
               if (res.length === 0) {
-                //bcrypt
-                // .hash(password, BCRYPT_SALT_ROUNDS)
-                //.then(hashedPassword => {
-                // console.log("hashed password: ", hashedPassword);
-                //console.log(
-                // "hashed password length: ",
-                //hashedPassword.length
-                //);
-                createUser(firstName, lastName, username, email, password).then(
-                  () => {
-                    message = "User created successfully!";
-                    success = true;
-                    resolve({ message, success });
-                  }
-                );
-                //});
+                bcrypt
+                  .hash(password, BCRYPT_SALT_ROUNDS)
+                  .then(hashedPassword => {
+                    createUser(
+                      firstName,
+                      lastName,
+                      username,
+                      email,
+                      hashedPassword
+                    ).then(() => {
+                      message = "User created successfully!";
+                      success = true;
+                      resolve({ message, success });
+                    });
+                  });
               } else {
                 message = "Username already exist!";
                 success = false;

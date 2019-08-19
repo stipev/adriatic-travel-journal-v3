@@ -47,6 +47,7 @@ router.post("/signup", (req, res) => {
 
 router.get("/signin", (req, res) => {
   //  console.log("req.message", req.message);
+  //console.log("FLASSSSSSHHHH2", req.body.message);
   res.json({ message: "Incorrect user data!", success: false });
 });
 
@@ -60,9 +61,11 @@ router.post(
   (req, res) => {
     //console.log("req.body", req.body);
     const { id, username, email, firstName, lastName } = req.body;
+
     //console.log(" DA VIDIM ID", id);
     //console.log("DATA: ", id, username, email, firstName, lastName);
     const token = signToken(id, username, email, firstName, lastName);
+
     //console.log("decoded token", decode(token));
     res.json({ token, success: true });
   }
