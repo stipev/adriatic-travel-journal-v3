@@ -47,7 +47,7 @@ router.post("/signup", (req, res) => {
 
 router.get("/signin", (req, res) => {
   //  console.log("req.message", req.message);
-  res.json({ message: "Incorrect user data!" });
+  res.json({ message: "Incorrect user data!", success: false });
 });
 
 router.post(
@@ -64,7 +64,7 @@ router.post(
     //console.log("DATA: ", id, username, email, firstName, lastName);
     const token = signToken(id, username, email, firstName, lastName);
     //console.log("decoded token", decode(token));
-    res.json({ token });
+    res.json({ token, success: true });
   }
 );
 

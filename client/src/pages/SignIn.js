@@ -1,8 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import { setTokenToLocalStorage } from "../components/AuthService";
-const URL = "http://localhost:8000/signin";
+//import axios from "axios";
+import { signIn } from "../components/AuthService";
 
 class SignIn extends React.Component {
   state = {
@@ -12,29 +11,9 @@ class SignIn extends React.Component {
   };
 
   signIn = () => {
-    axios({
-      method: "post",
-      url: URL,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        username: this.state.usernameEmail,
-        password: this.state.password
-      },
-      //
-      credentials: "same-origin"
-    })
-      .then(res => {
-        this.setState({ message: res.data.message });
-        if (res.data.token) {
-          console.log("TOKEN");
-          setTokenToLocalStorage(res.data.token);
-        }
-        //console.log("res: ", res);
-        //console.log("res:", res.data);
-      })
-      .catch();
+    signIn(this.state.usernameEmail, this.state.password, this.props.history)
+      .then(res => this.setState({ message: res }))
+      .catch(err => console.log("error: ", err));
   };
 
   updateUsernameEmail = event => {

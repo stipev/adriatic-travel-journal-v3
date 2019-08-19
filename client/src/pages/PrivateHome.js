@@ -3,6 +3,7 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import greenMarker from "../assets/greenMarker.png";
 import blueMarker from "../assets/blueMarker.png";
 import * as places from "../data/adriaticCoast.json";
+import { getUsername } from "../components/AuthService";
 
 class Home extends Component {
   state = {
@@ -20,10 +21,15 @@ class Home extends Component {
     this.setState({ selectedPlace: place });
   }
 
+  componentDidMount() {
+    console.log("HOME CALLED");
+  }
+
   render() {
-    console.log("places: ", places.places[0]);
+    //console.log("places: ", places.places[0]);
     return (
       <div style={{ marginTop: "100px" }}>
+        Hello {getUsername()}
         <ReactMapGL
           {...this.state.viewport}
           mapboxApiAccessToken="pk.eyJ1Ijoic3RpcGUyMTEyIiwiYSI6ImNqejRpMjk4djBkOXAzbnBhYmhqNncxaWUifQ.Dt6V1FJWMsuz80YEx0ghdg"

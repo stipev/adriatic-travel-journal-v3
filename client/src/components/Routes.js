@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router-dom";
 import { isLoggedIn, getUsername } from "../components/AuthService";
 
 export const PublicRoute = ({ component: Component, restricted, ...rest }) => {
-  //console.log("all params", rest.path);
   return (
     <Route
       {...rest}
@@ -23,7 +22,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isLoggedIn() ? <Component {...props} /> : <Redirect to="/" />
+        isLoggedIn() ? <Component {...props} /> : <Redirect to="/home" />
       }
     />
   );

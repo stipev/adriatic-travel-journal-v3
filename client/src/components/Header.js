@@ -1,11 +1,17 @@
 import React from "react";
-import NavBar from "./NavBar";
-import { NavLink, withRouter } from "react-router-dom";
-import { logOut, isLoggedIn } from "../components/AuthService";
+import NavBar from "./NavBar/NavBar";
+import { withRouter } from "react-router-dom";
+import { isLoggedIn, getUsername } from "./AuthService";
 
 class Header extends React.Component {
+  componentDidMount() {
+    if (this.props.history.location.pathname === "/" && isLoggedIn()) {
+      this.props.history.push(`/home/${getUsername()}`);
+    } else if (this.props.history.location.pathname === "/" && !isLoggedIn()) {
+      this.props.history.push("/home");
+    }
+  }
   render() {
-    console.log("HEADER");
     return (
       <div>
         <nav className="navbar has-background-info is-fixed-top">
@@ -27,21 +33,7 @@ class Header extends React.Component {
               marginRight: "3rem"
             }}
           >
-            <NavBar />
-            <button
-              onClick={() => {
-                logOut(this.props.history);
-              }}
-              className="title is-6 navbar-item has-background-info"
-              style={{
-                border: "3px solid black",
-                color: "white",
-                cursor: "pointer",
-                border: "none"
-              }}
-            >
-              SIGN OUT
-            </button>
+            <NavBar history={this.props.history} />
           </div>
         </nav>
       </div>

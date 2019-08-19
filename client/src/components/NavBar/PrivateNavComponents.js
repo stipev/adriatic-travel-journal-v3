@@ -1,21 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { logOut } from "../AuthService";
 
-export default function NavBar() {
+function PrivateNavComponents(props) {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <NavLink
-        className="title is-6 navbar-item has-background-info"
-        style={{ margin: 0, color: "white" }}
-        activeStyle={{
-          color: "yellow",
-          borderBottom: "2px solid yellow"
-        }}
-        to="/home"
-      >
-        HOME
-      </NavLink>
-
       <NavLink
         className="title is-6 navbar-item has-background-info"
         style={{ margin: 0, color: "white" }}
@@ -63,6 +52,23 @@ export default function NavBar() {
       >
         ABOUT
       </NavLink>
+
+      <button
+        onClick={() => {
+          logOut(props.history);
+        }}
+        className="title is-6 navbar-item has-background-info"
+        style={{
+          margin: 0,
+          color: "white",
+          cursor: "pointer",
+          border: "none"
+        }}
+      >
+        SIGN OUT
+      </button>
     </div>
   );
 }
+
+export default PrivateNavComponents;
