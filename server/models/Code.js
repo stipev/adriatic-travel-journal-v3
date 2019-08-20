@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const db = require("../database");
+const db = require("../configuration/database");
 
 const Code = db.define("code", {
   id: {
@@ -8,12 +8,10 @@ const Code = db.define("code", {
   },
   code: {
     type: Sequelize.STRING
-    //defaultValue: "AA"
   },
 
   activated: {
     type: Sequelize.BOOLEAN
-    //defaultValue: false
   }
 });
 
