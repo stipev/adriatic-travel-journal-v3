@@ -3,8 +3,12 @@ import {
   getUsername,
   getFirstName,
   getLastName,
-  getEmail
+  getEmail,
+  getId
 } from "../components/AuthService";
+import axios from "axios";
+
+const URL = "http://localhost:8000/review/add";
 
 class Profile extends React.Component {
   state = {
@@ -26,6 +30,28 @@ class Profile extends React.Component {
   };
   updateReview = event => {
     this.setState({ review: event.target.value });
+  };
+
+  submitReview = () => {
+    let code = this.state.code.trim();
+    console.log("post");
+    axios({
+      method: "post",
+      url: URL,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        code,
+        userId: getId(),
+        review: this.state.review,
+        rate: this.state.rate
+      },
+      //
+      credentials: "same-origin"
+    })
+      .then(res => console.log("resss axios", res))
+      .catch(err => console.log("error", err));
   };
 
   onStarClick = value => {
@@ -90,7 +116,7 @@ class Profile extends React.Component {
               <textarea
                 onChange={this.updateReview}
                 className="textarea is-info"
-                placeholder="Info textarea"
+                placeholder="Write review..."
               />
             </div>
             <div className="field">
@@ -115,7 +141,9 @@ class Profile extends React.Component {
               </div>
             </div>
           </div>
-          <button className="button is-info"> SUBMIT REVIEW </button>
+          <button onClick={this.submitReview} className="button is-info">
+            SUBMIT REVIEW
+          </button>
         </div>
       </div>
     );

@@ -14,8 +14,8 @@ const Location = db.define("location", {
   longitude: {
     type: Sequelize.DECIMAL
   },
-  visited: {
-    type: Sequelize.BOOLEAN
+  sign: {
+    type: Sequelize.STRING
   }
 });
 

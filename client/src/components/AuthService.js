@@ -106,6 +106,11 @@ export const getEmail = () => {
   email = localStorage.getItem("email", email);
   return email;
 };
+export const getId = () => {
+  let id;
+  id = localStorage.getItem("id", id);
+  return id;
+};
 
 export const isSignedIn = () => {
   if (localStorage.getItem("token")) {

@@ -9,11 +9,9 @@ const decode = require("jwt-decode");
 const passport = require("passport");
 const passportConf = require("../passport");
 const { signUp } = require("./signup");
-
-// const passport = require("passport");
-// const passportConf = require("../passport");
-
-// SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
+const Code = require("../Models/Code");
+const UserCode = require("../Models/UserCode");
+const Review = require("../Models/Review");
 
 signToken = (id, username, email, firstName, lastName) => {
   return jwt.sign(
@@ -38,13 +36,6 @@ router.post("/signup", (req, res) => {
     .catch(err => console.log("err mes:", err));
 });
 
-/*app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-*/
-
 router.get("/signin", (req, res) => {
   //  console.log("req.message", req.message);
   //console.log("FLASSSSSSHHHH2", req.body.message);
@@ -59,15 +50,54 @@ router.post(
     session: false
   }),
   (req, res) => {
-    //console.log("req.body", req.body);
     const { id, username, email, firstName, lastName } = req.body;
 
-    //console.log(" DA VIDIM ID", id);
-    //console.log("DATA: ", id, username, email, firstName, lastName);
     const token = signToken(id, username, email, firstName, lastName);
 
-    //console.log("decoded token", decode(token));
     res.json({ token, success: true });
+  }
+);
+
+router.post(
+  "/review/add",
+  //passport.authenticate("jwt"),
+  (req, res) => {
+    let { code, userId, review, rate } = req.body;
+    console.log("USER ID", userId);
+    console.log("review i rate", review, rate);
+    // console.log("POST CODE", code);
+    Code.findOne({
+      where: {
+        [Op.and]: [{ code }, { activated: false }]
+      }
+    })
+      .then(code => {
+        if (code) {
+          const { id } = code.dataValues;
+
+          Promise.all([
+            UserCode.create({ FK_user_usercode: userId, FK_code_usercode: id }),
+            Code.update(
+              {
+                activated: true
+              },
+              { where: { id } }
+            ),
+            Review.create({
+              FK_user_review: userId,
+              FK_code_review: id,
+              review,
+              rate
+            })
+          ]).then(aaa => {
+            console.log("PROMISE ALL !");
+            res.json({ message: " Review submited successfully" });
+          });
+        } else {
+          res.json({ message: "CODE ERROR" });
+        }
+      })
+      .catch(err => console.log("erorr: ", err));
   }
 );
 
