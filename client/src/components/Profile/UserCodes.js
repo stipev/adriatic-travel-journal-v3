@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getId } from "../AuthService";
+import { getId, getToken } from "../AuthService";
 import uuidv4 from "uuid/v4";
 
 import axios from "axios";
@@ -16,7 +16,8 @@ class UserCodes extends Component {
       method: "post",
       url: USER_CODES_URL,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getToken()
       },
       data: {
         userId: getId()

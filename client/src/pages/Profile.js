@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  getToken,
   getUsername,
   getFirstName,
   getLastName,
@@ -41,7 +42,8 @@ class Profile extends React.Component {
       method: "post",
       url: URL,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getToken()
       },
       data: {
         code,

@@ -86,6 +86,11 @@ export const signOut = history => {
   history.push("/signin");
 };
 
+export const getToken = () => {
+  let token;
+  token = localStorage.getItem("token", token);
+  return token;
+};
 export const getUsername = () => {
   let username;
   username = localStorage.getItem("username", username);
