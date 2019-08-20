@@ -58,6 +58,40 @@ router.post(
   }
 );
 
+router.post("/code/all", (req, res) => {
+  const { userId } = req.body;
+  console.log("userId: ", userId);
+  let codesId = [];
+  let userCodes = [];
+
+  UserCode.findAll({
+    attributes: ["FK_code_usercode"],
+    where: {
+      FK_user_usercode: userId
+    }
+  })
+    .then(usercode => {
+      for (let i = 0; i < usercode.length; i++) {
+        //console.log("VALUEE:", resp[i].dataValues.FK_code_usercode);
+        codesId.push(usercode[i].dataValues.FK_code_usercode);
+      }
+      console.log("svi id-evi: ", codesId);
+      Code.findAll({
+        where: {
+          id: {
+            [Op.in]: codesId
+          }
+        }
+      }).then(code => {
+        for (let i = 0; i < code.length; i++) {
+          userCodes.push(code[i].dataValues.code);
+        }
+        res.json({ codes: userCodes });
+      });
+    })
+    .catch();
+});
+
 router.post(
   "/review/add",
   //passport.authenticate("jwt"),

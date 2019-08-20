@@ -6,9 +6,11 @@ import {
   getEmail,
   getId
 } from "../components/AuthService";
+import UserCodes from "../components/Profile/UserCodes";
 import axios from "axios";
 
 const URL = "http://localhost:8000/review/add";
+const USER_CODES_URL = "http://localhost:8000/code/all";
 
 class Profile extends React.Component {
   state = {
@@ -91,6 +93,7 @@ class Profile extends React.Component {
           <div>Last name: {getLastName()}</div>
           <div>E-mail: {getEmail()}</div>
         </div>
+        <UserCodes />
         <div
           className="box"
           style={{ display: "flex", flexDirection: "column" }}

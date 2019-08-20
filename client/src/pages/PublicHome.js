@@ -47,7 +47,7 @@ class PublicHome extends Component {
                   border: "none",
                   cursor: "pointer"
                 }}
-                className="marker-btn"
+                //className="marker-btn"
                 onClick={e => {
                   e.preventDefault();
                   if (e.key === "Escape") {
@@ -59,7 +59,7 @@ class PublicHome extends Component {
                 <img
                   style={{ width: "40px", height: "40px" }}
                   src={place.visited ? blueMarker : greenMarker}
-                  alt="Skate Park Icon"
+                  alt="Location icon"
                 />
               </button>
             </Marker>
@@ -82,7 +82,7 @@ class PublicHome extends Component {
                 <img
                   style={{ width: "200px", height: "200px" }}
                   src="./greenMarker.png"
-                  alt="Skate Park Icon"
+                  alt="Location Icon"
                 />
                 <h2
                   style={{

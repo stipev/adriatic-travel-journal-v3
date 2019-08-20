@@ -4,6 +4,7 @@ import greenMarker from "../assets/greenMarker.png";
 import blueMarker from "../assets/blueMarker.png";
 import * as places from "../data/adriaticCoast.json";
 import { getUsername } from "../components/AuthService";
+//const URL = "http://localhost:8000/review/add";
 
 class Home extends Component {
   state = {
@@ -48,7 +49,7 @@ class Home extends Component {
                   border: "none",
                   cursor: "pointer"
                 }}
-                className="marker-btn"
+                //            className="marker-btn"
                 onClick={e => {
                   e.preventDefault();
                   if (e.key === "Escape") {
@@ -60,7 +61,7 @@ class Home extends Component {
                 <img
                   style={{ width: "40px", height: "40px" }}
                   src={place.visited ? blueMarker : greenMarker}
-                  alt="Skate Park Icon"
+                  alt="Location icon"
                 />
               </button>
             </Marker>
@@ -83,7 +84,7 @@ class Home extends Component {
                 <img
                   style={{ width: "200px", height: "200px" }}
                   src="./greenMarker.png"
-                  alt="Skate Park Icon"
+                  alt="Location Icon"
                 />
                 <h2
                   style={{
