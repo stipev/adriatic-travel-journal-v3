@@ -3,8 +3,12 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import greenMarker from "../assets/greenMarker.png";
 import blueMarker from "../assets/blueMarker.png";
 import * as places from "../data/adriaticCoast.json";
-import { getUsername } from "../components/AuthService";
-//const URL = "http://localhost:8000/review/add";
+import { getUsername, getToken, getId } from "../components/AuthService";
+import { connect } from "react-redux";
+import axios from "axios";
+import { setAllCodes } from "../actions/actions";
+
+const USER_CODES_URL = "http://localhost:8000/code/all";
 
 class Home extends Component {
   state = {
@@ -23,7 +27,25 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log("HOME CALLED");
+    axios({
+      method: "post",
+      url: USER_CODES_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      data: {
+        userId: getId()
+      },
+      //
+      credentials: "same-origin"
+    })
+      .then(res => {
+        //console.log("resss axios", res.data.codes);
+        //this.setState({ userCodes: res.data.codes });
+        this.props.setAllCodes(res.data.codes);
+      })
+      .catch(err => console.log("error", err));
   }
 
   render() {
@@ -107,4 +129,23 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  state = state.codesReducer;
+  return {
+    state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setAllCodes: codes => dispatch(setAllCodes(codes))
+    //enableNewPokemon: () => dispatch(enableNewPokemon()),
+    //setPokemonState: pokemon => dispatch(setPokemonState(pokemon)),
+    //setHeaderFlag: flag => dispatch(setHeaderFlag(flag))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

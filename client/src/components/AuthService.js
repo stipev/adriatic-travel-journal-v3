@@ -73,48 +73,87 @@ const signInWithToken = (token, history) => {
 const setDataToLocalStorage = token => {
   const decodedToken = decode(token);
   const { username, firstName, lastName, email, id } = decodedToken;
-  localStorage.setItem("token", token);
-  localStorage.setItem("username", username);
-  localStorage.setItem("firstName", firstName);
-  localStorage.setItem("lastName", lastName);
-  localStorage.setItem("email", email);
-  localStorage.setItem("id", id);
+  try {
+    localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("email", email);
+    localStorage.setItem("id", id);
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 
 export const signOut = history => {
-  localStorage.clear();
-  history.push("/signin");
+  try {
+    localStorage.clear();
+    history.push("/signin");
+  } catch (error) {
+    console.log("error: ", error);
+  }
 };
 
 export const getToken = () => {
   let token;
-  token = localStorage.getItem("token", token);
-  return token;
+  try {
+    token = localStorage.getItem("token", token);
+    return token;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 export const getUsername = () => {
-  let username;
-  username = localStorage.getItem("username", username);
-  return username;
+  try {
+    let username;
+    username = localStorage.getItem("username", username);
+    return username;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 export const getFirstName = () => {
-  let firstName;
-  firstName = localStorage.getItem("firstName", firstName);
-  return firstName;
+  try {
+    let firstName;
+    firstName = localStorage.getItem("firstName", firstName);
+    return firstName;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 export const getLastName = () => {
-  let lastName;
-  lastName = localStorage.getItem("lastName", lastName);
-  return lastName;
+  try {
+    let lastName;
+    lastName = localStorage.getItem("lastName", lastName);
+    return lastName;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 export const getEmail = () => {
-  let email;
-  email = localStorage.getItem("email", email);
-  return email;
+  try {
+    let email;
+    email = localStorage.getItem("email", email);
+    return email;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 export const getId = () => {
-  let id;
-  id = localStorage.getItem("id", id);
-  return id;
+  try {
+    let id;
+    id = localStorage.getItem("id", id);
+    return id;
+  } catch (error) {
+    console.log("error: ", error);
+    return undefined;
+  }
 };
 
 export const isSignedIn = () => {

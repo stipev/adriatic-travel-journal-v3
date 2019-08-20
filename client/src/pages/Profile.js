@@ -9,9 +9,10 @@ import {
 } from "../components/AuthService";
 import UserCodes from "../components/Profile/UserCodes";
 import axios from "axios";
-
+import { connect } from "react-redux";
+import { addCode } from "../actions/actions";
 const URL = "http://localhost:8000/review/add";
-const USER_CODES_URL = "http://localhost:8000/code/all";
+//const USER_CODES_URL = "http://localhost:8000/code/all";
 
 class Profile extends React.Component {
   state = {
@@ -54,7 +55,10 @@ class Profile extends React.Component {
       //
       credentials: "same-origin"
     })
-      .then(res => console.log("resss axios", res))
+      .then(res => {
+        console.log("resss axios", res);
+        this.props.addCode(code);
+      })
       .catch(err => console.log("error", err));
   };
 
@@ -74,6 +78,7 @@ class Profile extends React.Component {
   };
 
   render() {
+    console.log("REDUX: this.props.state", this.props.state);
     return (
       <div
         className="box"
@@ -154,4 +159,23 @@ class Profile extends React.Component {
     );
   }
 }
-export default Profile;
+
+const mapStateToProps = state => {
+  return {
+    state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addCode: code => dispatch(addCode(code))
+    //enableNewPokemon: () => dispatch(enableNewPokemon()),
+    //setPokemonState: pokemon => dispatch(setPokemonState(pokemon)),
+    //setHeaderFlag: flag => dispatch(setHeaderFlag(flag))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);

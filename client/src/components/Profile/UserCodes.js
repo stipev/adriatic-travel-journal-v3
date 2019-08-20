@@ -1,39 +1,20 @@
 import React, { Component } from "react";
-import { getId, getToken } from "../AuthService";
+//import { getId, getToken } from "../AuthService";
 import uuidv4 from "uuid/v4";
 
-import axios from "axios";
+//import axios from "axios";
+import { connect } from "react-redux";
+//import { setAllCodes } from "../../actions/actions";
 
-const USER_CODES_URL = "http://localhost:8000/code/all";
+//const USER_CODES_URL = "http://localhost:8000/code/all";
 
 class UserCodes extends Component {
-  state = {
-    userCodes: []
-  };
-
   componentDidMount() {
-    axios({
-      method: "post",
-      url: USER_CODES_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getToken()
-      },
-      data: {
-        userId: getId()
-      },
-      //
-      credentials: "same-origin"
-    })
-      .then(res => {
-        //console.log("resss axios", res.data.codes);
-        this.setState({ userCodes: res.data.codes });
-      })
-      .catch(err => console.log("error", err));
+    console.log("USER CODES COMPONENT MOUNTED");
   }
 
   render() {
-    let { userCodes } = this.state;
+    let { userCodes } = this.props.state;
     return (
       <div>
         CODE LIST:
@@ -51,4 +32,11 @@ class UserCodes extends Component {
   }
 }
 
-export default UserCodes;
+const mapStateToProps = state => {
+  state = state.codesReducer;
+  return {
+    state
+  };
+};
+
+export default connect(mapStateToProps)(UserCodes);
