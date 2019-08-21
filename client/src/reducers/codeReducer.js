@@ -1,5 +1,5 @@
-const ADD_CODE = "ADD_CODE";
-const SET_ALL_CODES = "SET_ALL_CODES";
+import { ADD_CODE, SET_ALL_CODES } from "../actions/types";
+
 const initState = { userCodes: [] };
 
 const codeReducer = (state = initState, action) => {
@@ -13,7 +13,7 @@ const codeReducer = (state = initState, action) => {
         userCodes: codes
       };
     case SET_ALL_CODES:
-      console.log("REDUX payload: ", action.codes);
+      //console.log("REDUX payload: ", action.codes);
       return {
         ...state,
         userCodes: action.codes

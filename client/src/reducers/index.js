@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
-import codesReducer from "./codesReducer";
+import codeReducer from "./codeReducer";
+import locationReducer from "./locationReducer";
 
-export default combineReducers({ codesReducer });
+export default combineReducers({ codeReducer, locationReducer });

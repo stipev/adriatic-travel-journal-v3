@@ -6,9 +6,10 @@ import * as places from "../data/adriaticCoast.json";
 import { getUsername, getToken, getId } from "../components/AuthService";
 import { connect } from "react-redux";
 import axios from "axios";
-import { setAllCodes } from "../actions/actions";
+import { setAllCodes, setAllLocations } from "../actions/actions";
 
 const USER_CODES_URL = "http://localhost:8000/code/all";
+const LOCATIONS_URL = "http://localhost:8000/location/all";
 
 class Home extends Component {
   state = {
@@ -28,28 +29,45 @@ class Home extends Component {
 
   componentDidMount() {
     axios({
-      method: "post",
-      url: USER_CODES_URL,
+      method: "get",
+      url: LOCATIONS_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
       },
-      data: {
-        userId: getId()
-      },
+
       //
       credentials: "same-origin"
     })
       .then(res => {
-        //console.log("resss axios", res.data.codes);
-        //this.setState({ userCodes: res.data.codes });
-        this.props.setAllCodes(res.data.codes);
+        //console.log("LOCATIONS:", res.data.locations);
+        this.props.setAllLocations(res.data.locations);
+
+        axios({
+          method: "post",
+          url: USER_CODES_URL,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken()
+          },
+          data: {
+            userId: getId()
+          },
+          //
+          credentials: "same-origin"
+        }).then(res => {
+          //console.log("resss axios", res.data.codes);
+          //this.setState({ userCodes: res.data.codes });
+          this.props.setAllCodes(res.data.codes);
+        });
       })
       .catch(err => console.log("error", err));
   }
 
   render() {
     //console.log("places: ", places.places[0]);
+    let { locations } = this.props.state.locationReducer;
+    console.log("LOCATION", locations);
     return (
       <div style={{ marginTop: "100px" }}>
         Hello {getUsername()}
@@ -59,11 +77,11 @@ class Home extends Component {
           onViewportChange={viewport => this.setState({ viewport })}
           mapStyle="mapbox://styles/stipe2112/cjz4im98v00zq1cn20gbvl8qp"
         >
-          {places.places.map(place => (
+          {locations.map(location => (
             <Marker
-              key={place.id}
-              latitude={place.latitude}
-              longitude={place.longitude}
+              key={location.id}
+              latitude={location.latitude}
+              longitude={location.longitude}
             >
               <button
                 style={{
@@ -77,12 +95,12 @@ class Home extends Component {
                   if (e.key === "Escape") {
                     this.setSelectedPlace(null);
                   }
-                  this.setSelectedPlace(place);
+                  this.setSelectedPlace(location);
                 }}
               >
                 <img
                   style={{ width: "40px", height: "40px" }}
-                  src={place.visited ? blueMarker : greenMarker}
+                  src={blueMarker}
                   alt="Location icon"
                 />
               </button>
@@ -130,7 +148,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-  state = state.codesReducer;
   return {
     state
   };
@@ -138,10 +155,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setAllCodes: codes => dispatch(setAllCodes(codes))
-    //enableNewPokemon: () => dispatch(enableNewPokemon()),
-    //setPokemonState: pokemon => dispatch(setPokemonState(pokemon)),
-    //setHeaderFlag: flag => dispatch(setHeaderFlag(flag))
+    setAllCodes: codes => dispatch(setAllCodes(codes)),
+    setAllLocations: locations => dispatch(setAllLocations(locations))
   };
 };
 

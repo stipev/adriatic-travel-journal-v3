@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 
 class UserCodes extends Component {
   componentDidMount() {
-    console.log("USER CODES COMPONENT MOUNTED");
+    //console.log("USER CODES COMPONENT MOUNTED");
   }
 
   render() {
@@ -33,7 +33,7 @@ class UserCodes extends Component {
 }
 
 const mapStateToProps = state => {
-  state = state.codesReducer;
+  state = state.codeReducer;
   return {
     state
   };

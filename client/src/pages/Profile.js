@@ -78,7 +78,7 @@ class Profile extends React.Component {
   };
 
   render() {
-    console.log("REDUX: this.props.state", this.props.state);
+    // console.log("REDUX: this.props.state", this.props.state);
     return (
       <div
         className="box"

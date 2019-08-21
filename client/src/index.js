@@ -1,17 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import App from "./App";
-import "bulma/css/bulma.css";
-
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-
-import rootReducer from "../src/reducers";
-
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
+import rootReducer from "../src/reducers";
+import "bulma/css/bulma.css";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +21,7 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
