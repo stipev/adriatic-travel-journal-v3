@@ -9,12 +9,32 @@ import {
 } from "../components/AuthService";
 import UserCodes from "../components/Profile/UserCodes";
 import axios from "axios";
+import uuidv4 from "uuid/v4";
+
 import { connect } from "react-redux";
-import { addCode, setAllCodes } from "../actions/actions";
+import { addCode, setAllCodes, setUserReviews } from "../actions/actions";
 const URL = "http://localhost:8000/review/add";
+const USER_REVIEWS_URL = "http://localhost:8000/review/user";
 const USER_CODES_URL = "http://localhost:8000/code/user";
 
 class Profile extends React.Component {
+  getUserReviews = () => {
+    axios({
+      method: "post",
+      url: USER_REVIEWS_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      data: {
+        userId: getId()
+      },
+      credentials: "same-origin"
+    })
+      .then(res => this.props.setUserReviews(res.data))
+      .catch(error => console.log("error: ", error));
+  };
+
   state = {
     message: "Input review data here:",
     code: "",
@@ -93,7 +113,12 @@ class Profile extends React.Component {
     this.setState({ stars, rate: value });
   };
 
+  deleteReview = reviewId => {
+    console.log("reviewId", reviewId);
+  };
+
   render() {
+    let { userReviews } = this.props.state.reviewReducer.userReviews;
     return (
       <div
         className="box"
@@ -169,6 +194,38 @@ class Profile extends React.Component {
           <button onClick={this.submitReview} className="button is-info">
             SUBMIT REVIEW
           </button>
+          <div className="box">
+            <button onClick={this.getUserReviews}>My reviews</button>
+            {userReviews.length > 0 ? (
+              <div className="box">
+                {" "}
+                {userReviews.map(userReview => {
+                  return (
+                    <div key={uuidv4()} className="box">
+                      <a
+                        onClick={() => {
+                          this.deleteReview(userReview.id);
+                        }}
+                        className="button is-danger is-outlined"
+                      >
+                        <span>Delete</span>
+                        <span className="icon is-small">
+                          <i className="fas fa-times"></i>
+                        </span>
+                      </a>
+                      <p>code:{userReview.code}</p>
+                      <p>review:{userReview.review}</p>
+                      <p>rate:{userReview.rate}</p>
+                      <p>date:{userReview.date}</p>
+                      <p>location:{userReview.location}</p>
+                    </div>
+                  );
+                })}{" "}
+              </div>
+            ) : (
+              <div className="box"> You don't have reviews yet </div>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -184,7 +241,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addCode: code => dispatch(addCode(code)),
-    setAllCodes: codes => dispatch(setAllCodes(codes))
+    setAllCodes: codes => dispatch(setAllCodes(codes)),
+    setUserReviews: reviews => dispatch(setUserReviews(reviews))
   };
 };
 

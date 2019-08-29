@@ -1,7 +1,7 @@
-import { SET_ALL_REVIEWS } from "../actions/types";
-import { SIGN_OUT } from "../actions/types";
+import { SET_ALL_REVIEWS, SET_USER_REVIEWS } from "../actions/types";
+//import { SIGN_OUT } from "../actions/types";
 
-const initState = { reviews: [] };
+const initState = { reviews: [], userReviews: [] };
 
 const reviewReducer = (state = initState, action) => {
   switch (action.type) {
@@ -10,11 +10,16 @@ const reviewReducer = (state = initState, action) => {
         ...state,
         reviews: action.reviews
       };
-    case SIGN_OUT:
+    case SET_USER_REVIEWS:
       return {
         ...state,
-        reviews: initState
+        userReviews: action.reviews
       };
+    // case SIGN_OUT:
+    //   return {
+    //     ...state,
+    //     reviews: initState
+    //   };
     default:
       return state;
   }

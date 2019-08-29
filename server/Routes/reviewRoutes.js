@@ -5,7 +5,8 @@ const passportConf = require("../configuration/passport");
 const { getDateAndLocation } = require("../Controllers/codeControllers");
 const {
   addReview,
-  getAllReviews
+  getAllReviews,
+  getUserReviews
 } = require("../Controllers/reviewControllers");
 
 const { findActiveCodes } = require("../Controllers/codeControllers");
@@ -39,6 +40,34 @@ router.get(
         res.json({ reviews });
       })
       .catch(error => console.log("erorr", error));
+  }
+);
+
+router.post(
+  "/review/user",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { userId } = req.body;
+    console.log("user id ", userId);
+    console.log("req body", req.body);
+    getUserReviews(userId)
+      .then(userReviews => {
+        //console.log("userReviewsRes", userReviewsRes);
+        res.json({ userReviews });
+      })
+      .catch(error => console.log("error: ", error));
+    // userId
+  }
+);
+
+router.delete(
+  "/review/user/delete",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { reviewId } = req.body;
+    deleteReview(reviewId)
+      .then()
+      .catch();
   }
 );
 

@@ -4,7 +4,8 @@ import {
   SET_ALL_LOCATIONS,
   SET_ALL_REVIEWS,
   SIGN_OUT,
-  MARK_VISITED_LOCATION
+  MARK_VISITED_LOCATION,
+  SET_USER_REVIEWS
 } from "./types";
 
 export const setAllLocations = locations => {
@@ -23,6 +24,10 @@ export const addCode = code => {
 
 export const markVisitedLocation = location => {
   return { type: MARK_VISITED_LOCATION, location };
+};
+
+export const setUserReviews = reviews => {
+  return { type: SET_USER_REVIEWS, reviews };
 };
 
 export const _signOut = () => {

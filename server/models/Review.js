@@ -9,9 +9,8 @@ const Review = db.define("review", {
   FK_user_review: {
     type: Sequelize.INTEGER
   },
-
-  FK_code_review: {
-    type: Sequelize.INTEGER
+  code: {
+    type: Sequelize.STRING
   },
   review: {
     type: Sequelize.STRING
