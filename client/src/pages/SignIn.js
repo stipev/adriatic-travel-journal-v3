@@ -1,7 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 //import axios from "axios";
-import { signIn } from "../components/AuthService";
+import { signIn, getToken } from "../components/AuthService";
+import { connect } from "react-redux";
+import { setAllLocations } from "../actions/actions";
+import axios from "axios";
+const LOCATIONS_URL = "http://localhost:8000/location/all";
 
 class SignIn extends React.Component {
   state = {
@@ -9,6 +13,22 @@ class SignIn extends React.Component {
     password: "",
     message: " Fill input fields with your data:"
   };
+
+  componentDidMount() {
+    axios({
+      method: "get",
+      url: LOCATIONS_URL,
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      credentials: "same-origin"
+    })
+      .then(res => {
+        this.props.setAllLocations(res.data.locations);
+      })
+      .catch(err => console.log("error", err));
+  }
 
   signIn = () => {
     signIn(this.state.usernameEmail, this.state.password, this.props.history)
@@ -107,4 +127,20 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => {
+  return {
+    state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    //setAllCodes: codes => dispatch(setAllCodes(codes)),
+    setAllLocations: locations => dispatch(setAllLocations(locations))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn);

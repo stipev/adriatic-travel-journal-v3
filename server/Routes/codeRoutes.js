@@ -6,14 +6,15 @@ const { findAllUserCodes } = require("../Controllers/codeControllers");
 const router = new Router();
 
 router.post(
-  "/code/all",
+  "/code/user",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
     const { userId } = req.body;
     findAllUserCodes(userId)
-      .then(userCodes => {
-        const { codes } = userCodes;
+      .then(codes => {
+        //console.log("ŠTI IDE ", userCodes);
+        //const { codes } = userCodes;
         res.json({ codes });
       })
       .catch(error => console.log("error: ", error));

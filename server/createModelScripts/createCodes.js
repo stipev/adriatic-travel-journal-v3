@@ -1,18 +1,21 @@
-const Location = require("./Location");
-const Code = require("./Code");
+const Location = require("../Models/Location");
+const Code = require("../Models/Code");
 
 Location.findAll()
   .then(res => {
     for (let i = 0; i < res.length; i++) {
       //console.log("resss", res[i].dataValues.sign);
       for (let j = 1; j <= 31; j++) {
-        let code =
-          res[i].dataValues.sign +
-          new Date(`August ${j}, 2018 15:00:00`).toLocaleDateString();
+        date = new Date(`August ${j}, 2018 15:00:00`).toLocaleDateString();
+
+        let code = res[i].dataValues.sign + date;
         console.log("code:", code);
-        Code.create({ code, activated: false })
-          .then()
-          .catch();
+        Code.create({
+          code,
+          activated: false,
+          date,
+          location: res[i].dataValues.name
+        });
       }
     }
   })

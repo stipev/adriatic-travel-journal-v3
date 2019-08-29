@@ -1,27 +1,21 @@
 import React, { Component } from "react";
-//import { getId, getToken } from "../AuthService";
 import uuidv4 from "uuid/v4";
 
-//import axios from "axios";
 import { connect } from "react-redux";
-//import { setAllCodes } from "../../actions/actions";
-
-//const USER_CODES_URL = "http://localhost:8000/code/all";
 
 class UserCodes extends Component {
-  componentDidMount() {
-    //console.log("USER CODES COMPONENT MOUNTED");
-  }
-
   render() {
-    let { userCodes } = this.props.state;
+    let { codes } = this.props.state.userCodes;
+    let userCodes = codes.codes;
+    console.log("codes: ", userCodes);
+    console.log("codes length: ", userCodes.length);
     return (
       <div>
         CODE LIST:
         {userCodes.length > 0 ? (
           <div className="box">
-            {userCodes.map(userCode => {
-              return <p key={uuidv4()}>{userCode}</p>;
+            {userCodes.map(code => {
+              return <p key={uuidv4()}>{code.code}</p>;
             })}
           </div>
         ) : (
@@ -33,6 +27,7 @@ class UserCodes extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log("AAAAAAAAAA STATE: ", state);
   state = state.codeReducer;
   return {
     state

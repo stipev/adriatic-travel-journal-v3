@@ -10,9 +10,9 @@ import {
 import UserCodes from "../components/Profile/UserCodes";
 import axios from "axios";
 import { connect } from "react-redux";
-import { addCode } from "../actions/actions";
+import { addCode, setAllCodes } from "../actions/actions";
 const URL = "http://localhost:8000/review/add";
-//const USER_CODES_URL = "http://localhost:8000/code/all";
+const USER_CODES_URL = "http://localhost:8000/code/user";
 
 class Profile extends React.Component {
   state = {
@@ -57,7 +57,22 @@ class Profile extends React.Component {
     })
       .then(res => {
         console.log("resss axios", res);
-        this.props.addCode(code);
+
+        axios({
+          method: "post",
+          url: USER_CODES_URL,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken()
+          },
+          data: {
+            userId: getId()
+          },
+
+          credentials: "same-origin"
+        }).then(res => {
+          this.props.setAllCodes(res.data);
+        });
       })
       .catch(err => console.log("error", err));
   };
@@ -78,7 +93,6 @@ class Profile extends React.Component {
   };
 
   render() {
-    // console.log("REDUX: this.props.state", this.props.state);
     return (
       <div
         className="box"
@@ -168,10 +182,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCode: code => dispatch(addCode(code))
-    //enableNewPokemon: () => dispatch(enableNewPokemon()),
-    //setPokemonState: pokemon => dispatch(setPokemonState(pokemon)),
-    //setHeaderFlag: flag => dispatch(setHeaderFlag(flag))
+    addCode: code => dispatch(addCode(code)),
+    setAllCodes: codes => dispatch(setAllCodes(codes))
   };
 };
 

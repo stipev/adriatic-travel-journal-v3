@@ -1,3 +1,6 @@
 export const SET_ALL_CODES = "SET_ALL_CODES";
 export const SET_ALL_LOCATIONS = "SET_ALL_LOCATIONS";
+export const SET_ALL_REVIEWS = "SET_ALL_REVIEWS";
 export const ADD_CODE = "ADD_CODE";
+export const MARK_VISITED_LOCATION = "MARK_VISITED_LOCATION";
+export const SIGN_OUT = "SIGN_OUT";

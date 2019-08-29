@@ -1,8 +1,19 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Code = require("../Models/Code");
-const UserCode = require("../Models/UserCode");
+//const UserCode = require("../Models/UserCode");
 const Review = require("../Models/Review");
+
+const getAllReviews = () => {
+  return Review.findAll({
+    attributes: [
+      ["FK_user_review", "userId"],
+      ["FK_code_review", "codeId"],
+      "review",
+      "rate"
+    ]
+  });
+};
 
 const addReview = (userId, code, review, rate) => {
   return new Promise((resolve, reject) => {
@@ -16,10 +27,12 @@ const addReview = (userId, code, review, rate) => {
           const { id } = code.dataValues;
 
           Promise.all([
-            UserCode.create({ FK_user_usercode: userId, FK_code_usercode: id }),
+            //UserCode.create({ FK_user_usercode: userId, FK_code_usercode: id }),
+
             Code.update(
               {
-                activated: true
+                activated: true,
+                FK_userId: userId
               },
               { where: { id } }
             ),
@@ -40,4 +53,4 @@ const addReview = (userId, code, review, rate) => {
   });
 };
 
-module.exports = { addReview };
+module.exports = { addReview, getAllReviews };
