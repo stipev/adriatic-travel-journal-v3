@@ -49,6 +49,7 @@ class Profile extends React.Component {
       data: {
         code,
         userId: getId(),
+        username: getUsername(),
         review: this.state.review,
         rate: this.state.rate
       },

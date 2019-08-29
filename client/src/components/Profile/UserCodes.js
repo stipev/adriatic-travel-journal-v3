@@ -7,8 +7,6 @@ class UserCodes extends Component {
   render() {
     let { codes } = this.props.state.userCodes;
     let userCodes = codes.codes;
-    console.log("codes: ", userCodes);
-    console.log("codes length: ", userCodes.length);
     return (
       <div>
         CODE LIST:
@@ -27,7 +25,6 @@ class UserCodes extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("AAAAAAAAAA STATE: ", state);
   state = state.codeReducer;
   return {
     state

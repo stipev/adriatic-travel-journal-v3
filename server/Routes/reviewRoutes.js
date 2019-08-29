@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = new Router();
 const passport = require("passport");
 const passportConf = require("../configuration/passport");
-
+const { getDateAndLocation } = require("../Controllers/codeControllers");
 const {
   addReview,
   getAllReviews
@@ -47,12 +47,22 @@ router.post(
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
-    let { code, userId, review, rate } = req.body;
-    addReview(userId, code, review, rate)
-      .then(message => {
-        res.json({ message });
+    let { code, userId, review, rate, username } = req.body;
+
+    getDateAndLocation(code)
+      .then(resp => {
+        console.log("resp", resp);
+        console.log("resp.dataValues", resp.dataValues);
+        const { location } = resp.dataValues;
+        const { date } = resp.dataValues;
+        console.log("username:", username);
+        addReview(userId, code, review, rate, location, date, username).then(
+          message => {
+            res.json({ message });
+          }
+        );
       })
-      .catch(error => console.log("error: ", error));
+      .catch();
   }
 );
 

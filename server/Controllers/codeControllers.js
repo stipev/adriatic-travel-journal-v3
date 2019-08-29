@@ -12,6 +12,15 @@ const findActiveCodes = () => {
   });
 };
 
+const getDateAndLocation = code => {
+  return Code.findOne({
+    attributes: ["date", "location"],
+    where: {
+      code
+    }
+  });
+};
+
 const findAllUserCodes = userId => {
   let codes = [];
 
@@ -65,5 +74,6 @@ const findAllUserCodes = userId => {
 
 module.exports = {
   findAllUserCodes,
-  findActiveCodes
+  findActiveCodes,
+  getDateAndLocation
 };

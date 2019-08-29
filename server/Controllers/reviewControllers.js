@@ -6,16 +6,11 @@ const Review = require("../Models/Review");
 
 const getAllReviews = () => {
   return Review.findAll({
-    attributes: [
-      ["FK_user_review", "userId"],
-      ["FK_code_review", "codeId"],
-      "review",
-      "rate"
-    ]
+    attributes: ["username", "location", "date", "review", "rate"]
   });
 };
 
-const addReview = (userId, code, review, rate) => {
+const addReview = (userId, code, review, rate, location, date, username) => {
   return new Promise((resolve, reject) => {
     Code.findOne({
       where: {
@@ -40,7 +35,10 @@ const addReview = (userId, code, review, rate) => {
               FK_user_review: userId,
               FK_code_review: id,
               review,
-              rate
+              rate,
+              location,
+              date,
+              username
             })
           ]).then(aaa => {
             resolve("Review submited successfully!");

@@ -3,6 +3,7 @@ import axios from "axios";
 import { getToken } from "../components/AuthService";
 import { setAllReviews } from "../actions/actions";
 import { connect } from "react-redux";
+import uuidv4 from "uuid/v4";
 
 const REVIEWS_URL = "http://localhost:8000/review/all";
 
@@ -18,18 +19,27 @@ class Reviews extends React.Component {
       credentials: "same-origin"
     })
       .then(res => {
-        //console.log("REVIEWS axios", res.data.reviews);
         this.props.setAllReviews(res.data.reviews);
       })
       .catch(err => console.log("error", err));
   }
 
   render() {
-    //console.log("REDUCERS .", this.props.reviewReducer.reviews);
     let { reviews } = this.props.reviewReducer;
-    console.log("REVIEWS: ", reviews);
     return (
-      <div style={{ marginTop: "200px", border: "3px solid red" }}>REVIEWS</div>
+      <div style={{ marginTop: "200px", border: "3px solid red" }}>
+        {reviews.map(review => {
+          return (
+            <div key={uuidv4()} className="box">
+              <p> username: {review.username} </p>
+              <p> rate: {review.rate} </p>
+              <p> review: {review.review} </p>
+              <p> location: {review.location} </p>
+              <p> date: {review.date} </p>
+            </div>
+          );
+        })}
+      </div>
     );
   }
 }

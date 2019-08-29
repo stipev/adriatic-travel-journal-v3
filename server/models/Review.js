@@ -18,6 +18,15 @@ const Review = db.define("review", {
   },
   rate: {
     type: Sequelize.INTEGER
+  },
+  username: {
+    type: Sequelize.STRING
+  },
+  location: {
+    type: Sequelize.STRING
+  },
+  date: {
+    type: Sequelize.STRING
   }
 });
 
