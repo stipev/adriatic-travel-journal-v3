@@ -1,5 +1,4 @@
-import { SET_ALL_LOCATIONS } from "../actions/types";
-import { MARK_VISITED_LOCATION } from "../actions/types";
+import { SET_ALL_LOCATIONS, MARK_VISITED_LOCATION } from "../actions/types";
 
 const initState = { locations: [] };
 

@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { addCode, setAllCodes, setUserReviews } from "../actions/actions";
 const URL = "http://localhost:8000/review/add";
 const USER_REVIEWS_URL = "http://localhost:8000/review/user";
+const USER_DELETE_URL = "http://localhost:8000/reviews";
 const USER_CODES_URL = "http://localhost:8000/code/user";
 
 class Profile extends React.Component {
@@ -31,7 +32,7 @@ class Profile extends React.Component {
       },
       credentials: "same-origin"
     })
-      .then(res => this.props.setUserReviews(res.data))
+      .then(res => this.props.setUserReviews(res.data.userReviews))
       .catch(error => console.log("error: ", error));
   };
 
@@ -78,24 +79,28 @@ class Profile extends React.Component {
     })
       .then(res => {
         console.log("resss axios", res);
-
-        axios({
-          method: "post",
-          url: USER_CODES_URL,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: getToken()
-          },
-          data: {
-            userId: getId()
-          },
-
-          credentials: "same-origin"
-        }).then(res => {
-          this.props.setAllCodes(res.data);
-        });
+        this.getAllUserCodes();
       })
       .catch(err => console.log("error", err));
+  };
+
+  getAllUserCodes = () => {
+    axios({
+      method: "post",
+      url: USER_CODES_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      data: {
+        userId: getId()
+      },
+
+      credentials: "same-origin"
+    }).then(res => {
+      this.props.setAllCodes(res.data);
+      this.getUserReviews();
+    });
   };
 
   onStarClick = value => {
@@ -113,12 +118,36 @@ class Profile extends React.Component {
     this.setState({ stars, rate: value });
   };
 
-  deleteReview = reviewId => {
-    console.log("reviewId", reviewId);
+  editReview = () => {
+    console.log("EDIT REVIEW");
+  };
+
+  deleteReview = code => {
+    axios({
+      method: "delete",
+      url: USER_DELETE_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      data: {
+        code
+      },
+      //
+      credentials: "same-origin"
+    })
+      .then(res => {
+        console.log("delete review res: ", res);
+        Promise.all([this.getUserReviews(), this.getAllUserCodes()]);
+      })
+      .catch(error => console.log("error: ", error));
   };
 
   render() {
-    let { userReviews } = this.props.state.reviewReducer.userReviews;
+    let { userReviews } = this.props.state.reviewReducer;
+    console.log("REVIEW REDUCER ERR: ", this.props.state.reviewReducer);
+    console.log("USER REVIEWS ERR:", userReviews);
+    console.log("DULJINA USER REVIEWS ERR:", userReviews.length);
     return (
       <div
         className="box"
@@ -200,11 +229,12 @@ class Profile extends React.Component {
               <div className="box">
                 {" "}
                 {userReviews.map(userReview => {
+                  console.log("ACCCC: USER REVIEW:", userReview);
                   return (
                     <div key={uuidv4()} className="box">
                       <a
                         onClick={() => {
-                          this.deleteReview(userReview.id);
+                          this.deleteReview(userReview.code);
                         }}
                         className="button is-danger is-outlined"
                       >
@@ -213,6 +243,18 @@ class Profile extends React.Component {
                           <i className="fas fa-times"></i>
                         </span>
                       </a>
+                      <a
+                        onClick={() => {
+                          this.editReview();
+                        }}
+                        className="button is-danger is-outlined"
+                      >
+                        <span>Edit</span>
+                        <span className="icon is-small">
+                          <i className="far fa-edit"></i>
+                        </span>
+                      </a>
+
                       <p>code:{userReview.code}</p>
                       <p>review:{userReview.review}</p>
                       <p>rate:{userReview.rate}</p>

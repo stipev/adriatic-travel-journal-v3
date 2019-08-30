@@ -6,7 +6,8 @@ const { getDateAndLocation } = require("../Controllers/codeControllers");
 const {
   addReview,
   getAllReviews,
-  getUserReviews
+  getUserReviews,
+  deleteReview
 } = require("../Controllers/reviewControllers");
 
 const { findActiveCodes } = require("../Controllers/codeControllers");
@@ -61,13 +62,14 @@ router.post(
 );
 
 router.delete(
-  "/review/user/delete",
+  "/reviews",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { reviewId } = req.body;
-    deleteReview(reviewId)
-      .then()
-      .catch();
+    const { code } = req.body;
+    console.log("code: ", code);
+    deleteReview(code)
+      .then(() => res.json("Review successfully deleted!"))
+      .catch(error => console.log("error ", error));
   }
 );
 

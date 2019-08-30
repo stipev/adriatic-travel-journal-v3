@@ -1,8 +1,28 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Code = require("../Models/Code");
-//const UserCode = require("../Models/UserCode");
 const Review = require("../Models/Review");
+
+const deleteReview = code => {
+  return Promise.all([
+    Review.destroy({
+      where: {
+        code
+      }
+    }),
+    Code.update(
+      {
+        FK_userId: null,
+        activated: false
+      },
+      {
+        where: {
+          code
+        }
+      }
+    )
+  ]);
+};
 
 const getUserReviews = userId => {
   return new Promise((resolve, reject) => {
@@ -72,4 +92,4 @@ const addReview = (userId, code, review, rate, location, date, username) => {
   });
 };
 
-module.exports = { addReview, getAllReviews, getUserReviews };
+module.exports = { addReview, getAllReviews, getUserReviews, deleteReview };

@@ -5,7 +5,9 @@ import {
   SET_ALL_REVIEWS,
   SIGN_OUT,
   MARK_VISITED_LOCATION,
-  SET_USER_REVIEWS
+  SET_USER_REVIEWS,
+  SET_PRIZE_TIMER,
+  UPDATE_PRIZE_TIMER
 } from "./types";
 
 export const setAllLocations = locations => {
@@ -33,4 +35,11 @@ export const setUserReviews = reviews => {
 export const _signOut = () => {
   console.log("!!!!ACTIONS LOGOUT!!!");
   return { type: SIGN_OUT };
+};
+export const setPrizeTimer = prizeTimer => {
+  return { type: SET_PRIZE_TIMER, prizeTimer };
+};
+
+export const updatePrizeTimer = distance => {
+  return { type: UPDATE_PRIZE_TIMER, distance };
 };
