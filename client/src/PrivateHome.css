@@ -38,6 +38,7 @@
 
 .DescriptionContainer {
   margin-top: 3rem;
+  min-height: 70px;
 }
 
 .ImageContainer {

@@ -24,6 +24,8 @@ const LOCATIONS = {
   Zadar: [Zadar1, Zadar2]
 };
 
+const LOCATIONS_ARRAY = [Sibenik1, Sibenik2, Split1, Split2, Zadar1, Zadar2];
+
 class PrivateHome extends Component {
   state = {
     viewport: {
@@ -34,8 +36,11 @@ class PrivateHome extends Component {
       zoom: 6.3,
       selectedLocation: " ",
       helperMessage: true,
-      descriptionName: "",
-      description: ""
+      name: "",
+      description: "",
+      image1: undefined,
+      image2: undefined,
+      getLocationImage: false
     }
   };
 
@@ -43,8 +48,25 @@ class PrivateHome extends Component {
     this.setState({ selectedLocation: location });
   }
 
+  setRandomData = () => {
+    this.setState({
+      name: "Adriatic coast",
+      description: "Visit breathtaking locations"
+    });
+
+    let image1 = Math.floor(Math.random() * LOCATIONS_ARRAY.length);
+    let image2;
+    do {
+      image2 = Math.floor(Math.random() * LOCATIONS_ARRAY.length);
+    } while (image1 === image2);
+    image1 = LOCATIONS_ARRAY[image1];
+    image2 = LOCATIONS_ARRAY[image2];
+
+    this.setState({ image1, image2 });
+  };
+
   componentDidMount() {
-    this.setState({ descriptionName: "Visit breathtaking locations" });
+    this.setRandomData();
     axios({
       method: "post",
       url: USER_CODES_URL,
@@ -68,7 +90,7 @@ class PrivateHome extends Component {
         }
       })
 
-      .catch(err => console.log("error", err));
+      .catch(error => console.log("error: ", error));
   }
 
   visitedPlace = codes => {
@@ -84,13 +106,18 @@ class PrivateHome extends Component {
     return image;
   };
 
+  setLocationDescriptionAndImages = () => {
+    const { name } = this.state.selectedLocation;
+    const { description } = this.state.selectedLocation;
+    const images = LOCATIONS[name];
+    const image1 = images[0];
+    const image2 = images[1];
+    this.setState({ name, description, image1, image2 });
+  };
+
   render() {
     let { locations } = this.props.state.locationReducer;
-    console.log("this.state.description", this.state.descriptionName);
-    // console.log(
-    //   "this.state.selectedLocation.location",
-    //   this.state.selectedLocation
-    // );
+
     return (
       <div className="PrivateHomeContainer">
         {/* <img src={Zadar1} alt="" /> */}
@@ -155,19 +182,10 @@ class PrivateHome extends Component {
                       src={this.getImage()}
                       alt="Location Icon"
                     />
-                    {/* <h2
-                      style={{
-                        textDecoration: "underline"
-                      }}
-                      onClick={() => {
-                        console.log("ACTION WILL HAPPEN");
-                      }}
-                    >
-                      KLIKNI TU ZA AKCIJU
-                    </h2> */}
+
                     <h2
                       onClick={() => {
-                        console.log("LOCA", this.state.selectedLocation.name);
+                        this.setLocationDescriptionAndImages();
                       }}
                     >
                       {this.state.selectedLocation.name}
@@ -235,14 +253,18 @@ class PrivateHome extends Component {
             </div>
           ) : null}
         </div>
-        <div className="DescriptionAndImageContainer">
+        <div className="DescriptionAndImageContainer box">
           <div className="DescriptionContainer">
-            <p className="subtitle is-5"> {this.state.descriptionName} </p>
+            <p className="subtitle is-5"> {this.state.name} </p>
             <p className="subtitle is-6">{this.state.description}</p>
           </div>
-          <div className="ImageContainer box">
-            <img src={Split2} alt="" />
-            <img className="BottomImage" src={Split1} alt="" />
+          <div className="ImageContainer box ">
+            <img src={this.state.image1} alt="location image 1" />
+            <img
+              className="BottomImage"
+              src={this.state.image2}
+              alt="location image 2"
+            />
           </div>
         </div>
       </div>
