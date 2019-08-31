@@ -8,8 +8,21 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { setAllCodes, markVisitedLocation } from "../actions/actions";
 import "../PrivateHome.css";
+import {
+  Sibenik1,
+  Sibenik2,
+  Split1,
+  Split2,
+  Zadar1,
+  Zadar2
+} from "../assets/locations/index";
 
 const USER_CODES_URL = "http://localhost:8000/code/user";
+const LOCATIONS = {
+  Sibenik: [Sibenik1, Sibenik2],
+  Split: [Split1, Split2],
+  Zadar: [Zadar1, Zadar2]
+};
 
 class PrivateHome extends Component {
   state = {
@@ -20,7 +33,9 @@ class PrivateHome extends Component {
       longitude: 15.8174061,
       zoom: 6.3,
       selectedLocation: " ",
-      helperMessage: true
+      helperMessage: true,
+      descriptionName: "",
+      description: ""
     }
   };
 
@@ -29,6 +44,7 @@ class PrivateHome extends Component {
   }
 
   componentDidMount() {
+    this.setState({ descriptionName: "Visit breathtaking locations" });
     axios({
       method: "post",
       url: USER_CODES_URL,
@@ -61,11 +77,23 @@ class PrivateHome extends Component {
     }
   };
 
+  getImage = () => {
+    const { name } = this.state.selectedLocation;
+    const images = LOCATIONS[name];
+    const image = images[Math.floor(Math.random() * images.length)];
+    return image;
+  };
+
   render() {
     let { locations } = this.props.state.locationReducer;
-
+    console.log("this.state.description", this.state.descriptionName);
+    // console.log(
+    //   "this.state.selectedLocation.location",
+    //   this.state.selectedLocation
+    // );
     return (
       <div className="PrivateHomeContainer">
+        {/* <img src={Zadar1} alt="" /> */}
         <div className="HelloMessage">
           <div className="notification is-info">
             <strong> Welcome {getUsername()} !!! :) </strong> <br />
@@ -115,9 +143,6 @@ class PrivateHome extends Component {
                 <Popup
                   latitude={this.state.selectedLocation.latitude}
                   longitude={this.state.selectedLocation.longitude}
-                  onClick={() => {
-                    console.log("POPUP");
-                  }}
                   closeOnClick={false}
                   closeButton={true}
                   onClose={() => {
@@ -127,10 +152,10 @@ class PrivateHome extends Component {
                   <div>
                     <img
                       style={{ width: "200px", height: "200px" }}
-                      src={greenMarker}
+                      src={this.getImage()}
                       alt="Location Icon"
                     />
-                    <h2
+                    {/* <h2
                       style={{
                         textDecoration: "underline"
                       }}
@@ -139,8 +164,14 @@ class PrivateHome extends Component {
                       }}
                     >
                       KLIKNI TU ZA AKCIJU
+                    </h2> */}
+                    <h2
+                      onClick={() => {
+                        console.log("LOCA", this.state.selectedLocation.name);
+                      }}
+                    >
+                      {this.state.selectedLocation.name}
                     </h2>
-                    <h2>{this.state.selectedLocation.name}</h2>
                     <p>{this.state.selectedLocation.description}</p>
                   </div>
                 </Popup>
@@ -203,6 +234,16 @@ class PrivateHome extends Component {
               </article>
             </div>
           ) : null}
+        </div>
+        <div className="DescriptionAndImageContainer">
+          <div className="DescriptionContainer">
+            <p className="subtitle is-5"> {this.state.descriptionName} </p>
+            <p className="subtitle is-6">{this.state.description}</p>
+          </div>
+          <div className="ImageContainer box">
+            <img src={Split2} alt="" />
+            <img className="BottomImage" src={Split1} alt="" />
+          </div>
         </div>
       </div>
     );

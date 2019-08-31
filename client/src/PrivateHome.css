@@ -23,20 +23,31 @@
   flex-direction: row;
   /* border: 3px solid black; */
   justify-content: space-between;
+  /* border: 3px solid black; */
 }
 
 .MapContainer {
   /* border: 3px solid black; */
 }
 
-/* .MessageContainer {
+.DescriptionAndImageContainer {
+  /* border: 3px solid black; */
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 3px solid black;
-} */
+  flex-direction: column;
+}
 
-/* .Messages {
+.DescriptionContainer {
+  margin-top: 3rem;
+}
+
+.ImageContainer {
+  margin-top: 3rem;
   display: flex;
   flex-direction: row;
-} */
+  /* border: 3px solid black; */
+}
+
+.BottomImage {
+  width: 400px;
+  height: 400px;
+}
