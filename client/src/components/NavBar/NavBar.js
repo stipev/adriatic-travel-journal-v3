@@ -3,7 +3,6 @@ import PrivateNavComponents from "./PrivateNavComponents";
 import SignIn from "./SignIn";
 import Home from "./Home";
 import { isSignedIn } from "../../components/AuthService";
-//import { connect } from "react-redux";
 
 class NavBar extends React.Component {
   componentDidMount() {}

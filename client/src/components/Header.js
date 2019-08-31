@@ -4,25 +4,17 @@ import { withRouter } from "react-router-dom";
 import { isSignedIn, getUsername } from "./AuthService";
 import anchor from "../assets/anchor.png";
 import journal from "../assets/journal.png";
+import "../Header.css";
 
 class Header extends React.Component {
   onMenuClick = () => {
-    //var x = document.getElementsByClassName("NavBarContainer");
-    let x = document.getElementById("navBar");
-    console.log("x je: ", x);
-    // //let y = document.getElementById("privateNavBar");
-    // //let z = document.getElementById("homeLink");
-    // console.log("x", window.screen.width);
-    // // console.log("aaa", `${window.screen.width}px`);
-    // //console.log("y", y);
-    // //console.log("MENU CLICKED");
-    if (x.style.display === "none") {
-      x.style.display = "flex";
-      x.style.flexDirection = "column";
-      // y.style.marginTop = "2.5rem";
-      // z.style.paddingBottom = `${window.screen.width}px`;
+    let navBar = document.getElementById("navBar");
+
+    if (navBar.style.display === "none") {
+      navBar.style.display = "flex";
+      navBar.style.flexDirection = "column";
     } else {
-      x.style.display = "none";
+      navBar.style.display = "none";
     }
   };
 
@@ -41,7 +33,6 @@ class Header extends React.Component {
           <div className="TitleWithMenuButton">
             <div className="TitleWithIconContainer">
               <h3
-                //className="Title"
                 className="Title title is-3 has-text-info"
                 style={{ margin: "0rem" }}
               >
@@ -55,10 +46,7 @@ class Header extends React.Component {
               </div>
             </div>
             {isSignedIn() ? (
-              <div
-                //style={{ display: "none" }}
-                className="MenuButton "
-              >
+              <div className="MenuButton ">
                 <button onClick={this.onMenuClick} className="button is-link">
                   MENU
                 </button>

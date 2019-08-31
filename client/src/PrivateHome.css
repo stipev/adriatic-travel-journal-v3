@@ -1,0 +1,42 @@
+.HelloMessage {
+  width: 300px;
+}
+
+.PrivateHomeContainer {
+  display: flex;
+  flex-direction: column;
+  /* border: 3px solid violet; */
+}
+
+.HelperMessage {
+  width: 300px;
+}
+
+.HelperMessageMark {
+  width: 30px;
+  height: 30px;
+}
+
+.MapAndHelperMessageContainer {
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: row;
+  /* border: 3px solid black; */
+  justify-content: space-between;
+}
+
+.MapContainer {
+  /* border: 3px solid black; */
+}
+
+/* .MessageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 3px solid black;
+} */
+
+/* .Messages {
+  display: flex;
+  flex-direction: row;
+} */

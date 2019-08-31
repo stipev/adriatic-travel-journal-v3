@@ -19,7 +19,7 @@ function App() {
     <div className="SiteContainer">
       <Router>
         <Header />
-        <div>
+        <div className="CenterContainer">
           <Switch>
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute

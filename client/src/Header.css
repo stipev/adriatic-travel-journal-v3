@@ -1,0 +1,133 @@
+.NavBar {
+  margin-top: 23px;
+}
+
+.Header {
+  border-bottom: 1px solid #209cee;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.TitleAndNavBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.IconAnchor {
+  display: none;
+}
+.IconJournal {
+  display: none;
+}
+
+.IconContainer {
+  padding-top: 13px;
+}
+
+.TitleWithIconContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.Title {
+  padding-top: 12px;
+  display: flex;
+  flex-direction: row;
+}
+
+.TitleTravel {
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+
+.TitleJournal {
+  margin-right: 0.8rem;
+}
+
+.NavBarItem {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 2px;
+}
+
+.NavBarItem:hover {
+  border-bottom: 3px solid #3273dc;
+}
+
+.MenuButton {
+  display: none;
+}
+
+@media only screen and (max-width: 919px) {
+  .NavBar {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Header {
+    border-bottom: 1px solid #209cee;
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+
+  .NavBarItem {
+    min-height: 34px;
+
+    text-align: center;
+  }
+  .MenuButton {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .TitleWithMenuButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .TitleAndNavBarContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .IconJournal {
+    display: block;
+    height: 35px;
+    width: 35px;
+  }
+  .IconAnchor {
+    display: block;
+    height: 35px;
+    width: 35px;
+  }
+
+  .IconContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .TitleTravel {
+    display: none;
+  }
+  .TitleJournal {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 920px) and (max-width: 1027px) {
+  .TitleJournal {
+    display: none;
+  }
+
+  .IconJournal {
+    display: block;
+    height: 35px;
+    width: 35px;
+  }
+}
+
+/* @media only screen and (min-width: 1028px) and (max-width: 1215px) {
+} */

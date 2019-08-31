@@ -4,25 +4,11 @@ import { isSignedIn, signOut } from "../AuthService";
 import { connect } from "react-redux";
 import { _signOut } from "../../actions/actions";
 import Home from "./Home";
-//const profile = "/profile";
 
 class PrivateNavComponents extends React.Component {
-  componentDidMount() {
-    console.log("PRIVATE NAC MOUNTED");
-  }
-
   render() {
-    //console.log("this.props,", this.props.history.location.pathname);
-    //    const { pathname } = this.props.history.location;
-
-    //console.log("ISTINA ILI LAŽ WTF", pathname === profile);
-
     return (
-      <div
-        className="NavBar"
-        id="navBar"
-        //style={{ display: "flex", flexDirection: "row" }}
-      >
+      <div className="NavBar" id="navBar">
         {isSignedIn() ? <Home /> : null}
 
         <NavLink
@@ -30,11 +16,6 @@ class PrivateNavComponents extends React.Component {
           activeStyle={{
             borderBottom: "3px solid #3273dc"
           }}
-          //style={{ margin: 0 }}
-          //activeStyle={{
-          // color: "yellow",
-          //borderBottom: "2px solid yellow"
-          // }}
           to="/profile"
         >
           PROFILE
@@ -44,12 +25,6 @@ class PrivateNavComponents extends React.Component {
           activeStyle={{
             borderBottom: "3px solid #3273dc"
           }}
-          /*
-          style={{ margin: 0, color: "white" }}
-          activeStyle={{
-            color: "yellow",
-            borderBottom: "2px solid yellow"
-          }} */
           to="/reviews"
         >
           REVIEWS
@@ -59,13 +34,6 @@ class PrivateNavComponents extends React.Component {
           activeStyle={{
             borderBottom: "3px solid #3273dc"
           }}
-          /* 
-          style={{ margin: 0, color: "white" }}
-          activeStyle={{
-            color: "yellow",
-            borderBottom: "2px solid yellow"
-          }}
-          */
           to="/prizes"
         >
           PRIZES
@@ -75,12 +43,6 @@ class PrivateNavComponents extends React.Component {
           activeStyle={{
             borderBottom: "3px solid #3273dc"
           }}
-          /*
-          style={{ margin: 0, color: "white" }}
-          activeStyle={{
-            color: "yellow",
-            borderBottom: "2px solid yellow"
-          }}*/
           to="/about"
         >
           ABOUT
@@ -93,13 +55,6 @@ class PrivateNavComponents extends React.Component {
             signOut();
           }}
           to="/signin"
-          /* 
-          style={{
-            margin: 0,
-            color: "white",
-            cursor: "pointer",
-            border: "none"
-          }} */
         >
           SIGN OUT
         </NavLink>
@@ -108,16 +63,9 @@ class PrivateNavComponents extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     state
-//   };
-// };
-
 const mapDispatchToProps = dispatch => {
   return {
     _signOut: () => dispatch(_signOut())
-    //setAllLocations: locations => dispatch(setAllLocations(locations))
   };
 };
 
