@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.NavBar {
+  margin-top: 23px;
+}
+
 .Header {
   border-bottom: 1px solid #209cee;
   padding-left: 4rem;
@@ -15,14 +19,6 @@
   justify-content: space-between;
 }
 
-/* .IconAnchor {
-  height: 35px;
-  width: 35px;
-}
-.IconJournal {
-  height: 35px;
-  width: 35px;
-} */
 .IconAnchor {
   display: none;
 }
@@ -57,23 +53,35 @@
 .NavBarItem {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-bottom: 13px;
+  padding-bottom: 2px;
 }
 
 .NavBarItem:hover {
   border-bottom: 3px solid #3273dc;
 }
 
-.NavBarContainer {
-  display: flex;
-  flex-direction: row;
-  padding-top: 18px;
-}
 .MenuButton {
   display: none;
 }
 
 @media only screen and (max-width: 919px) {
+  .NavBar {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Header {
+    border-bottom: 1px solid #209cee;
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+
+  .NavBarItem {
+    min-height: 34px;
+
+    text-align: center;
+  }
   .MenuButton {
     display: block;
     margin-top: 16px;
@@ -82,33 +90,14 @@
   .TitleWithMenuButton {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .TitleAndNavBarContainer {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
   }
 
-  .NavBarContainer {
-    display: flex;
-    flex-direction: column;
-  }
-  .PrivateNavBar {
-    /* margin-top: 2.5rem; */
-    display: flex;
-    flex-direction: column;
-  }
-  /* .TitleJournal {
-    display: none;
-  }
-
-  .IconJournal {
-    display: block;
-    height: 35px;
-    width: 35px;
-  } */
   .IconJournal {
     display: block;
     height: 35px;
@@ -143,15 +132,7 @@
     height: 35px;
     width: 35px;
   }
-  .NavBarContainer {
-    /* border: 3px solid yellow; */
-    /* display: flex; */
-    /* flex-direction: column; */
-  }
 }
 
-@media only screen and (min-width: 1028px) and (max-width: 1215px) {
-  .NavBarContainer {
-    /* border: 3px solid red; */
-  }
-}
+/* @media only screen and (min-width: 1028px) and (max-width: 1215px) {
+} */

@@ -10,29 +10,19 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div
-      //className="NavBar" //style={{ display: "flex", flexDirection: "row" }}
-      >
-        {isSignedIn() ? (
-          <div
-            className="NavBarContainer"
-            id="navs"
-            //style={{ display: "flex", flexDirection: "row" }}
-          >
-            <Home /> <PrivateNavComponents history={this.props.history} />
-          </div>
-        ) : null}
+      <div>
+        {isSignedIn() ? <PrivateNavComponents /> : null}
 
         {!isSignedIn() &&
         (this.props.history.location.pathname === "/signin" ||
           this.props.history.location.pathname === "/signup") ? (
-          <div className="NavBarContainer">
+          <div className="NavBar">
             <Home />
           </div>
         ) : null}
 
         {!isSignedIn() && this.props.history.location.pathname === "/home" ? (
-          <div className="NavBarContainer">
+          <div className="NavBar">
             <SignIn />
           </div>
         ) : null}

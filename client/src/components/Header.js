@@ -8,13 +8,19 @@ import journal from "../assets/journal.png";
 class Header extends React.Component {
   onMenuClick = () => {
     //var x = document.getElementsByClassName("NavBarContainer");
-    var x = document.getElementById("navs");
-
-    console.log("x", x);
-    //console.log("y", y);
-    //console.log("MENU CLICKED");
+    let x = document.getElementById("navBar");
+    console.log("x je: ", x);
+    // //let y = document.getElementById("privateNavBar");
+    // //let z = document.getElementById("homeLink");
+    // console.log("x", window.screen.width);
+    // // console.log("aaa", `${window.screen.width}px`);
+    // //console.log("y", y);
+    // //console.log("MENU CLICKED");
     if (x.style.display === "none") {
-      x.style.display = "block";
+      x.style.display = "flex";
+      x.style.flexDirection = "column";
+      // y.style.marginTop = "2.5rem";
+      // z.style.paddingBottom = `${window.screen.width}px`;
     } else {
       x.style.display = "none";
     }
@@ -27,6 +33,7 @@ class Header extends React.Component {
       this.props.history.push("/home");
     }
   }
+
   render() {
     return (
       <div className="Header">
@@ -47,14 +54,16 @@ class Header extends React.Component {
                 <img className="IconJournal" src={journal} alt="journal icon" />
               </div>
             </div>
-            <div
-              //style={{ display: "none" }}
-              className="MenuButton "
-            >
-              <button onClick={this.onMenuClick} className="button is-link">
-                MENU
-              </button>
-            </div>
+            {isSignedIn() ? (
+              <div
+                //style={{ display: "none" }}
+                className="MenuButton "
+              >
+                <button onClick={this.onMenuClick} className="button is-link">
+                  MENU
+                </button>
+              </div>
+            ) : null}
           </div>
           <NavBar history={this.props.history} />
         </div>

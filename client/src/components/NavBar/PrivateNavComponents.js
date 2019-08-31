@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { signOut } from "../AuthService";
+import { isSignedIn, signOut } from "../AuthService";
 import { connect } from "react-redux";
 import { _signOut } from "../../actions/actions";
-
+import Home from "./Home";
 //const profile = "/profile";
 
 class PrivateNavComponents extends React.Component {
@@ -19,9 +19,12 @@ class PrivateNavComponents extends React.Component {
 
     return (
       <div
-        className="PrivateNavBar"
+        className="NavBar"
+        id="navBar"
         //style={{ display: "flex", flexDirection: "row" }}
       >
+        {isSignedIn() ? <Home /> : null}
+
         <NavLink
           className="NavBarItem title is-6 has-text-info"
           activeStyle={{
