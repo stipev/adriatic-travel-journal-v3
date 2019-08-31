@@ -152,6 +152,7 @@ class Profile extends React.Component {
       <div
         className="box"
         style={{
+          marginTop: "3rem",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center"
@@ -232,7 +233,7 @@ class Profile extends React.Component {
                   console.log("ACCCC: USER REVIEW:", userReview);
                   return (
                     <div key={uuidv4()} className="box">
-                      <a
+                      <button
                         onClick={() => {
                           this.deleteReview(userReview.code);
                         }}
@@ -242,8 +243,8 @@ class Profile extends React.Component {
                         <span className="icon is-small">
                           <i className="fas fa-times"></i>
                         </span>
-                      </a>
-                      <a
+                      </button>
+                      <button
                         onClick={() => {
                           this.editReview();
                         }}
@@ -253,7 +254,7 @@ class Profile extends React.Component {
                         <span className="icon is-small">
                           <i className="far fa-edit"></i>
                         </span>
-                      </a>
+                      </button>
 
                       <p>code:{userReview.code}</p>
                       <p>review:{userReview.review}</p>

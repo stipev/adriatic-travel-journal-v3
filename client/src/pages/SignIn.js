@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 //import axios from "axios";
-import { signIn, getToken } from "../components/AuthService";
+import { signIn } from "../components/AuthService";
 import { connect } from "react-redux";
 import { setAllLocations } from "../actions/actions";
 import axios from "axios";

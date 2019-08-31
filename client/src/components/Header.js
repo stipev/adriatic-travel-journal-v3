@@ -2,8 +2,24 @@ import React from "react";
 import NavBar from "./NavBar/NavBar";
 import { withRouter } from "react-router-dom";
 import { isSignedIn, getUsername } from "./AuthService";
+import anchor from "../assets/anchor.png";
+import journal from "../assets/journal.png";
 
 class Header extends React.Component {
+  onMenuClick = () => {
+    //var x = document.getElementsByClassName("NavBarContainer");
+    var x = document.getElementById("navs");
+
+    console.log("x", x);
+    //console.log("y", y);
+    //console.log("MENU CLICKED");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  };
+
   componentDidMount() {
     if (this.props.history.location.pathname === "/" && isSignedIn()) {
       this.props.history.push(`/home/${getUsername()}`);
@@ -13,29 +29,35 @@ class Header extends React.Component {
   }
   render() {
     return (
-      <div>
-        <nav className="navbar has-background-info is-fixed-top">
-          <div
-            style={{
-              marginLeft: "3rem"
-            }}
-            className="navbar-brand"
-          >
-            <div className="navbar-item">
-              <h3 className="title is-3" style={{ color: "yellow" }}>
-                ADRIATIC TRAVEL JOURNAL
+      <div className="Header">
+        <div className="TitleAndNavBarContainer">
+          <div className="TitleWithMenuButton">
+            <div className="TitleWithIconContainer">
+              <h3
+                //className="Title"
+                className="Title title is-3 has-text-info"
+                style={{ margin: "0rem" }}
+              >
+                ADRIATIC
+                <div className="TitleTravel">TRAVEL</div>
+                <div className="TitleJournal">JOURNAL</div>
               </h3>
+              <div className="IconContainer">
+                <img className="IconAnchor" src={anchor} alt="anchor icon" />
+                <img className="IconJournal" src={journal} alt="journal icon" />
+              </div>
+            </div>
+            <div
+              //style={{ display: "none" }}
+              className="MenuButton "
+            >
+              <button onClick={this.onMenuClick} className="button is-link">
+                MENU
+              </button>
             </div>
           </div>
-          <div
-            className="navbar-end"
-            style={{
-              marginRight: "3rem"
-            }}
-          >
-            <NavBar history={this.props.history} />
-          </div>
-        </nav>
+          <NavBar history={this.props.history} />
+        </div>
       </div>
     );
   }

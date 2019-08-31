@@ -86,10 +86,10 @@ const setDataToLocalStorage = token => {
   }
 };
 
-export const signOut = history => {
+export const signOut = () => {
   try {
     localStorage.clear();
-    history.push("/signin");
+    //  history.push("/signin");
   } catch (error) {
     console.log("error: ", error);
   }

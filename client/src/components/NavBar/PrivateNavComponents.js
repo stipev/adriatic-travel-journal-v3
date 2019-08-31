@@ -4,73 +4,102 @@ import { signOut } from "../AuthService";
 import { connect } from "react-redux";
 import { _signOut } from "../../actions/actions";
 
+//const profile = "/profile";
+
 class PrivateNavComponents extends React.Component {
+  componentDidMount() {
+    console.log("PRIVATE NAC MOUNTED");
+  }
+
   render() {
+    //console.log("this.props,", this.props.history.location.pathname);
+    //    const { pathname } = this.props.history.location;
+
+    //console.log("ISTINA ILI LAŽ WTF", pathname === profile);
+
     return (
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div
+        className="PrivateNavBar"
+        //style={{ display: "flex", flexDirection: "row" }}
+      >
         <NavLink
-          className="title is-6 navbar-item has-background-info"
-          style={{ margin: 0, color: "white" }}
+          className="NavBarItem title is-6 has-text-info"
           activeStyle={{
-            color: "yellow",
-            borderBottom: "2px solid yellow"
+            borderBottom: "3px solid #3273dc"
           }}
+          //style={{ margin: 0 }}
+          //activeStyle={{
+          // color: "yellow",
+          //borderBottom: "2px solid yellow"
+          // }}
           to="/profile"
         >
           PROFILE
         </NavLink>
-
         <NavLink
-          className="title is-6 navbar-item has-background-info"
+          className="NavBarItem title is-6 has-text-info"
+          activeStyle={{
+            borderBottom: "3px solid #3273dc"
+          }}
+          /*
           style={{ margin: 0, color: "white" }}
           activeStyle={{
             color: "yellow",
             borderBottom: "2px solid yellow"
-          }}
+          }} */
           to="/reviews"
         >
           REVIEWS
         </NavLink>
-
         <NavLink
-          className="title is-6 navbar-item has-background-info"
+          className="NavBarItem title is-6 has-text-info"
+          activeStyle={{
+            borderBottom: "3px solid #3273dc"
+          }}
+          /* 
           style={{ margin: 0, color: "white" }}
           activeStyle={{
             color: "yellow",
             borderBottom: "2px solid yellow"
           }}
+          */
           to="/prizes"
         >
           PRIZES
         </NavLink>
-
         <NavLink
-          className="navbar-item has-background-info title is-6"
+          className=" has-text-info title is-6 NavBarItem"
+          activeStyle={{
+            borderBottom: "3px solid #3273dc"
+          }}
+          /*
           style={{ margin: 0, color: "white" }}
           activeStyle={{
             color: "yellow",
             borderBottom: "2px solid yellow"
-          }}
+          }}*/
           to="/about"
         >
           ABOUT
         </NavLink>
 
-        <button
+        <NavLink
+          className="title is-6 has-text-info NavBarItem"
           onClick={() => {
-            _signOut();
-            signOut(this.props.history);
+            //  _signOut();
+            signOut();
           }}
-          className="title is-6 navbar-item has-background-info"
+          to="/signin"
+          /* 
           style={{
             margin: 0,
             color: "white",
             cursor: "pointer",
             border: "none"
-          }}
+          }} */
         >
           SIGN OUT
-        </button>
+        </NavLink>
       </div>
     );
   }

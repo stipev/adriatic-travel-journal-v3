@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { updatePrizeTimer } from "../actions/actions";
 
 const SECONDS = 1000;
-const MINUTES = SECONDS * 60;
-const HOURS = MINUTES * 60;
-const DAYS = HOURS * 24;
+// const MINUTES = SECONDS * 60;
+// const HOURS = MINUTES * 60;
+// const DAYS = HOURS * 24;
 
 export class Prizes extends React.Component {
   componentDidMount() {

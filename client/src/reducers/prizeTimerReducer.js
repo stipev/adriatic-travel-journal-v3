@@ -1,7 +1,7 @@
 import {
   SET_PRIZE_TIMER,
-  UPDATE_PRIZE_TIMER,
-  SIGN_OUT
+  UPDATE_PRIZE_TIMER
+  //SIGN_OUT
 } from "../actions/types";
 
 const seconds = distance => Math.floor((distance % (1000 * 60)) / 1000);
@@ -11,10 +11,10 @@ const hours = distance =>
   Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 const days = distance => Math.floor(distance / (1000 * 60 * 60 * 24));
 
-const SECONDS = 1000;
-const MINUTES = SECONDS * 60;
-const HOURS = MINUTES * 60;
-const DAYS = HOURS * 24;
+//const SECONDS = 1000;
+//const MINUTES = SECONDS * 60;
+//const HOURS = MINUTES * 60;
+//const DAYS = HOURS * 24;
 
 const initState = {
   days: "",

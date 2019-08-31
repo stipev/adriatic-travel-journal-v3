@@ -3,18 +3,12 @@ import { NavLink } from "react-router-dom";
 
 export default function SignIn() {
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div>
       <NavLink
         to="/signin"
-        onClick={() => {
-          console.log("SIGN IN CLICK");
-        }}
-        className="title is-6 navbar-item has-background-info"
-        style={{
-          margin: 0,
-          color: "white",
-          cursor: "pointer",
-          border: "none"
+        className="NavBarItem title is-6 has-text-info "
+        activeStyle={{
+          borderBottom: "3px solid #3273dc"
         }}
       >
         SIGN IN

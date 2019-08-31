@@ -10,23 +10,16 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "../src/components/Routes";
+import "./App.css";
+
 //import { isLoggedIn } from "./components/AuthService";
 
 function App() {
   return (
-    <div>
+    <div className="SiteContainer">
       <Router>
         <Header />
-        <div
-          style={{
-            margin: "3rem",
-            marginTop: "15rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-            // border: "3px solid green"
-          }}
-        >
+        <div>
           <Switch>
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute
