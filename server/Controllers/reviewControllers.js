@@ -3,6 +3,20 @@ const Op = Sequelize.Op;
 const Code = require("../Models/Code");
 const Review = require("../Models/Review");
 
+const updateReview = (userId, review, rate, code) => {
+  return Review.update(
+    {
+      review,
+      rate
+    },
+    {
+      where: {
+        [Op.and]: [{ code }, { FK_user_review: userId }]
+      }
+    }
+  );
+};
+
 const deleteReview = code => {
   return Promise.all([
     Review.destroy({
@@ -92,4 +106,10 @@ const addReview = (userId, code, review, rate, location, date, username) => {
   });
 };
 
-module.exports = { addReview, getAllReviews, getUserReviews, deleteReview };
+module.exports = {
+  addReview,
+  getAllReviews,
+  getUserReviews,
+  deleteReview,
+  updateReview
+};

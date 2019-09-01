@@ -14,7 +14,8 @@ Location.findAll()
           code,
           activated: false,
           date,
-          location: res[i].dataValues.name
+          location: res[i].dataValues.name,
+          winner: false
         });
       }
     }

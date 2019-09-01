@@ -66,7 +66,6 @@ class PrivateHome extends Component {
   };
 
   componentDidMount() {
-    this.getLastDate("Split");
     this.setRandomData();
     axios({
       method: "post",
@@ -86,18 +85,21 @@ class PrivateHome extends Component {
 
         this.props.setAllCodes(res.data);
         let { userCodes } = this.props.state.codeReducer;
-        if (userCodes.codes.codes.length > 0) {
-          this.visitedPlace(userCodes.codes.codes);
-        }
+
+        this.visitedLocation(userCodes.codes.codes);
       })
 
       .catch(error => console.log("error: ", error));
   }
 
-  visitedPlace = codes => {
-    for (let i = 0; i < codes.length; i++) {
-      this.props.markVisitedLocation(codes[i].location);
-    }
+  visitedLocation = codes => {
+    let allCodesLocations = codes.map(code => {
+      return code.location;
+    });
+
+    let locations = [...new Set(allCodesLocations)];
+
+    this.props.markVisitedLocation(locations);
   };
 
   getImage = () => {
@@ -120,13 +122,11 @@ class PrivateHome extends Component {
     const locationCodes = this.props.state.codeReducer.userCodes.codes.codes.filter(
       code => code.location === location
     );
-    //console.log("locationCodes: ", locationCodes);
 
     const dates = [];
     for (let i = 0; i < locationCodes.length; i++) {
       dates.push(locationCodes[i].date);
     }
-    console.log("dates: ", dates);
     return dates;
   };
 
@@ -197,13 +197,8 @@ class PrivateHome extends Component {
 
   render() {
     let { locations } = this.props.state.locationReducer;
-    // console.log(
-    //   "this.props.state",
-    //   this.props.state.codeReducer.userCodes.codes.codes
-    // );
     return (
       <div className="PrivateHomeContainer">
-        {/* <img src={Zadar1} alt="" /> */}
         <div className="HelloMessage">
           <div className="notification is-info">
             <strong> Welcome {getUsername()} !!! :) </strong> <br />
@@ -268,6 +263,8 @@ class PrivateHome extends Component {
                     />
 
                     <h2
+                      style={{ textDecoration: "underline" }}
+                      className="title is-4"
                       onClick={() => {
                         this.setLocationDescriptionAndImages();
                       }}
@@ -391,7 +388,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setAllCodes: codes => dispatch(setAllCodes(codes)),
-    markVisitedLocation: location => dispatch(markVisitedLocation(location))
+    markVisitedLocation: locations => dispatch(markVisitedLocation(locations))
   };
 };
 

@@ -63,12 +63,11 @@ class Reviews extends React.Component {
   };
 
   render() {
-    //let { reviews } = this.props.reviewReducer;
     let { reviewsToShow } = this.state;
-
+    console.log("ssdasadsfsf", this.props.reviewReducer);
     return (
       <div className="ReviewsPageContainer">
-        <div className="Menu card">
+        <div className="Menu">
           <a className="list-item">Oldest to newest</a>
           <a className="list-item">Newest to oldest</a>
           {this.getLocationsFromReviews().map(location => {
@@ -86,31 +85,37 @@ class Reviews extends React.Component {
           })}
         </div>
         <div className="ReviewsContainer">
-          {reviewsToShow.map(review => {
-            return (
-              <div key={uuidv4()} className="ReviewCard card">
-                <header className="card-header">
-                  <p className="card-header-title">{review.username}</p>
-                  <p className="card-header-icon">
-                    {review.rate}
-                    <i className="fas fa-star icon has-text-info"></i>
-                  </p>
-                </header>
-                <div className="card-content">
-                  <div className="content">{review.review}</div>
-                </div>
-                <footer className="card-footer">
-                  <p className="card-footer-item">
-                    location: {review.location}
-                  </p>
+          {reviewsToShow.length > 0 ? (
+            <div>
+              {reviewsToShow.map(review => {
+                return (
+                  <div key={uuidv4()} className="ReviewCard card">
+                    <header className="card-header">
+                      <p className="card-header-title">{review.username}</p>
+                      <p className="card-header-icon">
+                        {review.rate}
+                        <i className="fas fa-star icon has-text-info"></i>
+                      </p>
+                    </header>
+                    <div className="card-content">
+                      <div className="content">{review.review}</div>
+                    </div>
+                    <footer className="card-footer">
+                      <p className="card-footer-item">
+                        location: {review.location}
+                      </p>
 
-                  <p href="#" className="card-footer-item">
-                    date: {review.date}
-                  </p>
-                </footer>
-              </div>
-            );
-          })}
+                      <p href="#" className="card-footer-item">
+                        date: {review.date}
+                      </p>
+                    </footer>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="box">No reviews yet!</div>
+          )}
         </div>
       </div>
     );

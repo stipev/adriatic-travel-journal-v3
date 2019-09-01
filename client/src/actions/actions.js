@@ -5,6 +5,7 @@ import {
   SET_ALL_REVIEWS,
   SIGN_OUT,
   MARK_VISITED_LOCATION,
+  MARK_UNVISITED_LOCATION,
   SET_USER_REVIEWS,
   SET_PRIZE_TIMER,
   UPDATE_PRIZE_TIMER
@@ -24,8 +25,13 @@ export const addCode = code => {
   return { type: ADD_CODE, code };
 };
 
-export const markVisitedLocation = location => {
-  return { type: MARK_VISITED_LOCATION, location };
+export const markVisitedLocation = locations => {
+  return { type: MARK_VISITED_LOCATION, locations };
+};
+
+//DELETE
+export const markUnvisitedLocation = location => {
+  return { type: MARK_UNVISITED_LOCATION, location };
 };
 
 export const setUserReviews = reviews => {

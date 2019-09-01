@@ -7,10 +7,27 @@ const {
   addReview,
   getAllReviews,
   getUserReviews,
-  deleteReview
+  deleteReview,
+  updateReview
 } = require("../Controllers/reviewControllers");
 
 const { findActiveCodes } = require("../Controllers/codeControllers");
+
+router.patch(
+  "/reviews/update",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //console.log("IMA LI ISTA req.body: ", req.body);
+    const { userId, code, review, rate } = req.body;
+    updateReview(userId, review, rate, code)
+      .then(resp => {
+        resp[0] === 1
+          ? res.json({ message: "Successfully updated review" })
+          : res.json({ message: "Error while updating review" });
+      })
+      .catch(error => console.log("error: ", error));
+  }
+);
 
 router.get(
   "/review/all",

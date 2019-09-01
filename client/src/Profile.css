@@ -1,0 +1,40 @@
+.ProfilePageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  /* border: 3px solid red; */
+}
+
+.ProfileCard {
+  max-width: 310px;
+  margin-bottom: 3rem;
+}
+
+.CodeListContainer {
+  margin-top: 3rem;
+  max-width: 310px;
+}
+.ReviewListContainer {
+  width: 600px;
+}
+
+.ReviewInputForm {
+  width: 250px;
+  /* diskplay: flex; */
+  /* flex-direction: row; */
+}
+
+@media only screen and (max-width: 919px) {
+  .ProfilePageContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+
+    /* border: 3px solid red; */
+  }
+  .ReviewListContainer {
+    margin-top: 3rem;
+    width: 400px;
+  }
+}

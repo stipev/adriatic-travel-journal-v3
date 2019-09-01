@@ -15,18 +15,22 @@
   width: 600px;
 }
 
-.Menu {
+.ReviewInputForm {
+  /* border: 3px solid black; */
+  width: 250px;
 }
 
 @media only screen and (max-width: 919px) {
   .Menu {
-    width: 600px;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 3rem;
+    max-width: 600px;
   }
 
-  .CenterContainer {
+  /* .CenterContainer {
     margin-left: 4rem;
-  }
+  } */
   .ReviewsPageContainer {
     display: flex;
     flex-direction: column;

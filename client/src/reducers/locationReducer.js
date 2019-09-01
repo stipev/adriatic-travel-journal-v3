@@ -1,4 +1,8 @@
-import { SET_ALL_LOCATIONS, MARK_VISITED_LOCATION } from "../actions/types";
+import {
+  SET_ALL_LOCATIONS,
+  MARK_VISITED_LOCATION,
+  MARK_UNVISITED_LOCATION
+} from "../actions/types";
 
 const initState = { locations: [] };
 
@@ -12,20 +16,36 @@ const locationReducer = (state = initState, action) => {
       };
     case MARK_VISITED_LOCATION:
       //console.log("AKCIJAAAAA:", action.location);
-      let locations = state.locations.map(location => {
-        if (action.location === location.name) {
-          location.visited = true;
-        }
 
+      // let locations = state.locations.map(location => {
+      //   if (action.location === location.name) {
+      //     location.visited = true;
+      //   }
+
+      let { locations } = action;
+
+      let locationsBuffer = state.locations.map(location => {
+        location.visited = false;
         return location;
       });
-      //console.log("state ", state);
-      //console.log("LOCATIONN: ", action.location);
 
+      console.log("locations", locations);
+      console.log("locationsBuffer", locationsBuffer);
+
+      locationsBuffer = locationsBuffer.map(location => {
+        for (let i = 0; i < locations.length; i++) {
+          if (locations[i] === location.name) {
+            location.visited = true;
+          }
+        }
+        return location;
+      });
+      console.log("REDUCERRRR:", locationsBuffer);
       return {
         ...state,
-        locations
+        locations: locationsBuffer
       };
+
     default:
       return state;
   }

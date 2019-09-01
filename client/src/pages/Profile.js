@@ -12,13 +12,24 @@ import axios from "axios";
 import uuidv4 from "uuid/v4";
 
 import { connect } from "react-redux";
-import { addCode, setAllCodes, setUserReviews } from "../actions/actions";
+import {
+  addCode,
+  setAllCodes,
+  setUserReviews,
+  markUnvisitedLocation
+} from "../actions/actions";
+import "../Profile.css";
 const URL = "http://localhost:8000/review/add";
+const URL_REVIEWS_UPDATE = "http://localhost:8000/reviews/update";
 const USER_REVIEWS_URL = "http://localhost:8000/review/user";
 const USER_DELETE_URL = "http://localhost:8000/reviews";
 const USER_CODES_URL = "http://localhost:8000/code/user";
 
 class Profile extends React.Component {
+  componentDidMount() {
+    this.getUserReviews();
+  }
+
   getUserReviews = () => {
     axios({
       method: "post",
@@ -32,12 +43,17 @@ class Profile extends React.Component {
       },
       credentials: "same-origin"
     })
-      .then(res => this.props.setUserReviews(res.data.userReviews))
+      .then(res => {
+        console.log("pozvano");
+        this.props.setUserReviews(res.data.userReviews);
+      })
       .catch(error => console.log("error: ", error));
   };
 
   state = {
     message: "Input review data here:",
+    editMode: false,
+    editCode: "code",
     code: "",
     review: "",
     rate: "",
@@ -59,7 +75,6 @@ class Profile extends React.Component {
 
   submitReview = () => {
     let code = this.state.code.trim();
-    console.log("post");
     axios({
       method: "post",
       url: URL,
@@ -74,7 +89,7 @@ class Profile extends React.Component {
         review: this.state.review,
         rate: this.state.rate
       },
-      //
+
       credentials: "same-origin"
     })
       .then(res => {
@@ -98,6 +113,7 @@ class Profile extends React.Component {
 
       credentials: "same-origin"
     }).then(res => {
+      console.log("KODOVI POSTAVLJANJE");
       this.props.setAllCodes(res.data);
       this.getUserReviews();
     });
@@ -118,10 +134,6 @@ class Profile extends React.Component {
     this.setState({ stars, rate: value });
   };
 
-  editReview = () => {
-    console.log("EDIT REVIEW");
-  };
-
   deleteReview = code => {
     axios({
       method: "delete",
@@ -133,44 +145,221 @@ class Profile extends React.Component {
       data: {
         code
       },
-      //
+
+      credentials: "same-origin"
+    }).then(() => {
+      console.log("BEFORE PROMISE CODES:", this.props.state);
+
+      Promise.all([this.getUserReviews(), this.getAllUserCodes()]);
+    });
+  };
+
+  editReview = code => {
+    //console.log("EDIT REVIEW code: ", code);
+    this.setState({
+      message: "Edit review here:",
+      editMode: true,
+      editCode: code
+    });
+  };
+
+  submitReviewEdit = () => {
+    console.log("ETO GA RADI");
+    axios({
+      method: "patch",
+      url: URL_REVIEWS_UPDATE,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      data: {
+        code: this.state.editCode,
+        userId: getId(),
+        review: this.state.review,
+        rate: this.state.rate
+      },
+
       credentials: "same-origin"
     })
       .then(res => {
-        console.log("delete review res: ", res);
-        Promise.all([this.getUserReviews(), this.getAllUserCodes()]);
+        console.log("resss axios", res);
+        this.getUserReviews();
+        this.setState({ editMode: false });
       })
-      .catch(error => console.log("error: ", error));
+      .catch(err => console.log("error", err));
   };
 
-  render() {
-    let { userReviews } = this.props.state.reviewReducer;
-    console.log("REVIEW REDUCER ERR: ", this.props.state.reviewReducer);
-    console.log("USER REVIEWS ERR:", userReviews);
-    console.log("DULJINA USER REVIEWS ERR:", userReviews.length);
+  onCodeListClick = () => {
+    // console.log("CLICKEC");
+    let codeList = document.getElementById("codeList");
+    console.log("codeList display:", codeList.style.display);
+    if (codeList.style.display === "none") {
+      codeList.style.display = "flex";
+      codeList.style.flexDirection = "column";
+    } else {
+      codeList.style.display = "none";
+    }
+  };
+
+  onReviewListClick = () => {
+    //console.log("review");
+    let reviewList = document.getElementById("reviewList");
+    //console.log("codeList display:", codeList.style.display);
+    if (reviewList.style.display === "none") {
+      reviewList.style.display = "flex";
+      reviewList.style.flexDirection = "column";
+    } else {
+      reviewList.style.display = "none";
+    }
+  };
+  profileCard = () => {
     return (
-      <div
-        className="box"
-        style={{
-          marginTop: "3rem",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginRight: "10rem"
-          }}
-        >
-          <div>HELLO {getUsername()} </div>
-          <div>First name: {getFirstName()}</div>
-          <div>Last name: {getLastName()}</div>
-          <div>E-mail: {getEmail()}</div>
+      <div className="ProfileCard">
+        <div className="card">
+          <div className="card-content">
+            <div className="content">
+              <p className="subtitle is-6">Username: {getUsername()}</p>
+              <p className="subtitle is-6">First Name: {getFirstName()}</p>
+              <p className="subtitle is-6">Last Name: {getLastName()}</p>
+              <p className="subtitle is-6">E-mail: {getEmail()}</p>
+            </div>
+          </div>
         </div>
-        <UserCodes />
+      </div>
+    );
+  };
+
+  codeListContainer = () => {
+    let { codes } = this.props.state.codeReducer.userCodes;
+    let userCodes = codes.codes;
+    return (
+      <div className="CodeListContainer">
+        <button onClick={this.onCodeListClick} className="button is-link">
+          CODE LIST
+        </button>
+
+        <div className="card">
+          <div className="card-content">
+            <div className="content">
+              <strong>My codes:</strong>
+              <div
+                style={{ display: "none" }}
+                id="codeList"
+                className="CodeList"
+              >
+                {userCodes.length > 0 ? (
+                  <div>
+                    {userCodes.map(code => {
+                      return (
+                        <p className="box subtitle is-6" key={uuidv4()}>
+                          {code.code}
+                        </p>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="subtitle is-6">No codes yet!</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  reviewListContainer = () => {
+    let { userReviews } = this.props.state.reviewReducer;
+    console.log("userReviews", userReviews);
+    return (
+      <div className="ReviewListContainer">
+        <button onClick={this.onReviewListClick} className="button is-link">
+          REVIEW LIST
+        </button>
+
+        <div className="card">
+          <div className="card-content">
+            <div className="content">
+              <strong>My reviews:</strong>
+              <div
+                style={{ display: "none" }}
+                id="reviewList"
+                className="ReviewList"
+              >
+                {userReviews.length > 0 ? (
+                  <div>
+                    {" "}
+                    {userReviews.map(review => {
+                      return (
+                        <div key={uuidv4()} className="ReviewCard card">
+                          <header className="card-header">
+                            <div className="card-header-title">
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column"
+                                }}
+                              >
+                                <p>{review.code} </p>
+                                <p>
+                                  {review.rate}
+                                  <i className="fas fa-star icon has-text-info"></i>
+                                </p>{" "}
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => {
+                                this.deleteReview(review.code);
+                              }}
+                              className="button is-small is-danger is-outlined"
+                            >
+                              <span>Delete</span>
+                              <span className="icon is-small">
+                                <i className="fas fa-times"></i>
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => {
+                                this.editReview(review.code);
+                              }}
+                              className="button is-small is-danger is-outlined"
+                            >
+                              <span>Edit</span>
+                              <span className="icon is-small">
+                                <i className="far fa-edit"></i>
+                              </span>
+                            </button>
+                          </header>
+                          <div className="card-content">
+                            <div className="content">{review.review}</div>
+                          </div>
+                          <footer className="card-footer">
+                            <p className="card-footer-item">
+                              location: {review.location}
+                            </p>
+
+                            <p href="#" className="card-footer-item">
+                              date: {review.date}
+                            </p>
+                          </footer>
+                        </div>
+                      );
+                    })}{" "}
+                  </div>
+                ) : (
+                  <div className="box"> You don't have reviews yet </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  reviewInputForm = () => {
+    return (
+      <div className="ReviewInputForm">
         <div
           className="box"
           style={{ display: "flex", flexDirection: "column" }}
@@ -181,12 +370,21 @@ class Profile extends React.Component {
             <label className="label">Code :</label>
 
             <div className="control">
-              <input
-                onChange={this.updateCode}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter code here..."
-              />
+              {this.state.editMode ? (
+                <input
+                  //onChange={this.updateCode}
+                  className="input is-info is-small"
+                  type="text"
+                  value={this.state.editCode || "A"}
+                />
+              ) : (
+                <input
+                  onChange={this.updateCode}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter code here..."
+                />
+              )}
             </div>
           </div>
           <div className="field">
@@ -221,54 +419,33 @@ class Profile extends React.Component {
               </div>
             </div>
           </div>
-          <button onClick={this.submitReview} className="button is-info">
-            SUBMIT REVIEW
-          </button>
-          <div className="box">
-            <button onClick={this.getUserReviews}>My reviews</button>
-            {userReviews.length > 0 ? (
-              <div className="box">
-                {" "}
-                {userReviews.map(userReview => {
-                  console.log("ACCCC: USER REVIEW:", userReview);
-                  return (
-                    <div key={uuidv4()} className="box">
-                      <button
-                        onClick={() => {
-                          this.deleteReview(userReview.code);
-                        }}
-                        className="button is-danger is-outlined"
-                      >
-                        <span>Delete</span>
-                        <span className="icon is-small">
-                          <i className="fas fa-times"></i>
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => {
-                          this.editReview();
-                        }}
-                        className="button is-danger is-outlined"
-                      >
-                        <span>Edit</span>
-                        <span className="icon is-small">
-                          <i className="far fa-edit"></i>
-                        </span>
-                      </button>
-
-                      <p>code:{userReview.code}</p>
-                      <p>review:{userReview.review}</p>
-                      <p>rate:{userReview.rate}</p>
-                      <p>date:{userReview.date}</p>
-                      <p>location:{userReview.location}</p>
-                    </div>
-                  );
-                })}{" "}
-              </div>
+          <button
+            onClick={
+              this.state.editMode ? this.submitReviewEdit : this.submitReview
+            }
+            className="button is-info"
+          >
+            {this.state.editMode ? (
+              <div>EDIT REVIEW</div>
             ) : (
-              <div className="box"> You don't have reviews yet </div>
+              <div>SUBMIT REVIEW</div>
             )}
-          </div>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  render() {
+    return (
+      <div className="ProfilePageContainer">
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {this.profileCard()}
+          {this.reviewInputForm()}
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {this.reviewListContainer()}
+          {this.codeListContainer()}
         </div>
       </div>
     );
@@ -285,7 +462,8 @@ const mapDispatchToProps = dispatch => {
   return {
     addCode: code => dispatch(addCode(code)),
     setAllCodes: codes => dispatch(setAllCodes(codes)),
-    setUserReviews: reviews => dispatch(setUserReviews(reviews))
+    setUserReviews: reviews => dispatch(setUserReviews(reviews)),
+    markUnvisitedLocation: location => dispatch(markUnvisitedLocation(location))
   };
 };
 
