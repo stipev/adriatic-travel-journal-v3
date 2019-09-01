@@ -66,6 +66,7 @@ class PrivateHome extends Component {
   };
 
   componentDidMount() {
+    this.getLastDate("Split");
     this.setRandomData();
     axios({
       method: "post",
@@ -115,9 +116,91 @@ class PrivateHome extends Component {
     this.setState({ name, description, image1, image2 });
   };
 
+  getDates = location => {
+    const locationCodes = this.props.state.codeReducer.userCodes.codes.codes.filter(
+      code => code.location === location
+    );
+    //console.log("locationCodes: ", locationCodes);
+
+    const dates = [];
+    for (let i = 0; i < locationCodes.length; i++) {
+      dates.push(locationCodes[i].date);
+    }
+    console.log("dates: ", dates);
+    return dates;
+  };
+
+  getNumberOfVisits = location => {
+    const locationCodes = this.props.state.codeReducer.userCodes.codes.codes.filter(
+      code => code.location === location
+    );
+    return locationCodes.length;
+  };
+
+  getLastDate = location => {
+    const locationCodes = this.props.state.codeReducer.userCodes.codes.codes.filter(
+      code => code.location === location
+    );
+
+    const dates = [];
+    for (let i = 0; i < locationCodes.length; i++) {
+      dates.push(locationCodes[i].date);
+    }
+
+    let latestDate = dates[0].split("-");
+    let latestYear = parseInt(latestDate[0]);
+    let latestMonth = parseInt(latestDate[1]);
+    let latestDay = parseInt(latestDate[2]);
+    let sortedByYear = [];
+    for (let i = 0; i < dates.length; i++) {
+      let date = dates[i].split("-");
+      let year = parseInt(date[0]);
+
+      if (latestYear <= year) {
+        latestYear = year;
+      }
+    }
+    for (let i = 0; i < dates.length; i++) {
+      let date = dates[i].split("-");
+      let year = parseInt(date[0]);
+      if (year === latestYear) {
+        sortedByYear.push(dates[i]);
+      }
+    }
+    let sortedByMonth = [];
+    for (let i = 0; i < sortedByYear.length; i++) {
+      let date = sortedByYear[i].split("-");
+      let month = parseInt(date[1]);
+      if (latestMonth <= month) {
+        latestMonth = month;
+      }
+    }
+
+    for (let i = 0; i < sortedByYear.length; i++) {
+      let date = sortedByYear[i].split("-");
+      let month = parseInt(date[1]);
+      if (month === latestMonth) {
+        sortedByMonth.push(sortedByYear[i]);
+      }
+    }
+
+    for (let i = 0; i < sortedByMonth.length; i++) {
+      let date = sortedByMonth[i].split("-");
+      let day = parseInt(date[2]);
+      if (latestDay <= day) {
+        latestDay = day;
+        latestDate = sortedByMonth[i];
+      }
+    }
+    return latestDate;
+  };
+
   render() {
     let { locations } = this.props.state.locationReducer;
-
+    // console.log(
+    //   "this.props.state",
+    //   this.props.state.codeReducer.userCodes.codes.codes
+    // );
     return (
       <div className="PrivateHomeContainer">
         {/* <img src={Zadar1} alt="" /> */}
@@ -176,9 +259,10 @@ class PrivateHome extends Component {
                     this.setSelectedLocation(null);
                   }}
                 >
-                  <div>
+                  <div className="box">
                     <img
-                      style={{ width: "200px", height: "200px" }}
+                      className="PopUpImage"
+                      //style={{ width: "200px", height: "200px" }}
                       src={this.getImage()}
                       alt="Location Icon"
                     />
@@ -191,6 +275,32 @@ class PrivateHome extends Component {
                       {this.state.selectedLocation.name}
                     </h2>
                     <p>{this.state.selectedLocation.description}</p>
+                    <div>
+                      LAST VISIT:{" "}
+                      {this.state.selectedLocation.visited ? (
+                        <p>
+                          {" "}
+                          {this.getLastDate(
+                            this.state.selectedLocation.name
+                          )}{" "}
+                        </p>
+                      ) : (
+                        <p>Location not visited yet</p>
+                      )}
+                    </div>
+                    <div>
+                      NUMBER OF VISITS:
+                      {this.state.selectedLocation.visited ? (
+                        <p>
+                          {" "}
+                          {this.getNumberOfVisits(
+                            this.state.selectedLocation.name
+                          )}{" "}
+                        </p>
+                      ) : (
+                        <p>0</p>
+                      )}
+                    </div>
                   </div>
                 </Popup>
               ) : null}
