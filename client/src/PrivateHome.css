@@ -11,11 +11,10 @@
 .HelperMessage {
   width: 300px;
 }
-L .HelperMessageMark {
+.HelperMessageMark {
   width: 30px;
   height: 30px;
 }
-
 .MapAndHelperMessageContainer {
   margin-top: 6rem;
   display: flex;
@@ -59,7 +58,33 @@ L .HelperMessageMark {
 }
 
 @media only screen and (max-width: 919px) {
+  .MapAndHelperMessageContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .HelperMessage {
+    margin-bottom: 3rem;
+  }
 }
 
 @media only screen and (min-width: 920px) and (max-width: 1027px) {
+  .MapAndHelperMessageContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .MapContainer {
+    width: 540px;
+  }
+
+  .DescriptionAndImageContainer {
+    /* border: 3px solid black; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    margin-top: 3rem;
+  }
+
+  .HelperMessage {
+    margin-bottom: 3rem;
+  }
 }

@@ -8,3 +8,15 @@
   margin-top: 10rem;
   margin-bottom: 10rem;
 }
+
+@media only screen and (max-width: 919px) {
+  .CenterContainer {
+    margin-left: 4rem;
+  }
+}
+
+@media only screen and (min-width: 920px) and (max-width: 1027px) {
+  .CenterContainer {
+    margin-left: 4rem;
+  }
+}
