@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-//import axios from "axios";
 import { signIn } from "../components/AuthService";
 import { connect } from "react-redux";
 import { setAllLocations } from "../actions/actions";
 import axios from "axios";
+import "../SignIn.css";
 const LOCATIONS_URL = "http://localhost:8000/location/all";
 
 class SignIn extends React.Component {
@@ -46,51 +46,35 @@ class SignIn extends React.Component {
   render() {
     //console.log("this.state: ", this.state);
     return (
-      <div
-        style={{
-          marginTop: "100px",
-          display: "flex",
-          flexDirection: "column"
-          //border: "3px solid black"
-        }}
-      >
-        <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
+      <div className="SignInContainer">
+        <div className="Message">
+          <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
+        </div>
         <div
-          style={
-            {
-              //marginTop: "100px",
-              //            border: "3px solid red"
-            }
-          }
+          //className="SignInContainer"
+          style={{ display: "flex", justifyContent: "center" }}
         >
-          <div
-            className="box"
-            style={
-              {
-                //maxWidth: "300px"
-              }
-            }
-          >
-            <div className="field">
+          <div className="box">
+            <div className=" field">
               <label className="label">Username/E-mail:</label>
 
               <div className="control">
                 <input
                   onChange={this.updateUsernameEmail}
-                  className="input is-info is-small"
+                  className=" input is-info is-small"
                   type="text"
                   placeholder="Enter username/email here..."
                 />
               </div>
             </div>
 
-            <div className="field">
+            <div className=" field">
               <label className="label">Password:</label>
 
               <div className="control">
                 <input
                   onChange={this.updatePassword}
-                  className="input is-info is-small"
+                  className=" input is-info is-small"
                   type="text"
                   placeholder="Enter password here..."
                 />

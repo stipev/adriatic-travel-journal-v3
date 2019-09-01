@@ -1,0 +1,29 @@
+.SignInContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: -6rem;
+}
+
+.Message {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.SignInInput {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+}
+
+@media only screen and (max-width: 919px) {
+  .SignInContainer {
+    margin-left: 0rem;
+  }
+}
+
+@media only screen and (min-width: 920px) and (max-width: 1027px) {
+  .SignInContainer {
+    margin-left: 0rem;
+  }
+}
