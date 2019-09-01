@@ -1,4 +1,4 @@
-.SignInContainer {
+.SignUpContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,13 +11,13 @@
 }
 
 @media only screen and (max-width: 919px) {
-  .SignInContainer {
+  .SignUpContainer {
     margin-left: 0rem;
   }
 }
 
 @media only screen and (min-width: 920px) and (max-width: 1027px) {
-  .SignInContainer {
+  .SignUpContainer {
     margin-left: 0rem;
   }
 }

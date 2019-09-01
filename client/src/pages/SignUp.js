@@ -87,113 +87,118 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          marginTop: "50px",
-          width: "300px"
-        }}
-      >
-        <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
+      <div className="SignUpContainer">
+        <div className="Message">
+          <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
+        </div>
 
-        <div className="box">
-          <div className="field">
-            <label className="label ">First Name:</label>
+        <div
+          style={{
+            //  border: "3px solid red",
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          <div style={{ width: "235.78px" }} className="box">
+            <div className="field">
+              <label className="label ">First Name:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updateFirstName}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter your first name here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updateFirstName}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter your first name here..."
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="field">
-            <label className="label">Last Name:</label>
+            <div className="field">
+              <label className="label">Last Name:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updateLastName}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter your last name here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updateLastName}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter your last name here..."
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="field">
-            <label className="label">Username:</label>
+            <div className="field">
+              <label className="label">Username:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updateUsername}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter username here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updateUsername}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter username here..."
+                />
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label className="label">E-mail:</label>
+            <div className="field">
+              <label className="label">E-mail:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updateEmail}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter your e-mail here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updateEmail}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter your e-mail here..."
+                />
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label className="label">Password:</label>
+            <div className="field">
+              <label className="label">Password:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updatePassword}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Enter password here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updatePassword}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Enter password here..."
+                />
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label className="label">Retype Password:</label>
+            <div className="field">
+              <label className="label">Retype Password:</label>
 
-            <div className="control">
-              <input
-                onChange={this.updateRetypedPassword}
-                className="input is-info is-small"
-                type="text"
-                placeholder="Retype password here..."
-              />
+              <div className="control">
+                <input
+                  onChange={this.updateRetypedPassword}
+                  className="input is-info is-small"
+                  type="text"
+                  placeholder="Retype password here..."
+                />
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center"
-            }}
-          >
-            <button onClick={this.signUp} className="button is-info">
-              SIGN UP
-            </button>
-          </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
+              <button onClick={this.signUp} className="button is-info">
+                SIGN UP
+              </button>
+            </div>
 
-          <NavLink
-            style={{
-              textDecoration: "underline",
-              color: "#209cee",
-              //border: "3px solid green",
-              display: "flex",
-              justifyContent: "center"
-              //marginBottom: "300px"
-            }}
-            to="/signin"
-          >
-            Already have an account!?
-          </NavLink>
+            <NavLink
+              style={{
+                textDecoration: "underline",
+                color: "#209cee",
+                //border: "3px solid green",
+                display: "flex",
+                justifyContent: "center"
+                //marginBottom: "300px"
+              }}
+              to="/signin"
+            >
+              Already have an account!?
+            </NavLink>
+          </div>
         </div>
       </div>
     );
