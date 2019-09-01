@@ -99,7 +99,12 @@ class SignUp extends React.Component {
             justifyContent: "center"
           }}
         >
-          <div style={{ width: "235.78px" }} className="box">
+          <div
+            style={{
+              width: "235.78px"
+            }}
+            className="box"
+          >
             <div className="field">
               <label className="label ">First Name:</label>
 

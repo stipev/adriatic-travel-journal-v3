@@ -1,0 +1,40 @@
+.ReviewsPageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ReviewsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ReviewCard {
+  margin-bottom: 3rem;
+  width: 600px;
+}
+
+.Menu {
+}
+
+@media only screen and (max-width: 919px) {
+  .Menu {
+    width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  .CenterContainer {
+    margin-left: 4rem;
+  }
+  .ReviewsPageContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+/*
+
+@media only screen and (min-width: 920px) and (max-width: 1027px) {
+ 
+  }
+} */
