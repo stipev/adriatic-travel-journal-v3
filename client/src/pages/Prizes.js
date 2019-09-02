@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updatePrizeTimer, timerIsDone } from "../actions/actions";
+import { updatePrizeTimer, timerIsDone, setWinners } from "../actions/actions";
 import axios from "axios";
 import { getToken, getId } from "../components/AuthService";
 import uuidv4 from "uuid/v4";
@@ -9,6 +9,7 @@ import "../Prizes.css";
 
 const PRIZE_CODES_URL = "http://localhost:8000/codes/active";
 const USERS_URL = "http://localhost:8000/users/";
+const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
 
 const SECONDS = 1000;
 const prizeImages = [Prize1, Prize2, Prize3];
@@ -35,19 +36,46 @@ const prizes = [
 
 export class Prizes extends React.Component {
   componentDidMount() {
+    console.log("CDM");
     const { timerIsOn } = this.props.prizeTimerReducer;
     if (timerIsOn) {
       this.prizeTimer();
+    } else {
+      this.findWinnersInDatabase();
     }
   }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  timer;
 
   state = {
     winners: []
   };
 
-  getPrizeCodes = () => {
+  findWinnersInDatabase = () => {
     axios({
       method: "get",
+      url: WINNER_CODES_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+
+      credentials: "same-origin"
+    })
+      .then(res => {
+        this.props.setWinners(res.data.winners);
+
+        // console.log("res", res.data.winners);
+      })
+      .catch();
+  };
+
+  getPrizeCodes = () => {
+    axios({
+      method: "patch",
       url: PRIZE_CODES_URL,
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +102,7 @@ export class Prizes extends React.Component {
       this.getWinner(codes[2].userId)
     ]).then(res => {
       for (let i = 0; i < res.length; i++) {
-        res[i].data.winner.place = i + 1;
+        // res[i].data.winner.place = i + 1;
         winners.push(res[i].data.winner);
         winners[i].code = codes[i].code;
       }
@@ -105,11 +133,11 @@ export class Prizes extends React.Component {
       let distance = prizeTimer - now;
       this.props.updatePrizeTimer(distance);
       if (distance < 0) {
-        clearInterval(timer);
+        clearInterval(this.timer);
         this.getPrizeCodes();
       }
     };
-    let timer = setInterval(doEachInterval, SECONDS);
+    this.timer = setInterval(doEachInterval, SECONDS);
   };
 
   render() {
@@ -191,7 +219,7 @@ export class Prizes extends React.Component {
                         />
                         <strong>{prize.prizeName} </strong>
                         {prize.prizeDescription}
-                        <p>place : {winners[prize.imageIndex].place}</p>
+                        {/* <p>place : {winners[prize.imageIndex].place}</p> */}
                         <p>username: {winners[prize.imageIndex].username}</p>
                         <p>first name: {winners[prize.imageIndex].firstName}</p>
                         <p>last name: {winners[prize.imageIndex].lastName}</p>
@@ -217,7 +245,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updatePrizeTimer: distance => dispatch(updatePrizeTimer(distance)),
-    timerIsDone: winners => dispatch(timerIsDone(winners))
+    timerIsDone: winners => dispatch(timerIsDone(winners)),
+    setWinners: winners => dispatch(setWinners(winners))
   };
 };
 

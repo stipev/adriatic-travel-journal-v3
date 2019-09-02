@@ -9,11 +9,15 @@ import {
   SET_USER_REVIEWS,
   SET_PRIZE_TIMER,
   UPDATE_PRIZE_TIMER,
-  TIMER_IS_DONE
+  TIMER_IS_DONE,
+  SET_WINNERS
 } from "./types";
 
 export const timerIsDone = winners => {
   return { type: TIMER_IS_DONE, winners };
+};
+export const setWinners = winners => {
+  return { type: SET_WINNERS, winners };
 };
 export const setAllLocations = locations => {
   return { type: SET_ALL_LOCATIONS, locations };

@@ -1,7 +1,8 @@
 import {
   SET_PRIZE_TIMER,
   UPDATE_PRIZE_TIMER,
-  TIMER_IS_DONE
+  TIMER_IS_DONE,
+  SET_WINNERS
   //SIGN_OUT
 } from "../actions/types";
 
@@ -24,6 +25,10 @@ const initState = {
 
 const prizeTimerReducer = (state = initState, action) => {
   switch (action.type) {
+    case SET_WINNERS:
+      return {
+        winners: action.winners
+      };
     case TIMER_IS_DONE:
       return {
         ...state,

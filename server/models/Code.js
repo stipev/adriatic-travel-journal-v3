@@ -25,6 +25,9 @@ const Code = db.define("code", {
   },
   winner: {
     type: Sequelize.BOOLEAN
+  },
+  place: {
+    type: Sequelize.INTEGER
   }
 });
 

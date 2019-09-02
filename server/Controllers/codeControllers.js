@@ -1,6 +1,41 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Code = require("../Models/Code");
+const { getWinner } = require("./userControllers");
+
+const getWinnerCodes = () => {
+  return new Promise((resolve, reject) => {
+    Code.findAll({
+      attributes: [["FK_userId", "userId"], "code", "place"],
+      where: {
+        winner: true
+      }
+    }).then(codesData => {
+      let winners = [];
+      for (let i = 0; i < codesData.length; i++) {
+        winners.push(codesData[i].dataValues);
+      }
+      console.log("BEFORE winners", winners);
+      Promise.all([
+        getWinner(winners[0].userId),
+        getWinner(winners[1].userId),
+        getWinner(winners[2].userId)
+      ])
+        .then(winnersData => {
+          for (let i = 0; i < winnersData.length; i++) {
+            winners[i].username = winnersData[i].username;
+            winners[i].firstName = winnersData[i].firstName;
+            winners[i].lastName = winnersData[i].lastName;
+          }
+          //console.log("AFTER winners",
+          resolve(winners);
+        })
+        .catch(error => reject(error));
+
+      //console.log("WWcodes:", codes.length);
+    });
+  });
+};
 
 const getPrizeWinners = () => {
   return Code.findAll({
@@ -12,6 +47,20 @@ const getPrizeWinners = () => {
       activated: true
     }
   });
+};
+
+const setWinnerCode = (place, code) => {
+  return Code.update(
+    {
+      winner: true,
+      place
+    },
+    {
+      where: {
+        code: code
+      }
+    }
+  );
 };
 
 const findActiveCodes = () => {
@@ -51,41 +100,12 @@ const findAllUserCodes = userId => {
       .catch(error => reject(error));
   });
 };
-// const findAllUserCodes = userId => {
-//   return new Promise((resolve, reject) => {
-//     let codesId = [];
-//     let userCodes = [];
-
-//     UserCode.findAll({
-//       attributes: ["FK_code_usercode"],
-//       where: {
-//         FK_user_usercode: userId
-//       }
-//     })
-//       .then(usercode => {
-//         for (let i = 0; i < usercode.length; i++) {
-//           codesId.push(usercode[i].dataValues.FK_code_usercode);
-//         }
-//         Code.findAll({
-//           where: {
-//             id: {
-//               [Op.in]: codesId
-//             }
-//           }
-//         }).then(code => {
-//           for (let i = 0; i < code.length; i++) {
-//             userCodes.push(code[i].dataValues.code);
-//           }
-//           resolve({ codes: userCodes });
-//         });
-//       })
-//       .catch(error => reject(error));
-//   });
-// };
 
 module.exports = {
   findAllUserCodes,
   findActiveCodes,
   getDateAndLocation,
-  getPrizeWinners
+  getPrizeWinners,
+  setWinnerCode,
+  getWinnerCodes
 };

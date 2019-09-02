@@ -46,8 +46,13 @@ class SignUp extends React.Component {
       credentials: "same-origin"
     })
       .then(prizeTimerData => {
-        console.log("prizeTimerData", prizeTimerData.data.prizeTimer);
-        this.props.setPrizeTimer(prizeTimerData.data.prizeTimer);
+        let dateNow = new Date(Date.now()).getTime();
+        //console.log("exp date: ", expirationDate);
+        if (dateNow < parseInt(prizeTimerData.data.expirationDate)) {
+          this.props.setPrizeTimer(
+            parseInt(prizeTimerData.data.expirationDate)
+          );
+        }
       })
       .catch();
   };

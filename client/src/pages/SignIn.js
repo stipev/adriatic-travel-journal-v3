@@ -43,11 +43,18 @@ class SignIn extends React.Component {
       credentials: "same-origin"
     })
       .then(prizeTimerData => {
-        console.log(
-          "prizeTimerData",
-          parseInt(prizeTimerData.data.expirationDate)
-        );
-        this.props.setPrizeTimer(parseInt(prizeTimerData.data.expirationDate));
+        // console.log(
+        //   "prizeTimerData",
+        //   parseInt(prizeTimerData.data.expirationDate)
+        // );
+
+        let dateNow = new Date(Date.now()).getTime();
+        //console.log("exp date: ", expirationDate);
+        if (dateNow < parseInt(prizeTimerData.data.expirationDate)) {
+          this.props.setPrizeTimer(
+            parseInt(prizeTimerData.data.expirationDate)
+          );
+        }
       })
       .catch();
   };
