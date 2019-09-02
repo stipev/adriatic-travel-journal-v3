@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { signUp } from "../components/AuthService";
 import { setAllLocations, setPrizeTimer } from "../actions/actions";
 const LOCATIONS_URL = "http://localhost:8000/location/all";
-const PRIZE_TIMER_URL = "http://localhost:8000/prizeTimer";
+const PRIZE_TIMER_URL = "http://localhost:8000/timers";
 
 class SignUp extends React.Component {
   state = {

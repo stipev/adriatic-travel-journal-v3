@@ -6,7 +6,7 @@ import { setAllLocations, setPrizeTimer } from "../actions/actions";
 import axios from "axios";
 import "../SignIn.css";
 const LOCATIONS_URL = "http://localhost:8000/location/all";
-const PRIZE_TIMER_URL = "http://localhost:8000/prizeTimer";
+const PRIZE_TIMER_URL = "http://localhost:8000/timers";
 
 class SignIn extends React.Component {
   state = {
@@ -43,8 +43,11 @@ class SignIn extends React.Component {
       credentials: "same-origin"
     })
       .then(prizeTimerData => {
-        console.log("prizeTimerData", prizeTimerData.data.prizeTimer);
-        this.props.setPrizeTimer(prizeTimerData.data.prizeTimer);
+        console.log(
+          "prizeTimerData",
+          parseInt(prizeTimerData.data.expirationDate)
+        );
+        this.props.setPrizeTimer(parseInt(prizeTimerData.data.expirationDate));
       })
       .catch();
   };
