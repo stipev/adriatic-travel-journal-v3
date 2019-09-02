@@ -2,7 +2,16 @@
 
 ## Running project
 
-### 1. Run in git bash command: git clone https://github.com/stipev/adriatic-travel-journal-v2.git
+###Run in git bash command:
+
+1.  git clone https://github.com/stipev/adriatic-travel-journal-v2.git
+2.  cd adriatic-travel-journal-v2/
+3.  cd client/
+4.  npm install
+5.  cd server/
+6.  npm install
+
+###Configure database
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
