@@ -104,7 +104,7 @@ class SignIn extends React.Component {
                 <input
                   onChange={this.updatePassword}
                   className=" input is-info is-small"
-                  type="text"
+                  type="password"
                   placeholder="Enter password here..."
                 />
               </div>

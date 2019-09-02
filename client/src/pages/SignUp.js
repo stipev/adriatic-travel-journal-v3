@@ -167,7 +167,7 @@ class SignUp extends React.Component {
                 <input
                   onChange={this.updatePassword}
                   className="input is-info is-small"
-                  type="text"
+                  type="password"
                   placeholder="Enter password here..."
                 />
               </div>
@@ -179,7 +179,7 @@ class SignUp extends React.Component {
                 <input
                   onChange={this.updateRetypedPassword}
                   className="input is-info is-small"
-                  type="text"
+                  type="password"
                   placeholder="Retype password here..."
                 />
               </div>

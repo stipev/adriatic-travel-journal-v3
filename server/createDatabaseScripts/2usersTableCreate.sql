@@ -4,7 +4,7 @@
   `lastName` VARCHAR(45) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(60) NOT NULL,
   `createdAt` VARCHAR(45) NULL,
   `updatedAt` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));

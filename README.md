@@ -2,7 +2,7 @@
 
 ## Running project
 
-### Run in git bash command:
+### 1.Run in git bash command:
 
 1.  git clone https://github.com/stipev/adriatic-travel-journal-v2.git
 2.  cd adriatic-travel-journal-v2/
@@ -11,14 +11,18 @@
 5.  cd server/
 6.  npm install
 
-### Create database
+### 2.Create database
 
 Run SQL scripts on MySQL Workbench
 
 Scripts location:
 adriatic-travel-journal-v2/server/createDatabaseScripts
 
-### Configure database
+### 3.Configure database
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+cd server/ npm run configure
+
+### 4. Start server
+
+cd client/ npm start
+cd server/ npm start

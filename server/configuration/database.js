@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 // Option 1: Passing parameters separately
-const sequelize = new Sequelize("adriatictraveljournaldb", "root", "root", {
+const sequelize = new Sequelize("atjdb", "root", "root", {
   host: "localhost",
   dialect: "mysql",
   pool: {
