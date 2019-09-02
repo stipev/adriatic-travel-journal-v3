@@ -59,16 +59,18 @@ class SignUp extends React.Component {
 
   signUp = () => {
     const password = this.state.password.trim();
-    signUp(
-      this.state.firstName,
-      this.state.lastName,
-      this.state.username,
-      this.state.email,
-      password,
-      this.props.history
-    )
-      .then(res => this.setState({ message: res }))
-      .catch(err => console.log("error: ", err));
+    if (this.samePasswords()) {
+      signUp(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.username,
+        this.state.email,
+        password,
+        this.props.history
+      )
+        .then(res => this.setState({ message: res }))
+        .catch(err => console.log("error: ", err));
+    }
   };
 
   updateFirstName = event => {
@@ -88,6 +90,15 @@ class SignUp extends React.Component {
   };
   updateRetypedPassword = event => {
     this.setState({ retypedPassword: event.target.value });
+  };
+
+  samePasswords = () => {
+    if (this.state.password === this.state.retypedPassword) {
+      return true;
+    } else {
+      this.setState({ message: "Passwords aren't matched" });
+    }
+    return false;
   };
 
   render() {
