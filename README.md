@@ -1,6 +1,8 @@
-# Extension engine summercamp project
+#Summercamp extension engine project
 
 ## Running project
+
+### 1. Run in git bash command: git clone https://github.com/stipev/adriatic-travel-journal-v2.git
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
