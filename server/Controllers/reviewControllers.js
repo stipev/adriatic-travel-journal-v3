@@ -51,7 +51,6 @@ const getUserReviews = userId => {
         for (let i = 0; i < reviews.length; i++) {
           userReviews.push(reviews[i].dataValues);
         }
-        //console.log("user reviews: ", userReviews);
         resolve(userReviews);
       })
       .catch(error => reject(error));

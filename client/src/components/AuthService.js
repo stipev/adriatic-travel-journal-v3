@@ -163,22 +163,3 @@ export const isSignedIn = () => {
     return false;
   }
 };
-
-// export const isUserAuthenticated = () => {
-//   let token = localStorage.getItem("token", token);
-//   let username = localStorage.getItem("username", username);
-//   let _username = getUsernameFromToken(token);
-//   if (username === _username) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
-
-// export const redirectToError = history => {
-//   history.push("/404");
-// };
-
-// export const pathLog = path => {
-//   console.log("path: ", path);
-// };

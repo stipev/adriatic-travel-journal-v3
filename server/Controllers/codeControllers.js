@@ -15,7 +15,6 @@ const getWinnerCodes = () => {
       for (let i = 0; i < codesData.length; i++) {
         winners.push(codesData[i].dataValues);
       }
-      console.log("BEFORE winners", winners);
       Promise.all([
         getWinner(winners[0].userId),
         getWinner(winners[1].userId),
@@ -27,12 +26,9 @@ const getWinnerCodes = () => {
             winners[i].firstName = winnersData[i].firstName;
             winners[i].lastName = winnersData[i].lastName;
           }
-          //console.log("AFTER winners",
           resolve(winners);
         })
         .catch(error => reject(error));
-
-      //console.log("WWcodes:", codes.length);
     });
   });
 };

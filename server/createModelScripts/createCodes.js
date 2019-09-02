@@ -4,7 +4,6 @@ const Code = require("../Models/Code");
 Location.findAll()
   .then(res => {
     for (let i = 0; i < res.length; i++) {
-      //console.log("resss", res[i].dataValues.sign);
       for (let j = 1; j <= 31; j++) {
         date = new Date(`August ${j}, 2018 15:00:00`).toLocaleDateString();
 

@@ -18,8 +18,6 @@ router.post(
     const { userId } = req.body;
     findAllUserCodes(userId)
       .then(codes => {
-        //console.log("ŠTI IDE ", userCodes);
-        //const { codes } = userCodes;
         res.json({ codes });
       })
       .catch(error => console.log("error: ", error));
@@ -54,10 +52,8 @@ router.get(
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
-    console.log("nadji winnere");
     getWinnerCodes().then(winners => {
       res.json({ winners });
-      //  console.log("WIIINNNNNERRRS", winners);
     });
   }
 );
