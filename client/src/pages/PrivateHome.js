@@ -6,7 +6,11 @@ import { getUsername, getToken, getId } from "../components/AuthService";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { setAllCodes, markVisitedLocation } from "../actions/actions";
+import {
+  setAllCodes,
+  markVisitedLocation,
+  setWinners
+} from "../actions/actions";
 import "../PrivateHome.css";
 import {
   Sibenik1,
@@ -18,6 +22,8 @@ import {
 } from "../assets/locations/index";
 
 const USER_CODES_URL = "http://localhost:8000/code/user";
+const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
+
 const LOCATIONS = {
   Sibenik: [Sibenik1, Sibenik2],
   Split: [Split1, Split2],
@@ -67,6 +73,33 @@ class PrivateHome extends Component {
 
   componentDidMount() {
     this.setRandomData();
+    this.getUserCodes();
+    const { timerIsOn } = this.props.state.prizeTimerReducer;
+    if (!timerIsOn) {
+      this.findWinnersInDatabase();
+    }
+  }
+
+  findWinnersInDatabase = () => {
+    axios({
+      method: "get",
+      url: WINNER_CODES_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+
+      credentials: "same-origin"
+    })
+      .then(res => {
+        this.props.setWinners(res.data.winners);
+
+        // console.log("res", res.data.winners);
+      })
+      .catch();
+  };
+
+  getUserCodes = () => {
     axios({
       method: "post",
       url: USER_CODES_URL,
@@ -90,7 +123,7 @@ class PrivateHome extends Component {
       })
 
       .catch(error => console.log("error: ", error));
-  }
+  };
 
   visitedLocation = codes => {
     let allCodesLocations = codes.map(code => {
@@ -354,7 +387,7 @@ class PrivateHome extends Component {
                     alt="blueMarker"
                   />
                   <br />
-                  <i>Click on X above to never show this message again!</i>
+                  <i>Click on X above to hide this message!</i>
                 </div>
               </article>
             </div>
@@ -388,7 +421,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setAllCodes: codes => dispatch(setAllCodes(codes)),
-    markVisitedLocation: locations => dispatch(markVisitedLocation(locations))
+    markVisitedLocation: locations => dispatch(markVisitedLocation(locations)),
+    setWinners: winners => dispatch(setWinners(winners))
   };
 };
 

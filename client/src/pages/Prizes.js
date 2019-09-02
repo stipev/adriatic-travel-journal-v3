@@ -41,6 +41,7 @@ export class Prizes extends React.Component {
     if (timerIsOn) {
       this.prizeTimer();
     } else {
+      console.log("ZOVE LI IH");
       this.findWinnersInDatabase();
     }
   }
@@ -149,6 +150,7 @@ export class Prizes extends React.Component {
       timerIsOn,
       winners
     } = this.props.prizeTimerReducer;
+    console.log("WINNERS: ", winners);
 
     //console.log("this.state.winners", this.state.winners);
     //console.log("this.state.codes", this.state.codes);

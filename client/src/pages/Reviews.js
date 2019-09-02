@@ -62,14 +62,20 @@ class Reviews extends React.Component {
     this.setState({ reviewsToShow });
   };
 
+  showAllReviews = () => {
+    let { reviews } = this.props.reviewReducer;
+    this.setState({ reviewsToShow: reviews });
+  };
+
   render() {
     let { reviewsToShow } = this.state;
     console.log("ssdasadsfsf", this.props.reviewReducer);
     return (
       <div className="ReviewsPageContainer">
         <div className="Menu">
-          <a className="list-item">Oldest to newest</a>
-          <a className="list-item">Newest to oldest</a>
+          <a onClick={this.showAllReviews} className="list-item">
+            All
+          </a>
           {this.getLocationsFromReviews().map(location => {
             return (
               <a
