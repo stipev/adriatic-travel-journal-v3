@@ -66,4 +66,11 @@ const usernameExist = username => {
   });
 };
 
-module.exports = { signUp };
+const getWinner = id => {
+  return User.findOne({
+    attributes: ["username", "firstName", "lastName"],
+    where: { id }
+  });
+};
+
+module.exports = { signUp, getWinner };

@@ -1,7 +1,18 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Code = require("../Models/Code");
-//const UserCode = require("../Models/UserCode");
+
+const getPrizeWinners = () => {
+  return Code.findAll({
+    order: [Sequelize.fn("RAND")],
+    limit: 3,
+    attributes: [["FK_userId", "userId"], "code"],
+
+    where: {
+      activated: true
+    }
+  });
+};
 
 const findActiveCodes = () => {
   return Code.findAll({
@@ -75,5 +86,6 @@ const findAllUserCodes = userId => {
 module.exports = {
   findAllUserCodes,
   findActiveCodes,
-  getDateAndLocation
+  getDateAndLocation,
+  getPrizeWinners
 };

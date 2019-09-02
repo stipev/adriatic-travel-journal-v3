@@ -1,7 +1,10 @@
 const { Router } = require("express");
 const passport = require("passport");
 const passportConf = require("../configuration/passport");
-const { findAllUserCodes } = require("../Controllers/codeControllers");
+const {
+  findAllUserCodes,
+  getPrizeWinners
+} = require("../Controllers/codeControllers");
 
 const router = new Router();
 
@@ -18,6 +21,22 @@ router.post(
         res.json({ codes });
       })
       .catch(error => console.log("error: ", error));
+  }
+);
+router.get(
+  "/codes/active",
+  passport.authenticate("jwt", { session: false }),
+
+  (req, res) => {
+    let codes = [];
+    getPrizeWinners()
+      .then(_codes => {
+        for (let i = 0; i < _codes.length; i++) {
+          codes.push(_codes[i].dataValues);
+        }
+        res.json({ codes });
+      })
+      .catch();
   }
 );
 

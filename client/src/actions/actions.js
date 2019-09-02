@@ -8,9 +8,13 @@ import {
   MARK_UNVISITED_LOCATION,
   SET_USER_REVIEWS,
   SET_PRIZE_TIMER,
-  UPDATE_PRIZE_TIMER
+  UPDATE_PRIZE_TIMER,
+  TIMER_IS_DONE
 } from "./types";
 
+export const timerIsDone = () => {
+  return { type: TIMER_IS_DONE };
+};
 export const setAllLocations = locations => {
   return { type: SET_ALL_LOCATIONS, locations };
 };

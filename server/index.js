@@ -16,6 +16,7 @@ app.use(reviewRoutes);
 app.use(codeRoutes);
 app.use(locationRoutes);
 app.get("/prizeTimer", (req, res) => {
+  //let prizeTimer = new Date(Date.now() + 30 * SECONDS + 10 * MINUTES).getTime();
   let prizeTimer = new Date(Date.now() + 30 * SECONDS).getTime();
   res.json({ prizeTimer });
 });

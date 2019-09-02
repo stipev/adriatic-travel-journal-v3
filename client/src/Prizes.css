@@ -1,0 +1,21 @@
+.PrizePageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.PrizeContainer {
+  /* border: 3px solid red; */
+  width: 350px;
+}
+.PrizesContainer {
+}
+.PrizeImage {
+  width: 300px;
+  height: 250px;
+}
+
+.TimerContainer {
+  /* border: 3px solid green; */
+  width: 350px;
+  margin-bottom: 3rem;
+}

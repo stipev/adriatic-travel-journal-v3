@@ -2,10 +2,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { signIn } from "../components/AuthService";
 import { connect } from "react-redux";
-import { setAllLocations } from "../actions/actions";
+import { setAllLocations, setPrizeTimer } from "../actions/actions";
 import axios from "axios";
 import "../SignIn.css";
 const LOCATIONS_URL = "http://localhost:8000/location/all";
+const PRIZE_TIMER_URL = "http://localhost:8000/prizeTimer";
 
 class SignIn extends React.Component {
   state = {
@@ -25,10 +26,28 @@ class SignIn extends React.Component {
       credentials: "same-origin"
     })
       .then(res => {
+        this.getPrizeTimer();
         this.props.setAllLocations(res.data.locations);
       })
       .catch(err => console.log("error", err));
   }
+
+  getPrizeTimer = () => {
+    axios({
+      method: "get",
+      url: PRIZE_TIMER_URL,
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      credentials: "same-origin"
+    })
+      .then(prizeTimerData => {
+        console.log("prizeTimerData", prizeTimerData.data.prizeTimer);
+        this.props.setPrizeTimer(prizeTimerData.data.prizeTimer);
+      })
+      .catch();
+  };
 
   signIn = () => {
     signIn(this.state.usernameEmail, this.state.password, this.props.history)
@@ -120,7 +139,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     //setAllCodes: codes => dispatch(setAllCodes(codes)),
-    setAllLocations: locations => dispatch(setAllLocations(locations))
+    setAllLocations: locations => dispatch(setAllLocations(locations)),
+    setPrizeTimer: prizeTimer => dispatch(setPrizeTimer(prizeTimer))
   };
 };
 
