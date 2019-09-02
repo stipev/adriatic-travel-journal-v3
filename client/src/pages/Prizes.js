@@ -11,22 +11,38 @@ const PRIZE_CODES_URL = "http://localhost:8000/codes/active";
 const USERS_URL = "http://localhost:8000/users/";
 
 const SECONDS = 1000;
-// const MINUTES = SECONDS * 60;
-// const HOURS = MINUTES * 60;
-// const DAYS = HOURS * 24;
+const prizeImages = [Prize1, Prize2, Prize3];
+const prizes = [
+  {
+    title: "First prize",
+    imageIndex: 0,
+    prizeName: "Million dollars ",
+    prizeDescription: "cool thing to win!! ;)"
+  },
+  {
+    title: "Second prize",
+    imageIndex: 1,
+    prizeName: "Lamborghini ",
+    prizeDescription: "cool thing to drive!! :)"
+  },
+  {
+    title: "Third prize",
+    imageIndex: 2,
+    prizeName: "MacBook Pro",
+    prizeDescription: "cool thing to code on!! =)"
+  }
+];
 
 export class Prizes extends React.Component {
   componentDidMount() {
-    setTimeout(() => {
-      this.getPrizeCodes();
-    }, 10 * SECONDS);
-
-    this.prizeTimer();
+    const { timerIsOn } = this.props.prizeTimerReducer;
+    if (timerIsOn) {
+      this.prizeTimer();
+    }
   }
 
   state = {
-    winners: [],
-    codes: []
+    winners: []
   };
 
   getPrizeCodes = () => {
@@ -51,9 +67,6 @@ export class Prizes extends React.Component {
   };
   //dodati u redux
   getPrizeWinners = codes => {
-    // console.log("codes: ", codes);
-    // console.log("userIDDDD: ", codes[0].userId);
-
     let winners = [];
     Promise.all([
       this.getWinner(codes[0].userId),
@@ -63,8 +76,11 @@ export class Prizes extends React.Component {
       for (let i = 0; i < res.length; i++) {
         res[i].data.winner.place = i + 1;
         winners.push(res[i].data.winner);
+        winners[i].code = codes[i].code;
       }
-      this.setState({ winners, codes });
+      this.setState({ winners });
+      //redux payload tu
+      this.props.timerIsDone(winners);
     });
   };
 
@@ -90,36 +106,32 @@ export class Prizes extends React.Component {
       this.props.updatePrizeTimer(distance);
       if (distance < 0) {
         clearInterval(timer);
-        this.props.timerIsDone();
+        this.getPrizeCodes();
       }
     };
     let timer = setInterval(doEachInterval, SECONDS);
   };
 
   render() {
-    //console.log("this.props.", this.props.prizeTimerReducer.timerIsOn);
     let {
       days,
       hours,
       minutes,
       seconds,
-      timerIsOn
+      timerIsOn,
+      winners
     } = this.props.prizeTimerReducer;
 
+    //console.log("this.state.winners", this.state.winners);
+    //console.log("this.state.codes", this.state.codes);
     return (
       <div className="PrizePageContainer">
-        <div className="PrizesContainer">
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center"
-            }}
-          >
-            <div className="TimerContainer">
+        <div>
+          <div className="TimerContainer">
+            <div className="Timer">
               {timerIsOn ? (
-                <div class="notification is-danger">
-                  <strong>REMAINING TIME: </strong>
+                <div className="notification is-danger">
+                  <strong>TIME LEFT: </strong>
                   <strong>
                     {days +
                       "d " +
@@ -132,88 +144,64 @@ export class Prizes extends React.Component {
                   </strong>
                 </div>
               ) : (
-                <div class="notification is-danger">AND THE WINNER IS...</div>
+                <div className="notification is-danger">
+                  <strong> LUCKY WINNERS </strong>
+                  ARE...
+                </div>
               )}
             </div>
           </div>
-
-          <div className="columns">
-            <div className="column">
-              <div className="PrizeContainer">
-                <article class="message is-link">
-                  <div class="message-header">
-                    <p>First prize</p>
-                  </div>
-                  <div class="message-body">
-                    <img
-                      className="PrizeImage"
-                      src={Prize1}
-                      alt="prize1 image"
-                    />
-                    <strong>Million dollars </strong>
-                    cool thing to win!! ;)
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div className="column">
-              <div className="PrizeContainer">
-                <article class="message is-link">
-                  <div class="message-header">
-                    <p>Second prize</p>
-                  </div>
-                  <div class="message-body">
-                    <img
-                      className="PrizeImage"
-                      src={Prize2}
-                      alt="prize2 image"
-                    />
-                    <strong>Lamborghini </strong>
-                    cool thing to drive!! :)
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div className="column">
-              <div className="PrizeContainer">
-                <article class="message is-link">
-                  <div class="message-header">
-                    <p>Third prize</p>
-                  </div>
-                  <div class="message-body">
-                    <img
-                      className="PrizeImage"
-                      src={Prize3}
-                      alt="prize3 image"
-                    />
-                    <strong> MacBook Pro </strong>
-                    cool thing to code on!! =)
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          {this.state.winners.length === 3 ? (
-            <div>
-              {this.state.winners.map(winner => {
+          {timerIsOn ? (
+            <div className="PrizesContainer">
+              {prizes.map(prize => {
                 return (
-                  <div key={uuidv4()}>
-                    <p>place : {winner.place}</p>
-                    <p>username: {winner.username}</p>
-                    <p>first name: {winner.firstName}</p>
-                    <p>last name: {winner.lastName}</p>
-                    <p>code: {this.state.codes[winner.place - 1].code}</p>
-                    <br />
-                    <br />
+                  <div key={uuidv4()} className="PrizeContainer">
+                    <article className="message is-link">
+                      <div className="message-header">
+                        <p>{prize.title}</p>
+                      </div>
+                      <div className="message-body">
+                        <img
+                          className="PrizeImage"
+                          src={prizeImages[prize.imageIndex]}
+                          alt="prize image"
+                        />
+                        <strong>{prize.prizeName} </strong>
+                        {prize.prizeDescription}
+                      </div>
+                    </article>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <div>NO winners yet</div>
+            <div className="PrizesContainer">
+              {prizes.map(prize => {
+                return (
+                  <div key={uuidv4()} className="PrizeContainer">
+                    <article className="message is-link">
+                      <div className="message-header">
+                        <p>{prize.title}</p>
+                      </div>
+                      <div className="message-body">
+                        <img
+                          className="PrizeImage"
+                          src={prizeImages[prize.imageIndex]}
+                          alt="prize image"
+                        />
+                        <strong>{prize.prizeName} </strong>
+                        {prize.prizeDescription}
+                        <p>place : {winners[prize.imageIndex].place}</p>
+                        <p>username: {winners[prize.imageIndex].username}</p>
+                        <p>first name: {winners[prize.imageIndex].firstName}</p>
+                        <p>last name: {winners[prize.imageIndex].lastName}</p>
+                        <p>code: {winners[prize.imageIndex].code}</p>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
       </div>
@@ -229,7 +217,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updatePrizeTimer: distance => dispatch(updatePrizeTimer(distance)),
-    timerIsDone: () => dispatch(timerIsDone())
+    timerIsDone: winners => dispatch(timerIsDone(winners))
   };
 };
 

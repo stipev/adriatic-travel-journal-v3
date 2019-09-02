@@ -12,8 +12,8 @@ import {
   TIMER_IS_DONE
 } from "./types";
 
-export const timerIsDone = () => {
-  return { type: TIMER_IS_DONE };
+export const timerIsDone = winners => {
+  return { type: TIMER_IS_DONE, winners };
 };
 export const setAllLocations = locations => {
   return { type: SET_ALL_LOCATIONS, locations };

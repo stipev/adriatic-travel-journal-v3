@@ -5,17 +5,48 @@
 
 .PrizeContainer {
   /* border: 3px solid red; */
-  width: 350px;
+  min-width: 300px;
+  width: 300px;
 }
 .PrizesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .PrizeImage {
+  width: 250px;
+  height: 200px;
+}
+
+.Timer {
+  /* border: 3px solid green; */
   width: 300px;
-  height: 250px;
+  margin-bottom: 3rem;
 }
 
 .TimerContainer {
-  /* border: 3px solid green; */
-  width: 350px;
-  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1125px) {
+  .PrizePageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .PrizesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .PrizeContainer {
+    /* border: 3px solid red; */
+    /* min-width: 300px; */
+    /* width: 300px; */
+    margin-bottom: 3rem;
+  }
 }

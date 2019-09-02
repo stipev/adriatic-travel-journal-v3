@@ -18,7 +18,8 @@ const initState = {
   minutes: "",
   seconds: "",
   prizeTimer: "",
-  timerIsOn: false
+  timerIsOn: false,
+  winners: []
 };
 
 const prizeTimerReducer = (state = initState, action) => {
@@ -26,6 +27,7 @@ const prizeTimerReducer = (state = initState, action) => {
     case TIMER_IS_DONE:
       return {
         ...state,
+        winners: action.winners,
         timerIsOn: false
       };
     case SET_PRIZE_TIMER:
