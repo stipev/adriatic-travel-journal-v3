@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { isSignedIn, getUsername } from "./AuthService";
 import anchor from "../assets/anchor.png";
 import journal from "../assets/journal.png";
-import "../Header.css";
+import "../css/Header.css";
 
 class Header extends React.Component {
   onMenuClick = () => {

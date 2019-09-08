@@ -8,7 +8,7 @@ import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import rootReducer from "../src/reducers";
 import "bulma/css/bulma.css";
-//
+
 const persistConfig = {
   key: "root",
   storage

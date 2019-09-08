@@ -3,7 +3,6 @@ import {
   UPDATE_PRIZE_TIMER,
   TIMER_IS_DONE,
   SET_WINNERS
-  //SIGN_OUT
 } from "../actions/types";
 
 const seconds = distance => Math.floor((distance % (1000 * 60)) / 1000);
@@ -51,16 +50,7 @@ const prizeTimerReducer = (state = initState, action) => {
         minutes: distance < 0 ? "0" : minutes(distance),
         seconds: distance < 0 ? "0" : seconds(distance)
       };
-    // case SIGN_OUT: {
-    //   console.log("RADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDIIIIILI");
-    //   return {
-    //     ...state,
-    //     days: "",
-    //     hours: "",
-    //     minutes: "",
-    //     seconds: ""
-    //   };
-    // }
+
     default:
       return state;
   }

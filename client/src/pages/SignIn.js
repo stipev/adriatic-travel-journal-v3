@@ -4,7 +4,7 @@ import { signIn } from "../components/AuthService";
 import { connect } from "react-redux";
 import { setAllLocations, setPrizeTimer } from "../actions/actions";
 import axios from "axios";
-import "../SignIn.css";
+import "../css/SignIn.css";
 
 const LOCATIONS_URL = "http://localhost:8000/locations";
 const PRIZE_TIMER_URL = "http://localhost:8000/timers";

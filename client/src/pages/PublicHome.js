@@ -1,32 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../PrivateHome.css";
-import "../Prizes.css";
 import { Split1, Zadar1 } from "../assets/locations/index";
 import { Prize1, Prize2, Prize3 } from "../assets/prizes/index";
+import { prizes } from "../components/Helper";
 import uuidv4 from "uuid/v4";
+import "../css/PrivateHome.css";
+import "../css/Prizes.css";
 
 const prizeImages = [Prize1, Prize2, Prize3];
-const prizes = [
-  {
-    title: "First prize",
-    imageIndex: 0,
-    prizeName: "Million dollars ",
-    prizeDescription: "cool thing to win!! ;)"
-  },
-  {
-    title: "Second prize",
-    imageIndex: 1,
-    prizeName: "Lamborghini ",
-    prizeDescription: "cool thing to drive!! :)"
-  },
-  {
-    title: "Third prize",
-    imageIndex: 2,
-    prizeName: "MacBook Pro",
-    prizeDescription: "cool thing to code on!! =)"
-  }
-];
 
 class PublicHome extends Component {
   setSelectedLocation(location) {

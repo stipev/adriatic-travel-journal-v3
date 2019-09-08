@@ -4,7 +4,6 @@
 }
 
 .PrizeContainer {
-  /* border: 3px solid red; */
   min-width: 300px;
   width: 300px;
 }
@@ -19,7 +18,6 @@
 }
 
 .Timer {
-  /* border: 3px solid green; */
   width: 300px;
   margin-bottom: 3rem;
 }
@@ -44,9 +42,6 @@
   }
 
   .PrizeContainer {
-    /* border: 3px solid red; */
-    /* min-width: 300px; */
-    /* width: 300px; */
     margin-bottom: 3rem;
   }
 }

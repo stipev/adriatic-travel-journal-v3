@@ -27,7 +27,6 @@ export const signUp = (
       }
     })
       .then(res => {
-        console.log("res:", res.data.success);
         if (res.data.success) {
           signIn(username, password, history);
         } else if (!res.data.success) {
@@ -50,7 +49,7 @@ export const signIn = (username, password, history) => {
         username,
         password
       },
-      //
+
       credentials: "same-origin"
     })
       .then(res => {
@@ -89,7 +88,6 @@ const setDataToLocalStorage = token => {
 export const signOut = () => {
   try {
     localStorage.clear();
-    //  history.push("/signin");
   } catch (error) {
     console.log("error: ", error);
   }

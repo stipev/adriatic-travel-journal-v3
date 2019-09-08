@@ -10,13 +10,8 @@ import {
 import axios from "axios";
 import uuidv4 from "uuid/v4";
 import { connect } from "react-redux";
-import {
-  addCode,
-  setAllCodes,
-  setUserReviews,
-  markUnvisitedLocation
-} from "../actions/actions";
-import "../Profile.css";
+import { addCode, setAllCodes, setUserReviews } from "../actions/actions";
+import "../css/Profile.css";
 
 const REVIEWS_URL = "http://localhost:8000/reviews";
 const CODES_URL = "http://localhost:8000/codes";
@@ -438,8 +433,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addCode: code => dispatch(addCode(code)),
     setAllCodes: codes => dispatch(setAllCodes(codes)),
-    setUserReviews: reviews => dispatch(setUserReviews(reviews)),
-    markUnvisitedLocation: location => dispatch(markUnvisitedLocation(location))
+    setUserReviews: reviews => dispatch(setUserReviews(reviews))
   };
 };
 

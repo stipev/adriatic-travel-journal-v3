@@ -37,19 +37,10 @@ export const markVisitedLocation = locations => {
   return { type: MARK_VISITED_LOCATION, locations };
 };
 
-//DELETE
-export const markUnvisitedLocation = location => {
-  return { type: MARK_UNVISITED_LOCATION, location };
-};
-
 export const setUserReviews = reviews => {
   return { type: SET_USER_REVIEWS, reviews };
 };
 
-export const _signOut = () => {
-  console.log("!!!!ACTIONS LOGOUT!!!");
-  return { type: SIGN_OUT };
-};
 export const setPrizeTimer = prizeTimer => {
   return { type: SET_PRIZE_TIMER, prizeTimer };
 };

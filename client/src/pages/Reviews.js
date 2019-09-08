@@ -4,7 +4,7 @@ import { getToken } from "../components/AuthService";
 import { setAllReviews } from "../actions/actions";
 import { connect } from "react-redux";
 import uuidv4 from "uuid/v4";
-import "../Reviews.css";
+import "../css/Reviews.css";
 
 const REVIEWS_URL = "http://localhost:8000/reviews";
 

@@ -16,7 +16,6 @@
 }
 
 .ReviewInputForm {
-  /* border: 3px solid black; */
   width: 250px;
 }
 
@@ -28,17 +27,8 @@
     max-width: 600px;
   }
 
-  /* .CenterContainer {
-    margin-left: 4rem;
-  } */
   .ReviewsPageContainer {
     display: flex;
     flex-direction: column;
   }
 }
-/*
-
-@media only screen and (min-width: 920px) and (max-width: 1027px) {
- 
-  }
-} */

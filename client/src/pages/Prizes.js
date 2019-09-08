@@ -5,7 +5,8 @@ import axios from "axios";
 import { getToken, getId } from "../components/AuthService";
 import uuidv4 from "uuid/v4";
 import { Prize1, Prize2, Prize3 } from "../assets/prizes/index";
-import "../Prizes.css";
+import { prizes } from "../components/Helper";
+import "../css/Prizes.css";
 
 const PRIZE_CODES_URL = "http://localhost:8000/codes/active";
 const USERS_URL = "http://localhost:8000/users/";
@@ -13,26 +14,6 @@ const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
 
 const SECONDS = 1000;
 const prizeImages = [Prize1, Prize2, Prize3];
-const prizes = [
-  {
-    title: "First prize",
-    imageIndex: 0,
-    prizeName: "Million dollars ",
-    prizeDescription: "cool thing to win!! ;)"
-  },
-  {
-    title: "Second prize",
-    imageIndex: 1,
-    prizeName: "Lamborghini ",
-    prizeDescription: "cool thing to drive!! :)"
-  },
-  {
-    title: "Third prize",
-    imageIndex: 2,
-    prizeName: "MacBook Pro",
-    prizeDescription: "cool thing to code on!! =)"
-  }
-];
 
 export class Prizes extends React.Component {
   state = {

@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { isSignedIn, signOut } from "../AuthService";
-import { connect } from "react-redux";
-import { _signOut } from "../../actions/actions";
 import Home from "./Home";
 
 class PrivateNavComponents extends React.Component {
@@ -42,7 +40,6 @@ class PrivateNavComponents extends React.Component {
         <NavLink
           className="title is-6 has-text-info NavBarItem"
           onClick={() => {
-            //  _signOut();
             signOut();
           }}
           to="/signin"
@@ -54,13 +51,4 @@ class PrivateNavComponents extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    _signOut: () => dispatch(_signOut())
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(PrivateNavComponents);
+export default PrivateNavComponents;

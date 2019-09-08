@@ -11,7 +11,7 @@ import {
   markVisitedLocation,
   setWinners
 } from "../actions/actions";
-import "../PrivateHome.css";
+import "../css/PrivateHome.css";
 import {
   Sibenik1,
   Sibenik2,
@@ -93,8 +93,6 @@ class PrivateHome extends Component {
     })
       .then(res => {
         this.props.setWinners(res.data.winners);
-
-        // console.log("res", res.data.winners);
       })
       .catch();
   };
@@ -286,7 +284,6 @@ class PrivateHome extends Component {
                   <div className="box">
                     <img
                       className="PopUpImage"
-                      //style={{ width: "200px", height: "200px" }}
                       src={this.getImage()}
                       alt="Location Icon"
                     />
@@ -302,13 +299,10 @@ class PrivateHome extends Component {
                     </h2>
                     <p>{this.state.selectedLocation.description}</p>
                     <div>
-                      LAST VISIT:{" "}
+                      LAST VISIT:
                       {this.state.selectedLocation.visited ? (
                         <p>
-                          {" "}
-                          {this.getLastDate(
-                            this.state.selectedLocation.name
-                          )}{" "}
+                          {this.getLastDate(this.state.selectedLocation.name)}
                         </p>
                       ) : (
                         <p>Location not visited yet</p>
@@ -318,10 +312,9 @@ class PrivateHome extends Component {
                       NUMBER OF VISITS:
                       {this.state.selectedLocation.visited ? (
                         <p>
-                          {" "}
                           {this.getNumberOfVisits(
                             this.state.selectedLocation.name
-                          )}{" "}
+                          )}
                         </p>
                       ) : (
                         <p>0</p>
