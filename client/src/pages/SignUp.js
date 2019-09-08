@@ -154,12 +154,12 @@ class SignUp extends React.Component {
 
   validatePassword = () => {
     let { password } = this.state;
-    if (password.length > 7 && password.length < 15) {
+    if (password.length > 6 && password.length < 15) {
       return true;
     } else {
       this.setState({
         message:
-          "Password need to have more than 7 and less than 15 characters!"
+          "Password need to have more than 6 and less than 15 characters!"
       });
       return false;
     }
@@ -168,13 +168,14 @@ class SignUp extends React.Component {
   validateEmail = () => {
     let { email } = this.state;
     email = email.trim();
-    if (EmailValidator.validate(email)) {
-      return EmailValidator.validate(email);
+    let isEmailFormatValid = EmailValidator.validate(email);
+    if (isEmailFormatValid) {
+      return isEmailFormatValid;
     } else {
       this.setState({
         message: "Try correct e-mail format example: mail@example.com !"
       });
-      return EmailValidator.validate(email);
+      return isEmailFormatValid;
     }
   };
 
