@@ -6,16 +6,17 @@ const {
   getPrizeWinners,
   setWinnerCode,
   getWinnerCodes
-} = require("../Controllers/codeControllers");
+} = require("../controllers/codeControllers");
 
 const router = new Router();
 
-router.post(
-  "/code/user",
+router.get(
+  "/codes/:userId",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
-    const { userId } = req.body;
+    let { userId } = req.params;
+    userId = parseInt(userId);
     findAllUserCodes(userId)
       .then(codes => {
         res.json({ codes });

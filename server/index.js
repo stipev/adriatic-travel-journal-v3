@@ -1,11 +1,11 @@
 const db = require("./configuration/database");
 const app = require("./configuration/server");
 
-const userRoutes = require("./Routes/userRoutes");
-const reviewRoutes = require("./Routes/reviewRoutes");
-const codeRoutes = require("./Routes/codeRoutes");
-const locationRoutes = require("./Routes/locationRoutes");
-const timerRoutes = require("./Routes/timerRoutes");
+const userRoutes = require("./routes/userRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const codeRoutes = require("./routes/codeRoutes");
+const locationRoutes = require("./routes/locationRoutes");
+const timerRoutes = require("./routes/timerRoutes");
 
 app.use(userRoutes);
 app.use(reviewRoutes);

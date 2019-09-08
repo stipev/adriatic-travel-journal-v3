@@ -6,9 +6,12 @@ import { connect } from "react-redux";
 import uuidv4 from "uuid/v4";
 import "../Reviews.css";
 
-const REVIEWS_URL = "http://localhost:8000/review/all";
+const REVIEWS_URL = "http://localhost:8000/reviews";
 
 class Reviews extends React.Component {
+  state = {
+    reviewsToShow: []
+  };
   componentDidMount() {
     this.getLocationsFromReviews();
     axios({
@@ -27,18 +30,12 @@ class Reviews extends React.Component {
       .catch(err => console.log("error", err));
   }
 
-  state = {
-    reviewsToShow: []
-  };
-
   getLocationsFromReviews = () => {
     let { reviews } = this.props.reviewReducer;
     let allReivewsLocations = reviews.map(review => {
       return review.location;
     });
-    // console.log("ALLlocations: ", allReivewsLocations);
     let locations = [...new Set(allReivewsLocations)];
-
     return locations;
   };
 
@@ -69,7 +66,6 @@ class Reviews extends React.Component {
 
   render() {
     let { reviewsToShow } = this.state;
-    console.log("ssdasadsfsf", this.props.reviewReducer);
     return (
       <div className="ReviewsPageContainer">
         <div className="Menu">

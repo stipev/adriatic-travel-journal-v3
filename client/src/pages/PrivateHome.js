@@ -21,7 +21,7 @@ import {
   Zadar2
 } from "../assets/locations/index";
 
-const USER_CODES_URL = "http://localhost:8000/code/user";
+const CODES_URL = "http://localhost:8000/codes";
 const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
 
 const LOCATIONS = {
@@ -101,16 +101,12 @@ class PrivateHome extends Component {
 
   getUserCodes = () => {
     axios({
-      method: "post",
-      url: USER_CODES_URL,
+      method: "get",
+      url: `${CODES_URL}/${getId()}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
       },
-      data: {
-        userId: getId()
-      },
-
       credentials: "same-origin"
     })
       .then(res => {

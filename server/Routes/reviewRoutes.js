@@ -2,22 +2,19 @@ const { Router } = require("express");
 const router = new Router();
 const passport = require("passport");
 const passportConf = require("../configuration/passport");
-const { getDateAndLocation } = require("../Controllers/codeControllers");
+const { getDateAndLocation } = require("../controllers/codeControllers");
 const {
   addReview,
   getAllReviews,
   getUserReviews,
   deleteReview,
   updateReview
-} = require("../Controllers/reviewControllers");
-
-const { findActiveCodes } = require("../Controllers/codeControllers");
+} = require("../controllers/reviewControllers");
 
 router.patch(
-  "/reviews/update",
+  "/reviews",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //console.log("IMA LI ISTA req.body: ", req.body);
     const { userId, code, review, rate } = req.body;
     updateReview(userId, review, rate, code)
       .then(resp => {
@@ -30,51 +27,35 @@ router.patch(
 );
 
 router.get(
-  "/review/all",
+  "/reviews",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
     getAllReviews()
       .then(reviewsData => {
         let reviews = [];
-        let codeIds = [];
-        let userIds = [];
+
         for (let i = 0; i < reviewsData.length; i++) {
           reviews.push(reviewsData[i].dataValues);
-          codeIds.push(reviewsData[i].dataValues.codeId);
-          userIds.push(reviewsData[i].dataValues.userId);
         }
-        findActiveCodes().then(activeCodesData => {
-          for (let i = 0; i < reviewsData.length; i++) {
-            console.log("kod: ", activeCodesData[i].dataValues);
-            //codeIds.push(reviewsData[i].dataValues.codeId);
-            //userIds.push(reviewsData[i].dataValues.userId);
-          }
-        });
-        //console.log("reviews: ", reviews);
-        // console.log("codeIds", codeIds);
-        //console.log("userIds", userIds);
 
         res.json({ reviews });
       })
-      .catch(error => console.log("erorr", error));
+      .catch(error => console.log("erorr: ", error));
   }
 );
 
-router.post(
-  "/review/user",
+router.get(
+  "/reviews/:userId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { userId } = req.body;
-    console.log("user id ", userId);
-    console.log("req body", req.body);
+    let { userId } = req.params;
+    userId = parseInt(userId);
     getUserReviews(userId)
       .then(userReviews => {
-        //console.log("userReviewsRes", userReviewsRes);
         res.json({ userReviews });
       })
       .catch(error => console.log("error: ", error));
-    // userId
   }
 );
 
@@ -83,15 +64,14 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { code } = req.body;
-    console.log("code: ", code);
     deleteReview(code)
       .then(() => res.json("Review successfully deleted!"))
-      .catch(error => console.log("error ", error));
+      .catch(error => console.log("error: ", error));
   }
 );
 
 router.post(
-  "/review/add",
+  "/reviews",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
@@ -99,11 +79,8 @@ router.post(
 
     getDateAndLocation(code)
       .then(resp => {
-        console.log("resp", resp);
-        console.log("resp.dataValues", resp.dataValues);
         const { location } = resp.dataValues;
         const { date } = resp.dataValues;
-        console.log("username:", username);
         addReview(userId, code, review, rate, location, date, username).then(
           message => {
             res.json({ message });

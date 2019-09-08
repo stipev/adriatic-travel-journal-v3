@@ -7,10 +7,8 @@ import {
   getEmail,
   getId
 } from "../components/AuthService";
-import UserCodes from "../components/Profile/UserCodes";
 import axios from "axios";
 import uuidv4 from "uuid/v4";
-
 import { connect } from "react-redux";
 import {
   addCode,
@@ -19,37 +17,11 @@ import {
   markUnvisitedLocation
 } from "../actions/actions";
 import "../Profile.css";
-const URL = "http://localhost:8000/review/add";
-const URL_REVIEWS_UPDATE = "http://localhost:8000/reviews/update";
-const USER_REVIEWS_URL = "http://localhost:8000/review/user";
-const USER_DELETE_URL = "http://localhost:8000/reviews";
-const USER_CODES_URL = "http://localhost:8000/code/user";
+
+const REVIEWS_URL = "http://localhost:8000/reviews";
+const CODES_URL = "http://localhost:8000/codes";
 
 class Profile extends React.Component {
-  componentDidMount() {
-    this.getUserReviews();
-  }
-
-  getUserReviews = () => {
-    axios({
-      method: "post",
-      url: USER_REVIEWS_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getToken()
-      },
-      data: {
-        userId: getId()
-      },
-      credentials: "same-origin"
-    })
-      .then(res => {
-        console.log("pozvano");
-        this.props.setUserReviews(res.data.userReviews);
-      })
-      .catch(error => console.log("error: ", error));
-  };
-
   state = {
     message: "Input review data here:",
     editMode: false,
@@ -58,12 +30,32 @@ class Profile extends React.Component {
     review: "",
     rate: "",
     stars: [
-      { value: 1, isActive: false, isHover: false, cursorPointer: false },
-      { value: 2, isActive: false, isHover: false, cursorPointer: false },
-      { value: 3, isActive: false, isHover: false, cursorPointer: false },
-      { value: 4, isActive: false, isHover: false, cursorPointer: false },
-      { value: 5, isActive: false, isHover: false, cursorPointer: false }
+      { value: 1, isActive: false },
+      { value: 2, isActive: false },
+      { value: 3, isActive: false },
+      { value: 4, isActive: false },
+      { value: 5, isActive: false }
     ]
+  };
+
+  componentDidMount() {
+    this.getUserReviews();
+  }
+
+  getUserReviews = () => {
+    axios({
+      method: "get",
+      url: `${REVIEWS_URL}/${getId()}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken()
+      },
+      credentials: "same-origin"
+    })
+      .then(res => {
+        this.props.setUserReviews(res.data.userReviews);
+      })
+      .catch(error => console.log("error: ", error));
   };
 
   updateCode = event => {
@@ -77,7 +69,7 @@ class Profile extends React.Component {
     let code = this.state.code.trim();
     axios({
       method: "post",
-      url: URL,
+      url: REVIEWS_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
@@ -93,7 +85,6 @@ class Profile extends React.Component {
       credentials: "same-origin"
     })
       .then(res => {
-        console.log("resss axios", res);
         this.getAllUserCodes();
       })
       .catch(err => console.log("error", err));
@@ -101,19 +92,14 @@ class Profile extends React.Component {
 
   getAllUserCodes = () => {
     axios({
-      method: "post",
-      url: USER_CODES_URL,
+      method: "get",
+      url: `${CODES_URL}/${getId()}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
       },
-      data: {
-        userId: getId()
-      },
-
       credentials: "same-origin"
     }).then(res => {
-      console.log("KODOVI POSTAVLJANJE");
       this.props.setAllCodes(res.data);
       this.getUserReviews();
     });
@@ -137,7 +123,7 @@ class Profile extends React.Component {
   deleteReview = code => {
     axios({
       method: "delete",
-      url: USER_DELETE_URL,
+      url: REVIEWS_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
@@ -148,14 +134,11 @@ class Profile extends React.Component {
 
       credentials: "same-origin"
     }).then(() => {
-      console.log("BEFORE PROMISE CODES:", this.props.state);
-
       Promise.all([this.getUserReviews(), this.getAllUserCodes()]);
     });
   };
 
   editReview = code => {
-    //console.log("EDIT REVIEW code: ", code);
     this.setState({
       message: "Edit review here:",
       editMode: true,
@@ -164,17 +147,16 @@ class Profile extends React.Component {
   };
 
   submitReviewEdit = () => {
-    console.log("ETO GA RADI");
     axios({
       method: "patch",
-      url: URL_REVIEWS_UPDATE,
+      url: REVIEWS_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
       },
       data: {
-        code: this.state.editCode,
         userId: getId(),
+        code: this.state.editCode,
         review: this.state.review,
         rate: this.state.rate
       },
@@ -182,7 +164,6 @@ class Profile extends React.Component {
       credentials: "same-origin"
     })
       .then(res => {
-        console.log("resss axios", res);
         this.getUserReviews();
         this.setState({ editMode: false });
       })
@@ -190,9 +171,8 @@ class Profile extends React.Component {
   };
 
   onCodeListClick = () => {
-    // console.log("CLICKEC");
     let codeList = document.getElementById("codeList");
-    console.log("codeList display:", codeList.style.display);
+
     if (codeList.style.display === "none") {
       codeList.style.display = "flex";
       codeList.style.flexDirection = "column";
@@ -202,9 +182,8 @@ class Profile extends React.Component {
   };
 
   onReviewListClick = () => {
-    //console.log("review");
     let reviewList = document.getElementById("reviewList");
-    //console.log("codeList display:", codeList.style.display);
+
     if (reviewList.style.display === "none") {
       reviewList.style.display = "flex";
       reviewList.style.flexDirection = "column";
@@ -270,7 +249,6 @@ class Profile extends React.Component {
 
   reviewListContainer = () => {
     let { userReviews } = this.props.state.reviewReducer;
-    console.log("userReviews", userReviews);
     return (
       <div className="ReviewListContainer">
         <button onClick={this.onReviewListClick} className="button is-link">
@@ -288,7 +266,6 @@ class Profile extends React.Component {
               >
                 {userReviews.length > 0 ? (
                   <div>
-                    {" "}
                     {userReviews.map(review => {
                       return (
                         <div key={uuidv4()} className="ReviewCard card">
@@ -304,7 +281,7 @@ class Profile extends React.Component {
                                 <p>
                                   {review.rate}
                                   <i className="fas fa-star icon has-text-info"></i>
-                                </p>{" "}
+                                </p>
                               </div>
                             </div>
                             <button
@@ -372,7 +349,6 @@ class Profile extends React.Component {
             <div className="control">
               {this.state.editMode ? (
                 <input
-                  //onChange={this.updateCode}
                   className="input is-info is-small"
                   type="text"
                   value={this.state.editCode || "A"}

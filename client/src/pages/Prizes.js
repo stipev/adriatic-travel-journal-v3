@@ -35,8 +35,11 @@ const prizes = [
 ];
 
 export class Prizes extends React.Component {
+  state = {
+    winners: []
+  };
+
   componentDidMount() {
-    console.log("CDM");
     const { timerIsOn } = this.props.prizeTimerReducer;
     if (timerIsOn) {
       this.prizeTimer();
@@ -49,10 +52,6 @@ export class Prizes extends React.Component {
   }
 
   timer;
-
-  state = {
-    winners: []
-  };
 
   findWinnersInDatabase = () => {
     axios({
@@ -67,10 +66,8 @@ export class Prizes extends React.Component {
     })
       .then(res => {
         this.props.setWinners(res.data.winners);
-
-        // console.log("res", res.data.winners);
       })
-      .catch();
+      .catch(error => console.log("error: ", error));
   };
 
   getPrizeCodes = () => {
@@ -93,7 +90,7 @@ export class Prizes extends React.Component {
       })
       .catch();
   };
-  //dodati u redux
+
   getPrizeWinners = codes => {
     let winners = [];
     Promise.all([
@@ -102,12 +99,10 @@ export class Prizes extends React.Component {
       this.getWinner(codes[2].userId)
     ]).then(res => {
       for (let i = 0; i < res.length; i++) {
-        // res[i].data.winner.place = i + 1;
         winners.push(res[i].data.winner);
         winners[i].code = codes[i].code;
       }
       this.setState({ winners });
-      //redux payload tu
       this.props.timerIsDone(winners);
     });
   };
@@ -217,7 +212,6 @@ export class Prizes extends React.Component {
                         />
                         <strong>{prize.prizeName} </strong>
                         {prize.prizeDescription}
-                        {/* <p>place : {winners[prize.imageIndex].place}</p> */}
                         <p>username: {winners[prize.imageIndex].username}</p>
                         <p>first name: {winners[prize.imageIndex].firstName}</p>
                         <p>last name: {winners[prize.imageIndex].lastName}</p>

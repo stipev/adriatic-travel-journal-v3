@@ -1,4 +1,4 @@
-const Location = require("../Models/Location");
+const Location = require("../models/Location");
 
 const getAllLocations = () => {
   return Location.findAll();

@@ -9,13 +9,11 @@ const Code = db.define("code", {
   code: {
     type: Sequelize.STRING
   },
-
   activated: {
     type: Sequelize.BOOLEAN
   },
   FK_userId: {
     type: Sequelize.INTEGER
-    //jeli triba za foreign key
   },
   location: {
     type: Sequelize.STRING

@@ -4,7 +4,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { signUp } from "../components/AuthService";
 import { setAllLocations, setPrizeTimer } from "../actions/actions";
-const LOCATIONS_URL = "http://localhost:8000/location/all";
+
+const LOCATIONS_URL = "http://localhost:8000/locations";
 const PRIZE_TIMER_URL = "http://localhost:8000/timers";
 
 class SignUp extends React.Component {
@@ -42,12 +43,10 @@ class SignUp extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-
       credentials: "same-origin"
     })
       .then(prizeTimerData => {
         let dateNow = new Date(Date.now()).getTime();
-        //console.log("exp date: ", expirationDate);
         if (dateNow < parseInt(prizeTimerData.data.expirationDate)) {
           this.props.setPrizeTimer(
             parseInt(prizeTimerData.data.expirationDate)
@@ -110,7 +109,6 @@ class SignUp extends React.Component {
 
         <div
           style={{
-            //  border: "3px solid red",
             display: "flex",
             justifyContent: "center"
           }}
@@ -210,10 +208,8 @@ class SignUp extends React.Component {
               style={{
                 textDecoration: "underline",
                 color: "#209cee",
-                //border: "3px solid green",
                 display: "flex",
                 justifyContent: "center"
-                //marginBottom: "300px"
               }}
               to="/signin"
             >
@@ -234,7 +230,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //setAllCodes: codes => dispatch(setAllCodes(codes)),
     setAllLocations: locations => dispatch(setAllLocations(locations)),
     setPrizeTimer: prizeTimer => dispatch(setPrizeTimer(prizeTimer))
   };

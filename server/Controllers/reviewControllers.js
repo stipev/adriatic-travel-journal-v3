@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const Code = require("../Models/Code");
-const Review = require("../Models/Review");
+const Code = require("../models/Code");
+const Review = require("../models/Review");
 
 const updateReview = (userId, review, rate, code) => {
   return Review.update(
@@ -75,8 +75,6 @@ const addReview = (userId, code, review, rate, location, date, username) => {
           const { id } = _code.dataValues;
 
           Promise.all([
-            //UserCode.create({ FK_user_usercode: userId, FK_code_usercode: id }),
-
             Code.update(
               {
                 activated: true,
@@ -94,7 +92,7 @@ const addReview = (userId, code, review, rate, location, date, username) => {
               date,
               username
             })
-          ]).then(aaa => {
+          ]).then(() => {
             resolve("Review submited successfully!");
           });
         } else {

@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const Code = require("../Models/Code");
+const Code = require("../models/Code");
 const { getWinner } = require("./userControllers");
 
 const getWinnerCodes = () => {
@@ -53,7 +53,7 @@ const setWinnerCode = (place, code) => {
     },
     {
       where: {
-        code: code
+        code
       }
     }
   );

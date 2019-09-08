@@ -6,7 +6,7 @@ const { ExtractJwt } = require("passport-jwt");
 const Sequelize = require("sequelize");
 
 const { SECRET } = require("../secret/secret");
-const User = require("../Models/User");
+const User = require("../models/User");
 
 const Op = Sequelize.Op;
 
@@ -52,7 +52,6 @@ passport.use(
       secretOrKey: SECRET
     },
     (payload, done) => {
-      console.log("payload", payload);
       const user = User.findAll({
         where: {
           username: payload.username

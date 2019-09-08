@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { setAllLocations, setPrizeTimer } from "../actions/actions";
 import axios from "axios";
 import "../SignIn.css";
-const LOCATIONS_URL = "http://localhost:8000/location/all";
+
+const LOCATIONS_URL = "http://localhost:8000/locations";
 const PRIZE_TIMER_URL = "http://localhost:8000/timers";
 
 class SignIn extends React.Component {
@@ -22,7 +23,6 @@ class SignIn extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-
       credentials: "same-origin"
     })
       .then(res => {
@@ -39,17 +39,10 @@ class SignIn extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-
       credentials: "same-origin"
     })
       .then(prizeTimerData => {
-        // console.log(
-        //   "prizeTimerData",
-        //   parseInt(prizeTimerData.data.expirationDate)
-        // );
-
         let dateNow = new Date(Date.now()).getTime();
-        //console.log("exp date: ", expirationDate);
         if (dateNow < parseInt(prizeTimerData.data.expirationDate)) {
           this.props.setPrizeTimer(
             parseInt(prizeTimerData.data.expirationDate)
@@ -73,16 +66,12 @@ class SignIn extends React.Component {
   };
 
   render() {
-    //console.log("this.state: ", this.state);
     return (
       <div className="SignInContainer">
         <div className="Message">
           <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
         </div>
-        <div
-          //className="SignInContainer"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="box">
             <div className=" field">
               <label className="label">Username/E-mail:</label>
@@ -127,7 +116,6 @@ class SignIn extends React.Component {
                 color: "#209cee",
                 display: "flex",
                 justifyContent: "center"
-                //      marginBottom: "300px"
               }}
               to="/signup"
             >
@@ -148,7 +136,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //setAllCodes: codes => dispatch(setAllCodes(codes)),
     setAllLocations: locations => dispatch(setAllLocations(locations)),
     setPrizeTimer: prizeTimer => dispatch(setPrizeTimer(prizeTimer))
   };
