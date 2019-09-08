@@ -5,7 +5,6 @@ import PublicHome from "./pages/PublicHome";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/Reviews";
 import Prizes from "./pages/Prizes";
-import About from "./pages/About";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
@@ -29,7 +28,6 @@ function App() {
             />
             <PrivateRoute exact path="/reviews" component={Reviews} />
             <PrivateRoute exact path="/prizes" component={Prizes} />
-            <PrivateRoute exact path="/about" component={About} />
             <PublicRoute
               restricted={true}
               exact

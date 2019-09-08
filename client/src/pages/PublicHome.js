@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../PrivateHome.css";
 import "../Prizes.css";
-import {
-  Sibenik1,
-  Sibenik2,
-  Split1,
-  Split2,
-  Zadar1,
-  Zadar2
-} from "../assets/locations/index";
+import { Split1, Zadar1 } from "../assets/locations/index";
 import { Prize1, Prize2, Prize3 } from "../assets/prizes/index";
 import uuidv4 from "uuid/v4";
 
@@ -47,7 +40,7 @@ class PublicHome extends Component {
           <div className="notification is-info">
             <strong> Welcome !!! :) </strong> <br />
             Breathtaking beauty of adriatic coast waiting for
-            <strong>you</strong>! <br />
+            <strong> you </strong>! <br />
             <strong>
               <Link to="/signup"> SIGN UP </Link>
             </strong>
@@ -81,7 +74,11 @@ class PublicHome extends Component {
         <div className="DescriptionAndImageContainer box">
           <div className="DescriptionContainer">
             <p className="subtitle is-5"> Adriatic coast </p>
-            <p className="subtitle is-6">Visit breathtaking locations</p>
+            <p className="subtitle is-6">
+              Visit breathtaking locations
+              <Link to="/signin"> SIGN IN </Link> for more pictures in our
+              gallery!
+            </p>
           </div>
           <div className="ImageContainer box ">
             <img src={Split1} alt="location image 1" />

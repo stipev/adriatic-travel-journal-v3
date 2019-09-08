@@ -38,15 +38,6 @@ class PrivateNavComponents extends React.Component {
         >
           PRIZES
         </NavLink>
-        <NavLink
-          className=" has-text-info title is-6 NavBarItem"
-          activeStyle={{
-            borderBottom: "3px solid #3273dc"
-          }}
-          to="/about"
-        >
-          ABOUT
-        </NavLink>
 
         <NavLink
           className="title is-6 has-text-info NavBarItem"
