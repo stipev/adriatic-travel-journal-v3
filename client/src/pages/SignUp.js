@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { signUp } from "../components/AuthService";
 import { setAllLocations, setPrizeTimer } from "../actions/actions";
+import EmailValidator from "email-validator";
 import "../css/SignUp.css";
 
 const LOCATIONS_URL = "http://localhost:8000/locations";
@@ -59,7 +60,13 @@ class SignUp extends React.Component {
 
   signUp = () => {
     const password = this.state.password.trim();
-    if (this.samePasswords()) {
+    if (
+      this.samePasswords() &&
+      this.validateFirstName() &&
+      this.validateLastName() &&
+      this.validateUsername() &&
+      this.validateEmail()
+    ) {
       signUp(
         this.state.firstName,
         this.state.lastName,
@@ -93,12 +100,82 @@ class SignUp extends React.Component {
   };
 
   samePasswords = () => {
-    if (this.state.password === this.state.retypedPassword) {
+    if (this.validatePassword()) {
+      if (this.state.password === this.state.retypedPassword) {
+        return true;
+      } else {
+        this.setState({ message: "Passwords aren't matched" });
+      }
+      return false;
+    } else {
+      return false;
+    }
+  };
+
+  validateFirstName = () => {
+    let { firstName } = this.state;
+    firstName = firstName.trim();
+    if (firstName.length < 15) {
       return true;
     } else {
-      this.setState({ message: "Passwords aren't matched" });
+      this.setState({
+        message: "First name need to have less than 15 characters!"
+      });
+      return false;
     }
-    return false;
+  };
+
+  validateLastName = () => {
+    let { lastName } = this.state;
+    lastName = lastName.trim();
+    if (lastName.length < 15) {
+      return true;
+    } else {
+      this.setState({
+        message: "Last name need to have less than 15 characters!"
+      });
+      return false;
+    }
+  };
+
+  validateUsername = () => {
+    let { username } = this.state;
+    username = username.trim();
+    if (username.length > 3 && username.length < 15) {
+      return true;
+    } else {
+      this.setState({
+        message:
+          "Username need to have more than 3 and less than 15 characters!"
+      });
+      return false;
+    }
+  };
+
+  validatePassword = () => {
+    let { password } = this.state;
+    if (password.length > 7 && password.length < 15) {
+      return true;
+    } else {
+      this.setState({
+        message:
+          "Password need to have more than 7 and less than 15 characters!"
+      });
+      return false;
+    }
+  };
+
+  validateEmail = () => {
+    let { email } = this.state;
+    email = email.trim();
+    if (EmailValidator.validate(email)) {
+      return EmailValidator.validate(email);
+    } else {
+      this.setState({
+        message: "Try correct e-mail format example: mail@example.com !"
+      });
+      return EmailValidator.validate(email);
+    }
   };
 
   render() {
