@@ -8,13 +8,11 @@ const HOURS = MINUTES * 60;
 const DAYS = HOURS * 24;
 
 let expirationDate = new Date(
-  Date.now() + 6 * MINUTES + 5 * SECONDS
+  Date.now() + 3 * MINUTES + 5 * SECONDS
   //Date.now() + 30 * SECONDS
 ).getTime();
 //.getTime();
 console.log("expirationDate:", expirationDate);
-
-//GOTOVA NAGRADNA IGRA JOŠ TRIBA KODOVE MAKNIT VLASNIKA ILI CILI KOD I REVIEW PONIŠTIT
 
 Timer.destroy({ where: {} }).then(() => {
   Promise.all([

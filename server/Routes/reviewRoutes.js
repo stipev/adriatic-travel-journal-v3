@@ -19,8 +19,11 @@ router.patch(
     updateReview(userId, review, rate, code)
       .then(resp => {
         resp[0] === 1
-          ? res.json({ message: "Successfully updated review" })
-          : res.json({ message: "Error while updating review" });
+          ? res.json({ success: true, message: "Successfully updated review" })
+          : res.json({
+              success: false,
+              message: "Error while updating review"
+            });
       })
       .catch(error => console.log("error: ", error));
   }
@@ -65,7 +68,7 @@ router.delete(
   (req, res) => {
     const { code } = req.body;
     deleteReview(code)
-      .then(() => res.json("Review successfully deleted!"))
+      .then(() => res.json({ success: true }))
       .catch(error => console.log("error: ", error));
   }
 );
@@ -82,8 +85,8 @@ router.post(
         const { location } = resp.dataValues;
         const { date } = resp.dataValues;
         addReview(userId, code, review, rate, location, date, username).then(
-          message => {
-            res.json({ message });
+          success => {
+            res.json({ success });
           }
         );
       })

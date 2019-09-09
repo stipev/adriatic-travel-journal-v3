@@ -11,8 +11,6 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "../src/components/Routes";
 import "./App.css";
 
-//import { isLoggedIn } from "./components/AuthService";
-
 function App() {
   return (
     <div className="SiteContainer">

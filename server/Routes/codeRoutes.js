@@ -49,7 +49,7 @@ router.patch(
 );
 
 router.get(
-  "/codes/winner",
+  "/codes",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {

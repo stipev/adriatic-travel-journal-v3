@@ -37,6 +37,41 @@ class Profile extends React.Component {
     this.getUserReviews();
   }
 
+  codeValidator = () => {
+    let { code } = this.state;
+    code = code.trim();
+    if (code.length > 9 && code.length < 15) {
+      return true;
+    } else {
+      this.setState({
+        message: "Code need to have more than 9 and less than 15 characters"
+      });
+      return false;
+    }
+  };
+
+  reviewValidator = () => {
+    let { review } = this.state;
+    review = review.trim();
+    if (review.length <= 200) {
+      return true;
+    } else {
+      this.setState({
+        message: "Review need to have less than 200 characters"
+      });
+      return false;
+    }
+  };
+
+  rateValidator = () => {
+    if (typeof this.state.rate === "string") {
+      this.setState({ message: "Please rate your review" });
+      return false;
+    } else if (typeof this.state.rate === "number") {
+      return true;
+    }
+  };
+
   getUserReviews = () => {
     axios({
       method: "get",
@@ -61,28 +96,43 @@ class Profile extends React.Component {
   };
 
   submitReview = () => {
-    let code = this.state.code.trim();
-    axios({
-      method: "post",
-      url: REVIEWS_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getToken()
-      },
-      data: {
-        code,
-        userId: getId(),
-        username: getUsername(),
-        review: this.state.review,
-        rate: this.state.rate
-      },
+    if (
+      this.codeValidator() &&
+      this.reviewValidator() &&
+      this.rateValidator()
+    ) {
+      let { code } = this.state;
+      let { review } = this.state;
+      code = code.trim();
+      review = review.trim();
 
-      credentials: "same-origin"
-    })
-      .then(res => {
-        this.getAllUserCodes();
+      axios({
+        method: "post",
+        url: REVIEWS_URL,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: getToken()
+        },
+        data: {
+          code,
+          userId: getId(),
+          username: getUsername(),
+          review: review.length === 0 ? "Review not posted yet!" : review,
+          rate: this.state.rate
+        },
+
+        credentials: "same-origin"
       })
-      .catch(err => console.log("error", err));
+        .then(res => {
+          if (res.data.success.success) {
+            this.setState({ message: "Review submitted successfully!" });
+          } else {
+            this.setState({ message: "Invalid code!" });
+          }
+          this.getAllUserCodes();
+        })
+        .catch(err => console.log("error", err));
+    }
   };
 
   getAllUserCodes = () => {
@@ -128,8 +178,16 @@ class Profile extends React.Component {
       },
 
       credentials: "same-origin"
-    }).then(() => {
-      Promise.all([this.getUserReviews(), this.getAllUserCodes()]);
+    }).then(res => {
+      if (res.data.success) {
+        Promise.all([this.getUserReviews(), this.getAllUserCodes()]).then(
+          () => {
+            this.setState({ message: "Review deleted successfully!" });
+          }
+        );
+      } else {
+        this.setState({ message: "Error while deleting review!" });
+      }
     });
   };
 
@@ -142,27 +200,41 @@ class Profile extends React.Component {
   };
 
   submitReviewEdit = () => {
-    axios({
-      method: "patch",
-      url: REVIEWS_URL,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getToken()
-      },
-      data: {
-        userId: getId(),
-        code: this.state.editCode,
-        review: this.state.review,
-        rate: this.state.rate
-      },
+    if (this.reviewValidator() && this.rateValidator()) {
+      let { review } = this.state;
+      review = review.trim();
 
-      credentials: "same-origin"
-    })
-      .then(res => {
-        this.getUserReviews();
-        this.setState({ editMode: false });
+      axios({
+        method: "patch",
+        url: REVIEWS_URL,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: getToken()
+        },
+        data: {
+          userId: getId(),
+          code: this.state.editCode,
+          review: review.length === 0 ? "Review not posted yet!" : review,
+          rate: this.state.rate
+        },
+
+        credentials: "same-origin"
       })
-      .catch(err => console.log("error", err));
+        .then(res => {
+          console.log("res: ", res.data.success.success);
+          if (res.data.success.success) {
+            this.setState({ message: " Review updated successfully!" });
+          } else {
+            this.setState({ message: "Error while updating review!" });
+          }
+          this.getUserReviews();
+          this.setState({
+            editMode: false,
+            message: "Review updated successfully!"
+          });
+        })
+        .catch(err => console.log("error", err));
+    }
   };
 
   onCodeListClick = () => {
@@ -336,7 +408,12 @@ class Profile extends React.Component {
           className="box"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <h5 className="title is-5 has-text-info	">{this.state.message}</h5>
+          <h5
+            style={{ minHeight: "67px" }}
+            className="title is-5 has-text-info	"
+          >
+            {this.state.message}
+          </h5>
 
           <div className="field">
             <label className="label">Code :</label>
@@ -391,9 +468,11 @@ class Profile extends React.Component {
             </div>
           </div>
           <button
-            onClick={
-              this.state.editMode ? this.submitReviewEdit : this.submitReview
-            }
+            onClick={() => {
+              this.state.editMode
+                ? this.submitReviewEdit()
+                : this.submitReview();
+            }}
             className="button is-info"
           >
             {this.state.editMode ? (

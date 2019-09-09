@@ -22,7 +22,6 @@ import {
 } from "../assets/locations/index";
 
 const CODES_URL = "http://localhost:8000/codes";
-const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
 
 const LOCATIONS = {
   Sibenik: [Sibenik1, Sibenik2],
@@ -83,7 +82,7 @@ class PrivateHome extends Component {
   findWinnersInDatabase = () => {
     axios({
       method: "get",
-      url: WINNER_CODES_URL,
+      url: CODES_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()

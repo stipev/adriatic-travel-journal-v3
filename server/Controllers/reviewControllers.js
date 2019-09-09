@@ -93,10 +93,10 @@ const addReview = (userId, code, review, rate, location, date, username) => {
               username
             })
           ]).then(() => {
-            resolve("Review submited successfully!");
+            resolve({ success: true });
           });
         } else {
-          resolve("Invalid code submited!");
+          resolve({ success: false });
         }
       })
       .catch(error => reject(error));

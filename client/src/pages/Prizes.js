@@ -10,7 +10,7 @@ import "../css/Prizes.css";
 
 const PRIZE_CODES_URL = "http://localhost:8000/codes/active";
 const USERS_URL = "http://localhost:8000/users/";
-const WINNER_CODES_URL = "http://localhost:8000/codes/winner";
+const CODES_URL = "http://localhost:8000/codes";
 
 const SECONDS = 1000;
 const prizeImages = [Prize1, Prize2, Prize3];
@@ -37,7 +37,7 @@ export class Prizes extends React.Component {
   findWinnersInDatabase = () => {
     axios({
       method: "get",
-      url: WINNER_CODES_URL,
+      url: CODES_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken()
